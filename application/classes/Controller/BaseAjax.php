@@ -67,7 +67,6 @@ abstract class Controller_BaseAjax extends Controller
 	public function action_insertData()
 	{
 		$result = array();
-		$values = array();
 		// Read POST data in JSON format
 		$params = json_decode(file_get_contents("php://input"));
 	
