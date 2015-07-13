@@ -5,7 +5,7 @@
  *
  */
 
-class Model_Groups extends Model_Common {
+class Model_Group extends Model_Common {
 	
 	protected $tableName = "groups";
 	protected $fieldNames = array("group_id", "group_name", "speciality_id", "faculty_id");

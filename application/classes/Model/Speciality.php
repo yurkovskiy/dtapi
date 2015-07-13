@@ -5,7 +5,7 @@
  *
  */
 
-class Model_Specialities extends Model_Common {
+class Model_Speciality extends Model_Common {
 	
 	protected $tableName = "specialities";
 	protected $fieldNames = array("speciality_id", "speciality_code", "speciality_name");

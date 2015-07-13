@@ -2,7 +2,7 @@
 
 return array
 (
-	'default' => array
+	'alternate' => array
 	(
 		'type'       => 'MySQL',
 		'connection' => array(
@@ -28,7 +28,7 @@ return array
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
 	),
-	'alternate' => array(
+	'default' => array(
 		'type'       => 'PDO',
 		'connection' => array(
 			/**

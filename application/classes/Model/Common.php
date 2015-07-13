@@ -155,8 +155,8 @@ abstract class Model_Common extends Model
 		{
 			list($insert_id, $aff_rows) = $insertQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = "Code: ".$error->getCode()."<br>".$error->getMessage();
-			return $this->errorMessage;
+			$this->errorMessage = "Code: ".$error->getCode()."\n".$error->getMessage();
+			return false;
 		}
 		if ($aff_rows > 0) return true;
 		if ($aff_rows <= 0) return false;
@@ -193,8 +193,8 @@ abstract class Model_Common extends Model
 		{
 			$rows = $updateQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = "Code: ".$error->getCode()."<br>".$error->getMessage();
-			return $this->errorMessage;
+			$this->errorMessage = "Code: ".$error->getCode()."\n".$error->getMessage();
+			return false;
 		}
 		if ($rows > 0) return true;
 		if ($rows == 0) return true;
@@ -214,8 +214,8 @@ abstract class Model_Common extends Model
 		{
 			$rows = $eraseQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = "Code: ".$error->getCode()."<br>".$error->getMessage();
-			return $this->errorMessage;
+			$this->errorMessage = "Code: ".$error->getCode()."\n".$error->getMessage();
+			return false;
 		}
 		if ($rows > 0) return true;
 		if ($rows == 0) return true;
