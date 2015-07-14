@@ -91,4 +91,23 @@ abstract class Controller_BaseAjax extends Controller
 	
 	}
 	
+	public function action_del()
+	{
+		$record_id = $this->request->param("id");
+		$results = array();
+		
+		$model = Model::factory($this->modelName)->eraseRecord($record_id);
+		if ($model)
+		{
+			// Creating response in JSON format
+			$result["response"] = "ok";
+		}
+		else
+		{
+			$result["response"] = "error";
+		}
+		$r = json_encode($result);
+		$this->response->body($r);
+	}
+	
 }
