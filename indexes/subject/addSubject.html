@@ -6,17 +6,17 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 function request() {
-	var faculty = {
-			faculty_name: "Інститут інформаційних  технологій " + Math.random(), 
-			faculty_desc: "Такий собі інститучєг із блатним імечьком"
+	var subject = {
+			subject_name: "Вища математика " + Math.random(), 
+			subject_desc: "Самий курчя потрібний предмет!!!"
 		};
 $.ajax({
 	contentType: "application/json; charset=utf-8",
-	url: "../../faculty/insertData",
+	url: "../../subject/insertData",
 	type: "POST",
 	timeout: 3000,
 	dataType: 'json',
-	data: JSON.stringify(faculty),
+	data: JSON.stringify(subject),
 	success: function(resp) {
 		console.log(resp);
 	},
