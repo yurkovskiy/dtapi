@@ -23,35 +23,84 @@ abstract class Controller_BaseAjax extends Controller
 	{
 
 		$record_id = $this->request->param("id");			
-		$results = array();
-		$Model = Model::factory($this->modelName);
+		$result = array();
 		$DBResult = null;
 		if (!isset($record_id)) 
 		{
-			$DBResult = $Model->getRecords();
+			$DBResult = Model::factory($this->modelName)->getRecords();
 		}
 		else 
 		{
-			$DBResult = $Model->getRecord($record_id);
+			$DBResult = Model::factory($this->modelName)->getRecord($record_id);
 		}
 		
-		$fieldNames = $Model->getFieldNames();
-		$results = array();
+		$fieldNames = Model::factory($this->modelName)->getFieldNames();
 		foreach ($DBResult as $data)
 		{
 			$item = array();
 			foreach ($fieldNames as $fieldName) {
 				$item[$fieldName] = $data->$fieldName;
 			}
-			array_push($results, $item);
+			array_push($result, $item);
 		}
-		if (sizeof($results) < 1)
+		if (sizeof($result) < 1)
 		{
-			$results[] = array('record_id', 'null');
+			$result[] = array('record_id', 'null');
 		}
-		$r = json_encode($results);
+		$r = json_encode($result);
 		$this->response->body($r);
 	
+	}
+	
+	/**
+	 * @name getRecordsRange - method which return range of records (for pagination)
+	 * @access public
+	 * @method GET
+	 * @author Yuriy Bezgachnyuk
+	 * 
+	 */
+	public function action_getRecordsRange()
+	{
+		$limit = $this->request->param("id");
+		$offset = $this->request->param("id1");
+		$result = array();
+		
+		// check input parameters
+		if ((!is_numeric($limit)) || (!is_numeric($offset)))
+		{
+			$result["response"] = "error";
+		}
+		else 
+		{
+			$model = Model::factory($this->modelName)->getRecordsRange($limit, $offset);
+			$fieldNames = Model::factory($this->modelName)->getFieldNames();
+			foreach ($model as $data)
+			{
+				$item = array();
+				foreach ($fieldNames as $fieldName) {
+					$item[$fieldName] = $data->$fieldName;
+				}
+				array_push($result, $item);
+			}
+			if (sizeof($result) < 1)
+			{
+				$result[] = array('record_id', 'null');
+			}
+		}
+		$r = json_encode($result);
+		$this->response->body($r);
+	}
+	
+	/**
+	 * Return number of Records in table (for pagination)
+	 */
+	public function action_countRecords()
+	{
+		$numberOfRecords = Model::factory($this->modelName)->countRecords();
+		$result = array();
+		$result["numberOfRecords"] = $numberOfRecords;
+		$r = json_encode($result);
+		$this->response->body($r);
 	}
 	
 	/**
