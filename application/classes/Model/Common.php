@@ -197,7 +197,7 @@ abstract class Model_Common extends Model
 			return false;
 		}
 		if ($rows > 0) return true;
-		if ($rows == 0) return true;
+		if ($rows == 0) return false;
 	}
 
 	/**

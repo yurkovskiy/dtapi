@@ -9,6 +9,8 @@ abstract class Controller_BaseAjax extends Controller
 {
 
 	protected $modelName = "";
+	
+	private $RAW_DATA_SOURCE = "php://input";
 		
 	/**
 	 * @name action_getRecords
@@ -117,7 +119,7 @@ abstract class Controller_BaseAjax extends Controller
 	{
 		$result = array();
 		// Read POST data in JSON format
-		$params = json_decode(file_get_contents("php://input"));
+		$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 	
 		// Convert Object into Array
 		$paramsArr = get_object_vars($params);
@@ -138,6 +140,42 @@ abstract class Controller_BaseAjax extends Controller
 		$r = json_encode($result);
 		$this->response->body($r);
 	
+	}
+	
+	/**
+	 * @name action_update
+	 * @author Yuriy Bezgachnyuk
+	 * @access public
+	 * @method POST
+	 * 
+	 * Update information of some Entity in database
+	 * Using unique record_id for this action
+	 * 
+	 */
+	public function action_update()
+	{
+		$record_id = $this->request->param("id");
+		$results = array();
+		
+		// get info from client
+		$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$values = array_values(get_object_vars($params));
+		
+		array_unshift($values, $record_id); // Add record_id value for Primary Key
+				
+		// Give data to the Model
+		$model = Model::factory($this->modelName)->updateRecord($values);
+		if ($model)
+		{
+			// Creating response in JSON format
+			$result["response"] = "ok";
+		}
+		else
+		{
+			$result["response"] = "error";
+		}
+		$r = json_encode($result);
+		$this->response->body($r);
 	}
 	
 	public function action_del()
