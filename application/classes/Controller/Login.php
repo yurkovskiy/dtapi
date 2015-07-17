@@ -13,8 +13,8 @@ class Controller_Login extends Controller {
 	{
 		$result = array();
 		$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
-		$succsses = Auth::instance()->login($params->username, $params->password, FALSE);
-		if ($succsses)
+		$success = Auth::instance()->login($params->username, $params->password, FALSE);
+		if ($success)
 		{
 			$result["response"] = "ok";
 		}
