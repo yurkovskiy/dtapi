@@ -7,7 +7,7 @@
  * @copyright 2013 by Yuriy Bezgachnyuk
  * @version 0.1
  * 
- * This class contains basic methods for works with entitity that represents of table of database
+ * This class contains basic methods for works with entitity that represents table of database
  *
  */
 
@@ -155,8 +155,8 @@ abstract class Model_Common extends Model
 		{
 			list($insert_id, $aff_rows) = $insertQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = "Code: ".$error->getCode()."\n".$error->getMessage();
-			return false;
+			$this->errorMessage = $error->getMessage();
+			return $this->errorMessage;
 		}
 		if ($aff_rows > 0) return true;
 		if ($aff_rows <= 0) return false;
@@ -193,8 +193,8 @@ abstract class Model_Common extends Model
 		{
 			$rows = $updateQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = "Code: ".$error->getCode()."\n".$error->getMessage();
-			return false;
+			$this->errorMessage = $error->getMessage();
+			return $this->errorMessage;
 		}
 		if ($rows > 0) return true;
 		if ($rows == 0) return false;
@@ -214,8 +214,8 @@ abstract class Model_Common extends Model
 		{
 			$rows = $eraseQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = "Code: ".$error->getCode()."\n".$error->getMessage();
-			return false;
+			$this->errorMessage = $error->getMessage();
+			return $this->errorMessage;
 		}
 		if ($rows > 0) return true;
 		if ($rows == 0) return false;
