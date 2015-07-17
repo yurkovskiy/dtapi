@@ -11,6 +11,17 @@ abstract class Controller_BaseAjax extends Controller
 	protected $modelName = "";
 	
 	private $RAW_DATA_SOURCE = "php://input";
+	
+	public function before()
+	{
+		parent::before();
+		if (!Auth::instance()->logged_in("admin"))
+		{
+			$result = array();
+			$result["response"] = "Not admin role user";
+			$this->response->body(json_encode($result));
+		}
+	}
 		
 	/**
 	 * @name action_getRecords
