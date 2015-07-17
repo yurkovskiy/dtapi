@@ -128,14 +128,22 @@ abstract class Controller_BaseAjax extends Controller
 		$values = array_values($paramsArr);
 	
 		$model = Model::factory($this->modelName)->registerRecord($values);
-		if ($model)
+		if (!is_string($model) && $model)
 		{
 			// Creating response in JSON format
 			$result["response"] = "ok";
 		}
 		else
 		{
-			$result["response"] = "error";
+			if (is_string($model)) 
+			{
+				$result["response"] = $model;
+			}
+			else 
+			{
+				$result["response"] = "error";
+			}
+			
 		}
 		$r = json_encode($result);
 		$this->response->body($r);
@@ -165,14 +173,21 @@ abstract class Controller_BaseAjax extends Controller
 				
 		// Give data to the Model
 		$model = Model::factory($this->modelName)->updateRecord($values);
-		if ($model)
+		if (!is_string($model) && $model)
 		{
 			// Creating response in JSON format
 			$result["response"] = "ok";
 		}
 		else
 		{
-			$result["response"] = "error";
+			if (is_string($model)) 
+			{
+				$result["response"] = $model;
+			}
+			else 
+			{
+				$result["response"] = "error";
+			}
 		}
 		$r = json_encode($result);
 		$this->response->body($r);
@@ -184,14 +199,21 @@ abstract class Controller_BaseAjax extends Controller
 		$results = array();
 		
 		$model = Model::factory($this->modelName)->eraseRecord($record_id);
-		if ($model)
+		if (!is_string($model) && $model)
 		{
 			// Creating response in JSON format
 			$result["response"] = "ok";
 		}
 		else
 		{
-			$result["response"] = "error";
+			if (is_string($model))
+			{
+				$result["response"] = $model;
+			}
+			else
+			{
+				$result["response"] = "error";
+			}
 		}
 		$r = json_encode($result);
 		$this->response->body($r);
