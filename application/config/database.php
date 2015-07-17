@@ -29,7 +29,7 @@ return array
 		'caching'      => FALSE,
 	),
 	'default' => array(
-		'type'       => 'PDO',
+		'type'       => 'PDO_MySQL',
 		'connection' => array(
 			/**
 			 * The following options are available for PDO:
@@ -51,6 +51,7 @@ return array
 		 */
 		'table_prefix' => '',
 		'charset'      => 'utf8',
+		'options' 	   => array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'),
 		'caching'      => FALSE,
 	),
 );

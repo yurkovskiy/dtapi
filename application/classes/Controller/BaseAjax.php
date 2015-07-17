@@ -17,9 +17,7 @@ abstract class Controller_BaseAjax extends Controller
 		parent::before();
 		if (!Auth::instance()->logged_in("admin"))
 		{
-			$result = array();
-			$result["response"] = "Not admin role user";
-			$this->response->body(json_encode($result));
+			$this->redirect("/");
 		}
 	}
 		
