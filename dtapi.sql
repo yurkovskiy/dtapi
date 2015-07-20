@@ -203,6 +203,24 @@ CREATE TABLE `subjects` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `test_details`
+--
+
+DROP TABLE IF EXISTS `test_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `test_details` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `test_id` int(10) unsigned NOT NULL,
+  `level` tinyint(3) unsigned NOT NULL,
+  `tasks` tinyint(3) unsigned NOT NULL,
+  `rate` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `test_id` (`test_id`,`level`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `tests`
 --
 
@@ -294,4 +312,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-20  9:32:42
+-- Dump completed on 2015-07-20 10:56:03
