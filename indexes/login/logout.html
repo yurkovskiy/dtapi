@@ -6,17 +6,11 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 function request() {
-	var user = {
-			username: "admin", 
-			password: "dtapi_admin"
-		};
 $.ajax({
 	contentType: "application/json; charset=utf-8",
-	url: "../../login/index",
-	type: "POST",
+	url: "../../login/logout",
+	type: "GET",
 	timeout: 3000,
-	dataType: 'json',
-	data: JSON.stringify(user),
 	success: function(resp) {
 		console.log(resp);
 	},
