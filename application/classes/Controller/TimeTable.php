@@ -5,7 +5,7 @@
  *
  */
 
-class Controller_TimeTable extends Controller_BaseAjax {
+class Controller_TimeTable extends Controller_BaseAdmin {
 
 	protected $modelName = "TimeTable";
 

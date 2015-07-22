@@ -21,10 +21,11 @@ $.ajax({
 		console.log(resp);
 	},
 	error: function(xhr, status) {
-		console.log("Error: " +status);
+		var message = JSON.parse(xhr.responseText);
+		console.log(message.response);
 	},
 	complete: function(resp) {
-		console.log('Complete: ' +status);
+
 	}
 }); // $.ajax
 }

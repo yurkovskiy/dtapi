@@ -12,15 +12,6 @@ abstract class Controller_BaseAjax extends Controller
 	
 	private $RAW_DATA_SOURCE = "php://input";
 	
-	public function before()
-	{
-		parent::before();
-		if (!Auth::instance()->logged_in("admin"))
-		{
-			$this->redirect("/");
-		}
-	}
-		
 	/**
 	 * @name action_getRecords
 	 * @author Yuriy Bezgachnyuk

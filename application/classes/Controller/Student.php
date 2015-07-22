@@ -5,7 +5,7 @@
  *
  */
 
-class Controller_Student extends Controller_BaseAjax {
+class Controller_Student extends Controller_BaseAdmin {
 
 	protected $modelName = "Student";
 
