@@ -9,7 +9,9 @@ class Controller_Welcome extends Controller {
 
 	public function action_index() 
 	{
-		$this->response->body("Welcome to the D-Tester API");
+		$this->response
+			->send_headers("Cache-Control: no-cache, no-store, must-revalidate", "Pragma: no-cache", "Expires: 0")
+			->body("Welcome to the D-Tester API");
 	}
 
 }
