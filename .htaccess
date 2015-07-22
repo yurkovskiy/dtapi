@@ -1,6 +1,8 @@
 # Turn on URL rewriting
 RewriteEngine On
 
+SetEnv KOHANA_ENV=PRODUCTION
+
 # Installation directory
 RewriteBase /
 

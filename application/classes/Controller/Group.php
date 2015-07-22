@@ -5,7 +5,7 @@
  *
  */
 
-class Controller_Group extends Controller_BaseAjax {
+class Controller_Group extends Controller_BaseAdmin {
 
 	protected $modelName = "Group";
 
