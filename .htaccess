@@ -3,6 +3,8 @@ RewriteEngine On
 
 SetEnv KOHANA_ENV=PRODUCTION
 Header set Access-Control-Allow-Origin "*"
+Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+Header set Pragma "no-cache"
 
 # Installation directory
 RewriteBase /

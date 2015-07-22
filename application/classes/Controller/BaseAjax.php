@@ -50,9 +50,7 @@ abstract class Controller_BaseAjax extends Controller
 			$result[] = array('record_id', 'null');
 		}
 		$r = json_encode($result);
-		$this->response
-			->send_headers("Cache-Control: no-cache, no-store, must-revalidate", "Pragma: no-cache", "Expires: 0")
-			->body($r);
+		$this->response->body($r);
 	
 	}
 	
@@ -92,9 +90,7 @@ abstract class Controller_BaseAjax extends Controller
 			}
 		}
 		$r = json_encode($result);
-		$this->response
-			->send_headers("Cache-Control: no-cache, no-store, must-revalidate", "Pragma: no-cache", "Expires: 0")
-			->body($r);
+		$this->response->body($r);
 	}
 	
 	/**
@@ -106,9 +102,7 @@ abstract class Controller_BaseAjax extends Controller
 		$result = array();
 		$result["numberOfRecords"] = $numberOfRecords;
 		$r = json_encode($result);
-		$this->response
-			->send_headers("Cache-Control: no-cache, no-store, must-revalidate", "Pragma: no-cache", "Expires: 0")
-			->body($r);
+		$this->response->body($r);
 	}
 	
 	/**
@@ -152,9 +146,7 @@ abstract class Controller_BaseAjax extends Controller
 			
 		}
 		$r = json_encode($result);
-		$this->response
-			->send_headers("Cache-Control: no-cache, no-store, must-revalidate", "Pragma: no-cache", "Expires: 0")
-			->body($r);
+		$this->response->body($r);
 	
 	}
 	
@@ -198,9 +190,7 @@ abstract class Controller_BaseAjax extends Controller
 			}
 		}
 		$r = json_encode($result);
-		$this->response
-			->send_headers("Cache-Control: no-cache, no-store, must-revalidate", "Pragma: no-cache", "Expires: 0")
-			->body($r);
+		$this->response->body($r);
 	}
 	
 	public function action_del()
@@ -226,9 +216,7 @@ abstract class Controller_BaseAjax extends Controller
 			}
 		}
 		$r = json_encode($result);
-		$this->response
-			->send_headers("Cache-Control: no-cache, no-store, must-revalidate", "Pragma: no-cache", "Expires: 0")
-			->body($r);
+		$this->response->body($r);
 	}
 	
 }
