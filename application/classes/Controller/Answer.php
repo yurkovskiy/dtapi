@@ -9,7 +9,7 @@ class Controller_Answer extends Controller_BaseAdmin {
 
 	protected $modelName = "Answer";
 	
-	public function action_getAnswersQ()
+	public function action_getAnswersByQuestion()
 	{
 		$record_id = $this->request->param("id");
 		$result = array();
