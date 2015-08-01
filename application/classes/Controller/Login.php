@@ -16,6 +16,13 @@ class Controller_Login extends Controller {
 		$success = Auth::instance()->login($params->username, $params->password, FALSE);
 		if ($success)
 		{
+			// get user roles
+			$roles = Auth::instance()->get_user()->roles->find_all();
+			foreach ($roles as $role)
+			{
+				$result["roles"][] = $role->name;								
+			}
+						
 			$result["response"] = "ok";
 		}
 		else 
