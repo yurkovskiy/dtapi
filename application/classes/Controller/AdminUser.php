@@ -18,7 +18,6 @@ class Controller_AdminUser extends Controller {
 		else 
 		{
 			
-			$result = array ();
 			// Read POST data in JSON format
 			$params = json_decode ( file_get_contents ( $this->RAW_DATA_SOURCE ) );
 			
@@ -27,12 +26,64 @@ class Controller_AdminUser extends Controller {
 
 			// Register user
 			$model = ORM::factory ( "User" );
-			$model->values ( $paramsArr );
-			$model->save ();
-			
+			try {
+				$model->values ( $paramsArr );
+				$model->save ();
+				$this->response->body(json_encode(array("id" => $model->id, "response" => "ok")));
+			} catch (ORM_Validation_Exception $e) {
+				$this->response->body(json_encode(array("response" => $e->getMessage())));
+				return;
+			}
+						
 			// Add roles for new user
 			$model->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'login' )->find () );
 			$model->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'admin' )->find () );
+		}
+	}
+	
+	public function action_update()
+	{
+		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))
+		{
+			throw new HTTP_Exception_403("You don't have permissions to update records");
+		}
+		else
+		{
+			$record_id = $this->request->param("id");
+						
+			// get info from client
+			$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+			$paramsArr = get_object_vars($params);
+			
+			try {
+				// get record for update
+				$model = ORM::factory("User", $record_id);
+				$model->values($paramsArr);
+				$model->save();
+				$this->response->body(json_encode(array("response" => "ok")));
+			} catch (ORM_Validation_Exception $e) {
+				$this->response->body(json_encode(array("response" => $e->getMessage())));
+			}
+			
+		}
+	}
+	
+	public function action_del()
+	{
+		$record_id = $this->request->param("id");
+		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))
+		{
+			throw new HTTP_Exception_403("You don't have permissions to update records");
+		}
+		else
+		{
+			try {
+				$model = ORM::factory("User", $record_id);
+				$model->delete();
+				$this->response->body(json_encode(array("response" => "ok")));
+			} catch (Kohana_Exception $e) {
+				$this->response->body(json_encode(array("response" => $e->getMessage())));
+			}
 		}
 	}
 }
