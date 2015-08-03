@@ -158,7 +158,7 @@ abstract class Model_Common extends Model
 			$this->errorMessage = $error->getMessage();
 			return $this->errorMessage;
 		}
-		if ($aff_rows > 0) return true;
+		if ($aff_rows > 0) return intval($insert_id);
 		if ($aff_rows <= 0) return false;
 	}
 
