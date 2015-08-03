@@ -128,9 +128,10 @@ abstract class Controller_BaseAjax extends Controller
 		$values = array_values($paramsArr);
 	
 		$model = Model::factory($this->modelName)->registerRecord($values);
-		if (!is_string($model) && $model)
+		if (!is_string($model) && is_int($model))
 		{
 			// Creating response in JSON format
+			$result["id"] = $model;
 			$result["response"] = "ok";
 		}
 		else
