@@ -2,24 +2,14 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Add Admin</title>
+<title>DEL Admin</title>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 function request() {
-	var adminUser = {
-			username: "admin3",
-			password: "admin3",
-			password_confirm: "admin3",
-			email: "tuhes33@sraka.if.ua"
-			
-		};
 $.ajax({
-	contentType: "application/json; charset=utf-8",
-	url: "../../AdminUser/insertData",
-	type: "POST",
-	timeout: 3000,
-	dataType: 'json',
-	data: JSON.stringify(adminUser),
+	url: "../../AdminUser/del/3",
+	type: "GET",
+	timeout: 2000,
 	success: function(resp) {
 		console.log(resp);
 	},
@@ -27,8 +17,8 @@ $.ajax({
 		var message = JSON.parse(xhr.responseText);
 		console.log(message.response);
 	},
-	complete: function(resp) {
-		
+	complete: function(data) {
+
 	}
 }); // $.ajax
 }
