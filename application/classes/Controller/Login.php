@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Answer Controller for handle AJAX requests
+ * Login Controller for handle AJAX requests
  *
  */
 
@@ -16,13 +16,17 @@ class Controller_Login extends Controller {
 		$success = Auth::instance()->login($params->username, $params->password, FALSE);
 		if ($success)
 		{
+			// get username
+			$userName = Auth::instance()->get_user()->username;
 			// get user roles
 			$roles = Auth::instance()->get_user()->roles->find_all();
 			foreach ($roles as $role)
 			{
 				$result["roles"][] = $role->name;								
 			}
-						
+			
+			$result["username"] = $userName;
+												
 			$result["response"] = "ok";
 		}
 		else 
@@ -35,7 +39,7 @@ class Controller_Login extends Controller {
 	
 	public function action_logout()
 	{
-		Auth::instance()->logout();
+		Auth::instance()->logout(TRUE);
 	}
 
 }

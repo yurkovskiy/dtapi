@@ -23,7 +23,7 @@ class Controller_AdminUser extends Controller {
 			
 			// Convert Object into Array
 			$paramsArr = get_object_vars ( $params );
-
+			
 			// Register user
 			$model = ORM::factory ( "User" );
 			try {
