@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Add Admin</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+function request() {
+	var studentUser = {
+			username: "vasiaAB",
+			password: "1qaz2wsx",
+			password_confirm: "1qaz2wsx",
+			email: "vasiaAB@tuhesS.if.ua",
+			gradebook_id: "АУ-0202033",
+			student_surname: "Пупкін",
+			student_name: "Василь",
+			student_fname: "Васильович",
+			group_id: "1"
+			
+		};
+$.ajax({
+	contentType: "application/json; charset=utf-8",
+	url: "../../student/insertData",
+	type: "POST",
+	timeout: 3000,
+	dataType: 'json',
+	data: JSON.stringify(studentUser),
+	success: function(resp) {
+		console.log(resp);
+	},
+	error: function(xhr, status) {
+		var message = JSON.parse(xhr.responseText);
+		console.log(message.response);
+	},
+	complete: function(resp) {
+		
+	}
+}); // $.ajax
+}
+</script>
+<script type="text/javascript">
+	window.onload = request;
+</script>
+</head>
+<body>
+
+<div id="main">
+
+</div>
+</body>
+</html>

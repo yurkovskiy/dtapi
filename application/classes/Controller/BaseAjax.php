@@ -10,7 +10,7 @@ abstract class Controller_BaseAjax extends Controller
 
 	protected $modelName = "";
 	
-	private $RAW_DATA_SOURCE = "php://input";
+	protected $RAW_DATA_SOURCE = "php://input";
 	
 	/**
 	 * @name action_getRecords
