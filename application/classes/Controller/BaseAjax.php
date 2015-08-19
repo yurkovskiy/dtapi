@@ -105,28 +105,28 @@ abstract class Controller_BaseAjax extends Controller
 		$this->response->body($r);
 	}
 	
+	// new INSERT
 	/**
 	 * @name action_insertData
 	 * @author Yuriy Bezgachnyuk
 	 * @access public
 	 * @method POST
-	 * 
+	 *
 	 * Read and store data of some Entity into the database
 	 * Input data must be in JSON format
-	 * 
+	 *
 	 */
 	public function action_insertData()
 	{
 		$result = array();
 		// Read POST data in JSON format
 		$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
-	
+		
 		// Convert Object into Array
 		$paramsArr = get_object_vars($params);
-		array_unshift($paramsArr, 0); // Add 0 value for autoincrement of Primary Key
-			
-		$values = array_values($paramsArr);
-	
+		
+		$values = $paramsArr;
+		
 		$model = Model::factory($this->modelName)->registerRecord($values);
 		if (!is_string($model) && is_int($model))
 		{
@@ -136,43 +136,43 @@ abstract class Controller_BaseAjax extends Controller
 		}
 		else
 		{
-			if (is_string($model)) 
+			if (is_string($model))
 			{
 				$result["response"] = $model;
 			}
-			else 
+			else
 			{
 				$result["response"] = "error";
 			}
-			
+				
 		}
 		$r = json_encode($result);
 		$this->response->body($r);
-	
 	}
 	
+	// new UPDATE
 	/**
 	 * @name action_update
 	 * @author Yuriy Bezgachnyuk
 	 * @access public
 	 * @method POST
-	 * 
+	 *
 	 * Update information of some Entity in database
 	 * Using unique record_id for this action
-	 * 
+	 *
 	 */
 	public function action_update()
 	{
+		// get Record_id from URL
 		$record_id = $this->request->param("id");
 		$results = array();
 		
-		// get info from client
+		// Get data from JSON
 		$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
-		$values = array_values(get_object_vars($params));
 		
+		$values = get_object_vars($params);
 		array_unshift($values, $record_id); // Add record_id value for Primary Key
-				
-		// Give data to the Model
+		
 		$model = Model::factory($this->modelName)->updateRecord($values);
 		if (!is_string($model) && $model)
 		{
@@ -181,11 +181,11 @@ abstract class Controller_BaseAjax extends Controller
 		}
 		else
 		{
-			if (is_string($model)) 
+			if (is_string($model))
 			{
 				$result["response"] = $model;
 			}
-			else 
+			else
 			{
 				$result["response"] = "error";
 			}
@@ -194,6 +194,16 @@ abstract class Controller_BaseAjax extends Controller
 		$this->response->body($r);
 	}
 	
+	/**
+	 * @name action_del
+	 * @author Yuriy Bezgachnyuk
+	 * @access public
+	 * @method GET
+	 * 
+	 * Delete information about Entity from database
+	 * Using unique record_id for this action 
+	 * 
+	 */
 	public function action_del()
 	{
 		$record_id = $this->request->param("id");

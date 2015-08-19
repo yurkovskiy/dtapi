@@ -72,45 +72,6 @@ abstract class Model_Common extends Model
 	}
 	
 	/**
-	 * Get number of records which matches by $letters template
-	 *
-	 * @param unknown_type $letters
-	 * @return unknown
-	 */
-	public function countRecordsByLetters($letters)
-	{
-		$letters = "%".$letters."%";
-		$query = "SELECT COUNT(*) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} LIKE '{$letters}'";
-		$count = DB::query(Database::SELECT, $query)->execute()->get('count');
-		return $count;
-		
-	}
-	
-	/**
-	 * Get Records range by letters
-	 *
-	 * @param int $limit
-	 * @param int $offset
-	 * @param string $letters
-	 * @return MySQL Object
-	 */
-	public function getRecordsRangeByLetters($limit, $offset, $letters) 
-	{
-		$letters = "%".$letters."%";
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[1], "LIKE", $letters)->order_by($this->fieldNames[0], 'asc')->limit($limit)->offset($offset);
-		$result = $query->as_object()->execute();
-		return $result;
-	}
-	
-	public function getRecordsByLetters($letters) 
-	{
-		$letters = "%".$letters."%";
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[1], "LIKE", $letters)->order_by($this->fieldNames[0], 'asc');
-		$result = $query->as_object()->execute();
-		return $result;
-	}
-
-	/**
 	 * Get All records from $this->tableName table
 	 *
 	 * @return mysql_object - records objects
@@ -134,24 +95,42 @@ abstract class Model_Common extends Model
 		$result = $query->as_object()->execute();
 		return $result;
 	}
-
+	
+	// new Register
 	/**
 	 * Store new record into table
 	 *
 	 * @param mixed array $values
 	 * @return boolean - query result status
 	 */
-	public function registerRecord($values) 
+	public function registerRecord($values)
 	{
 		$aff_rows = null;
 		
 		// change HTML special symbols to entities
-		for ($i = 0;$i < sizeof($values);$i++)
+		foreach ($values as $key => $value)
 		{
-			$values[$i] = htmlentities($values[$i], ENT_QUOTES, "UTF-8");
+			$values[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
 		}
-		$insertQuery = DB::insert($this->tableName, $this->fieldNames)->values($values);
-		try 
+		
+		// sync with table field names sequence
+		$_values = array();
+		for ($i = 1;$i <= sizeof($values);$i++)
+		{
+			if (!array_key_exists($this->fieldNames[$i], $values))
+			{
+				$this->errorMessage = "Input data is wrong";
+				return $this->errorMessage;
+			}
+			else 
+			{
+				$_values[$i - 1] = $values[$this->fieldNames[$i]];
+			}
+		}
+		array_unshift($_values, 0);
+		
+		$insertQuery = DB::insert($this->tableName, $this->fieldNames)->values($_values);
+		try
 		{
 			list($insert_id, $aff_rows) = $insertQuery->execute();
 		} catch (Database_Exception $error) {
@@ -161,43 +140,38 @@ abstract class Model_Common extends Model
 		if ($aff_rows > 0) return intval($insert_id);
 		if ($aff_rows <= 0) return false;
 	}
-
+		
+	// new UPDATE
 	/**
 	 * Method for update information in $this->tableName table
 	 *
 	 * @param mixed array $values
 	 * @return boolean - query result status
 	 */
-	public function updateRecord($values) 
+	public function updateRecord($values)
 	{
-		/**
-		 * @var array $pairs - array with data $pairs[field name] = value
-		 */
-		$pairs = array();
-		$rows = null;
+		$aff_rows = null;
 		
 		// change HTML special symbols to entities
-		for ($i = 0;$i < sizeof($values);$i++)
+		foreach ($values as $key => $value)
 		{
-			$values[$i] = htmlentities($values[$i], ENT_QUOTES, "UTF-8");
+			$values[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
 		}
-
-		for ($i = 1;$i < sizeof($this->fieldNames);$i++) 
+						
+		// remove zero value for ID :-(
+		$record_id = $values[0];
+		array_shift($values);
+												
+		$updateQuery = DB::update($this->tableName)->set($values)->where($this->fieldNames[0], '=', $record_id);
+		try
 		{
-			$pairs[$this->fieldNames[$i]] = $values[$i];
-		}
-
-		$updateQuery = DB::update($this->tableName)
-		->set($pairs)->where($this->fieldNames[0], '=', $values[0]);
-		try 
-		{
-			$rows = $updateQuery->execute();
+			$aff_rows = $updateQuery->execute();
 		} catch (Database_Exception $error) {
 			$this->errorMessage = $error->getMessage();
 			return $this->errorMessage;
 		}
-		if ($rows > 0) return true;
-		if ($rows == 0) return false;
+			if ($aff_rows > 0) return true;
+			if ($aff_rows == 0) return false;
 	}
 
 	/**
