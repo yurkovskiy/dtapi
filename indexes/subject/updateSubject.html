@@ -7,12 +7,12 @@
 <script type="text/javascript">
 function request() {
 	var subject = {
-			subject_name: "New name for Subject [UPDATED]" + Math.random(), 
-			subject_desc: "Самий важлививй предмет в жізні!!!"
+			subject_description: "Very important subject in a life 1000",
+			subject_name: "New name for Subject [UPDATED]" + Math.random(),
 		};
 $.ajax({
 	contentType: "application/json; charset=utf-8",
-	url: "../../subject/update/1",
+	url: "../../subject/update/40",
 	type: "POST",
 	timeout: 3000,
 	dataType: 'json',
