@@ -94,7 +94,7 @@ class Controller_AdminUser extends Controller {
 		$record_id = $this->request->param("id");
 		if (isset($record_id))
 		{
-			
+			$model = ORM::factory("User", $record_id)->as_array();
 		}
 		else
 		{
@@ -104,16 +104,25 @@ class Controller_AdminUser extends Controller {
 				->where("role_id", "=", "2")
 				->find_all();
 		}
+		//var_dump($model);
 		
 		$fieldNames = ORM::factory("User")->list_columns();
-
-		foreach ($model as $user)
+		
+		if (isset($record_id))
 		{
-			$item = array();
-			foreach ($fieldNames as $fieldName) {
-				$item[$fieldName["column_name"]] = $user->$fieldName["column_name"];
+			$result = $model;
+		}
+		else 
+		{
+			foreach ($model as $user)
+			{
+				$item = array();
+				foreach ($fieldNames as $fieldName) 
+				{
+					$item[$fieldName["column_name"]] = $user->$fieldName["column_name"];
+				}
+				array_push($result, $item);
 			}
-			array_push($result, $item);
 		}
 		
 		if (sizeof($result) < 1)
