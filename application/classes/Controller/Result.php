@@ -5,8 +5,14 @@
  *
  */
 
-class Controller_Result extends Controller_BaseAdmin {
+class Controller_Result extends Controller_BaseAjax {
 
 	protected $modelName = "Result";
+	
+	public function action_update()
+	{
+		// nothing to do :-)
+		$this->response->body(json_decode(array("response" => "error")));
+	}
 
 }

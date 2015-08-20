@@ -9,81 +9,68 @@ class Controller_AdminUser extends Controller {
 	
 	protected $ADMIN_ROLE = "admin";
 	
+	public function before()
+	{
+		if (! Auth::instance ()->logged_in ( $this->ADMIN_ROLE ))
+		{
+			throw new HTTP_Exception_403 ( "You don't have permissions to work with this Entity" );
+		}
+	}
+	
 	public function action_insertData() 
 	{
-		if (! Auth::instance ()->logged_in ( $this->ADMIN_ROLE )) 
-		{
-			throw new HTTP_Exception_403 ( "You don't have permissions to insert records" );
-		} 
-		else 
-		{
+		// Read POST data in JSON format
+		$params = json_decode ( file_get_contents ( $this->RAW_DATA_SOURCE ) );
 			
-			// Read POST data in JSON format
-			$params = json_decode ( file_get_contents ( $this->RAW_DATA_SOURCE ) );
+		// Convert Object into Array
+		$paramsArr = get_object_vars ( $params );
 			
-			// Convert Object into Array
-			$paramsArr = get_object_vars ( $params );
-			
-			// Register user
-			$model = ORM::factory ( "User" );
-			try {
-				$model->values ( $paramsArr );
-				$model->save ();
-				$this->response->body(json_encode(array("id" => $model->id, "response" => "ok")));
-			} catch (ORM_Validation_Exception $e) {
-				$this->response->body(json_encode(array("response" => $e->getMessage())));
-				return;
-			}
-						
-			// Add roles for new user
-			$model->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'login' )->find () );
-			$model->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'admin' )->find () );
+		// Register user
+		$model = ORM::factory ( "User" );
+		try {
+			$model->values ( $paramsArr );
+			$model->save ();
+			$this->response->body(json_encode(array("id" => $model->id, "response" => "ok")));
+		} catch (ORM_Validation_Exception $e) {
+			$this->response->body(json_encode(array("response" => $e->getMessage())));
+			return;
 		}
+					
+		// Add roles for new user
+		$model->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'login' )->find () );
+		$model->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'admin' )->find () );
+		
 	}
 	
 	public function action_update()
 	{
-		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))
-		{
-			throw new HTTP_Exception_403("You don't have permissions to update records");
-		}
-		else
-		{
-			$record_id = $this->request->param("id");
-						
-			// get info from client
-			$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
-			$paramsArr = get_object_vars($params);
+		$record_id = $this->request->param("id");
+				
+		// get info from client
+		$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$paramsArr = get_object_vars($params);
 			
-			try {
-				// get record for update
-				$model = ORM::factory("User", $record_id);
-				$model->values($paramsArr);
-				$model->save();
-				$this->response->body(json_encode(array("response" => "ok")));
-			} catch (ORM_Validation_Exception $e) {
-				$this->response->body(json_encode(array("response" => $e->getMessage())));
-			}
-			
+		try {
+			// get record for update
+			$model = ORM::factory("User", $record_id);
+			$model->values($paramsArr);
+			$model->save();
+			$this->response->body(json_encode(array("response" => "ok")));
+		} catch (ORM_Validation_Exception $e) {
+			$this->response->body(json_encode(array("response" => $e->getMessage())));
 		}
+
 	}
 	
 	public function action_del()
 	{
 		$record_id = $this->request->param("id");
-		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))
-		{
-			throw new HTTP_Exception_403("You don't have permissions to update records");
-		}
-		else
-		{
-			try {
-				$model = ORM::factory("User", $record_id);
-				$model->delete();
-				$this->response->body(json_encode(array("response" => "ok")));
-			} catch (Kohana_Exception $e) {
-				$this->response->body(json_encode(array("response" => $e->getMessage())));
-			}
+		try {
+			$model = ORM::factory("User", $record_id);
+			$model->delete();
+			$this->response->body(json_encode(array("response" => "ok")));
+		} catch (Kohana_Exception $e) {
+			$this->response->body(json_encode(array("response" => $e->getMessage())));
 		}
 	}
 	
