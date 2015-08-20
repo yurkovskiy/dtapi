@@ -86,4 +86,41 @@ class Controller_AdminUser extends Controller {
 			}
 		}
 	}
+	
+	public function action_getRecords()
+	{
+		$result = array();
+		$model = null;
+		$record_id = $this->request->param("id");
+		if (isset($record_id))
+		{
+			
+		}
+		else
+		{
+			$model = ORM::factory("User")
+				->join("roles_users")
+				->on("user_id", "=", "user.id")
+				->where("role_id", "=", "2")
+				->find_all();
+		}
+		
+		$fieldNames = ORM::factory("User")->list_columns();
+
+		foreach ($model as $user)
+		{
+			$item = array();
+			foreach ($fieldNames as $fieldName) {
+				$item[$fieldName["column_name"]] = $user->$fieldName["column_name"];
+			}
+			array_push($result, $item);
+		}
+		
+		if (sizeof($result) < 1)
+		{
+			$result[] = array('record_id', 'null');
+		}
+		$r = json_encode($result);
+		$this->response->body($r);
+	}
 }

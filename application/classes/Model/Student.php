@@ -26,10 +26,7 @@ class Model_Student extends Model_Common {
 		$valuesForUserModel = array_slice($values, 0, 4);
 		// workaround :-(
 		$valuesForStudentModel = array_values(array_slice($values, 4, 5));
-		//print_r($valuesForUserModel);
-		//print_r($valuesForStudentModel);
-		
-		//exit(1);
+				
 		try {
 			$userModel->values($valuesForUserModel);
 			$userModel->save();
@@ -64,3 +61,4 @@ class Model_Student extends Model_Common {
 	}
 	
 }
+

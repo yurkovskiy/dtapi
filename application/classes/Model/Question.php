@@ -58,7 +58,4 @@ class Model_Question extends Model_Common {
 		$result = $query->as_object()->execute();
 		return $result;
 	}
-	
-	
-	
 }
