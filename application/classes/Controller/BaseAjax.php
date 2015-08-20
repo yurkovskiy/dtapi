@@ -7,10 +7,27 @@
 
 abstract class Controller_BaseAjax extends Controller 
 {
-
+	
+	// Model for Controller that will be given in child classes 
 	protected $modelName = "";
 	
 	protected $RAW_DATA_SOURCE = "php://input";
+	
+	/**
+	 * @name action_index
+	 * 
+	 * This method for default action when the User define only Entity name in URL
+	 * 
+	 */
+	public function action_index()
+	{
+		$result = array("name" => "d-tester API", 
+				"author" => "Yuriy V. Bezgachnyuk aka Yurkovskiy", 
+				"date" => "20 Aug. 2015", 
+				"hint" => "Please define an action in URL address");
+		
+		$this->response->body(json_encode($result));
+	}
 	
 	/**
 	 * @name action_getRecords
@@ -119,15 +136,24 @@ abstract class Controller_BaseAjax extends Controller
 	public function action_insertData()
 	{
 		$result = array();
+		$model = null;
+		
 		// Read POST data in JSON format
-		$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 		
-		// Convert Object into Array
-		$paramsArr = get_object_vars($params);
-		
-		$values = $paramsArr;
-		
-		$model = Model::factory($this->modelName)->registerRecord($values);
+		// check if input data is given
+		if (is_null($params))
+		{
+			$model = "No input data";
+		}
+		else 
+		{
+			// Convert Object into Array
+			$paramsArr = get_object_vars($params);
+			$values = $paramsArr;
+			$model = Model::factory($this->modelName)->registerRecord($values);
+		}
+			
 		if (!is_string($model) && is_int($model))
 		{
 			// Creating response in JSON format
@@ -166,14 +192,24 @@ abstract class Controller_BaseAjax extends Controller
 		// get Record_id from URL
 		$record_id = $this->request->param("id");
 		$results = array();
+		$model = null;
 		
 		// Get data from JSON
-		$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 		
-		$values = get_object_vars($params);
-		array_unshift($values, $record_id); // Add record_id value for Primary Key
+		// check if input data is given
+		if (is_null($params))
+		{
+			$model = "No input data";
+		}
 		
-		$model = Model::factory($this->modelName)->updateRecord($values);
+		else 
+		{
+			$values = get_object_vars($params);
+			array_unshift($values, $record_id); // Add record_id value for Primary Key
+			$model = Model::factory($this->modelName)->updateRecord($values);
+		}
+		
 		if (!is_string($model) && $model)
 		{
 			// Creating response in JSON format

@@ -134,8 +134,8 @@ abstract class Model_Common extends Model
 		{
 			list($insert_id, $aff_rows) = $insertQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = $error->getMessage();
-			return $this->errorMessage;
+			$this->errorMessage = "error ".$error->getCode();
+			return strval($this->errorMessage);
 		}
 		if ($aff_rows > 0) return intval($insert_id);
 		if ($aff_rows <= 0) return false;
@@ -167,7 +167,7 @@ abstract class Model_Common extends Model
 		{
 			$aff_rows = $updateQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = $error->getMessage();
+			$this->errorMessage = "error ".$error->getCode();
 			return $this->errorMessage;
 		}
 			if ($aff_rows > 0) return true;
@@ -188,7 +188,7 @@ abstract class Model_Common extends Model
 		{
 			$rows = $eraseQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = $error->getMessage();
+			$this->errorMessage = "error ".$error->getCode();
 			return $this->errorMessage;
 		}
 		if ($rows > 0) return true;
