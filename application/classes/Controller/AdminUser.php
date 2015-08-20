@@ -110,7 +110,11 @@ class Controller_AdminUser extends Controller {
 		
 		if (isset($record_id))
 		{
-			$result = $model;
+			if (!is_null($model["id"])) 
+			{
+				array_push($result, $model);
+			}
+			
 		}
 		else 
 		{
