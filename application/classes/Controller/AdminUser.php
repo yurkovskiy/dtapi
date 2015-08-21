@@ -91,7 +91,6 @@ class Controller_AdminUser extends Controller {
 				->where("role_id", "=", "2")
 				->find_all();
 		}
-		//var_dump($model);
 		
 		$fieldNames = ORM::factory("User")->list_columns();
 		

@@ -60,5 +60,12 @@ class Model_Student extends Model_Common {
 		
 	}
 	
+	public function getStudentsByGroup($group_id)
+	{
+		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[5], "=", $group_id)->order_by($this->fieldNames[0], 'asc');
+		$result = $query->as_object()->execute();
+		return $result;
+	}
+	
 }
 
