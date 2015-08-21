@@ -50,5 +50,28 @@ class Controller_Student extends Controller_BaseAdmin {
 			$this->response->body($r);
 		}
 	}
+	
+	public function action_getStudentsByGroup()
+	{
+		$record_id = $this->request->param("id");
+		$result = array();
+		$DBResult = null;
+		$DBResult = Model::factory($this->modelName)->getStudentsByGroup($record_id);
+		$fieldNames = Model::factory($this->modelName)->getFieldNames();
+		foreach ($DBResult as $data)
+		{
+			$item = array();
+			foreach ($fieldNames as $fieldName) {
+				$item[$fieldName] = $data->$fieldName;
+			}
+			array_push($result, $item);
+		}
+		if (sizeof($result) < 1)
+		{
+			$result[] = array('record_id', 'null');
+		}
+		$r = json_encode($result);
+		$this->response->body($r);
+	}
 
 }
