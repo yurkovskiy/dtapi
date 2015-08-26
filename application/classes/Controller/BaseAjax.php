@@ -17,7 +17,7 @@ abstract class Controller_BaseAjax extends Controller
 	{
 		if (!Auth::instance()->logged_in("login"))
 		{
-			throw new HTTP_Exception_403("You don't have permissions to insert records");
+			throw new HTTP_Exception_403("Only logged users can work with entities");
 		}
 		else 
 		{
