@@ -156,7 +156,7 @@ abstract class Controller_BaseAjax extends Controller
 		// check if input data is given
 		if (is_null($params))
 		{
-			$model = "No input data";
+			$model = "Error: No input data";
 		}
 		else 
 		{
