@@ -13,6 +13,18 @@ abstract class Controller_BaseAjax extends Controller
 	
 	protected $RAW_DATA_SOURCE = "php://input";
 	
+	public function before()
+	{
+		if (!Auth::instance()->logged_in("login"))
+		{
+			throw new HTTP_Exception_403("You don't have permissions to insert records");
+		}
+		else 
+		{
+			parent::before();
+		}
+	}
+	
 	/**
 	 * @name action_index
 	 * 
