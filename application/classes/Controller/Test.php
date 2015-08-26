@@ -31,5 +31,4 @@ class Controller_Test extends Controller_BaseAdmin {
 		$r = json_encode($result);
 		$this->response->body($r);
 	}
-
 }
