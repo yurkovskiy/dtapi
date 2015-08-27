@@ -9,6 +9,10 @@ class Controller_Login extends Controller {
 	
 	private $RAW_DATA_SOURCE = "php://input";
 
+	/**
+	 * @name index - login action
+	 * @return JSON - with user parameters (id, name, roles)
+	 */
 	public function action_index()
 	{
 		$result = array();
@@ -25,7 +29,6 @@ class Controller_Login extends Controller {
 			if ($success)
 			{
 				// extract user's inforamtion
-				// get user roles
 				$roles = Auth::instance()->get_user()->roles->find_all();
 				foreach ($roles as $role)
 				{

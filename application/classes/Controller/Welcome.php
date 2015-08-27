@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Faculty Controller for handle AJAX requests
+ * Welcome Controller
  *
  */
 
