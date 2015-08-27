@@ -127,6 +127,8 @@ abstract class Model_Common extends Model
 				$_values[$i - 1] = $values[$this->fieldNames[$i]];
 			}
 		}
+		
+		// Add zero for auto_increment primary key :-)
 		array_unshift($_values, 0);
 		
 		$insertQuery = DB::insert($this->tableName, $this->fieldNames)->values($_values);
@@ -182,17 +184,17 @@ abstract class Model_Common extends Model
 	 */
 	public function eraseRecord($record_id) 
 	{
-		$rows = null;
+		$aff_rows = null;
 		$eraseQuery = DB::delete($this->tableName)->where($this->fieldNames[0], "=", $record_id);
 		try 
 		{
-			$rows = $eraseQuery->execute();
+			$aff_rows = $eraseQuery->execute();
 		} catch (Database_Exception $error) {
 			$this->errorMessage = "error ".$error->getCode();
 			return $this->errorMessage;
 		}
-		if ($rows > 0) return true;
-		if ($rows == 0) return false;
+		if ($aff_rows > 0) return true;
+		if ($aff_rows == 0) return false;
 	}
 
 } // Common Model
