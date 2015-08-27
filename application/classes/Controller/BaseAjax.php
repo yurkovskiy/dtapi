@@ -11,8 +11,14 @@ abstract class Controller_BaseAjax extends Controller
 	// Model for Controller that will be given in child classes 
 	protected $modelName = "";
 	
+	// Place where we read input data
 	protected $RAW_DATA_SOURCE = "php://input";
 	
+	/**
+	 * 
+	 * @see Kohana_Controller::before()
+	 * Auth controll added
+	 */
 	public function before()
 	{
 		if (!Auth::instance()->logged_in("login"))
@@ -27,6 +33,7 @@ abstract class Controller_BaseAjax extends Controller
 	
 	/**
 	 * @name action_index
+	 * @return JSON - with CORE info about system
 	 * 
 	 * This method for default action when the User define only Entity name in URL
 	 * 
@@ -78,8 +85,7 @@ abstract class Controller_BaseAjax extends Controller
 		{
 			$result[] = array('record_id', 'null');
 		}
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	
 	}
 	
@@ -118,20 +124,18 @@ abstract class Controller_BaseAjax extends Controller
 				$result[] = array('record_id', 'null');
 			}
 		}
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	}
 	
 	/**
 	 * Return number of Records in table (for pagination)
+	 * @return JSON object 
 	 */
 	public function action_countRecords()
 	{
 		$numberOfRecords = Model::factory($this->modelName)->countRecords();
-		$result = array();
 		$result["numberOfRecords"] = $numberOfRecords;
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	}
 	
 	// new INSERT
@@ -184,8 +188,7 @@ abstract class Controller_BaseAjax extends Controller
 			}
 				
 		}
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	}
 	
 	// new UPDATE
@@ -238,8 +241,7 @@ abstract class Controller_BaseAjax extends Controller
 				$result["response"] = "error";
 			}
 		}
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	}
 	
 	/**
@@ -274,8 +276,7 @@ abstract class Controller_BaseAjax extends Controller
 				$result["response"] = "error";
 			}
 		}
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	}
 	
 }
