@@ -24,8 +24,7 @@ class Controller_Login extends Controller {
 			$success = Auth::instance()->login($params->username, $params->password, FALSE);
 			if ($success)
 			{
-				// get username
-				$userName = Auth::instance()->get_user()->username;
+				// extract user's inforamtion
 				// get user roles
 				$roles = Auth::instance()->get_user()->roles->find_all();
 				foreach ($roles as $role)
@@ -33,7 +32,8 @@ class Controller_Login extends Controller {
 					$result["roles"][] = $role->name;								
 				}
 				
-				$result["username"] = $userName;
+				$result["id"] = Auth::instance()->get_user()->id;
+				$result["username"] = Auth::instance()->get_user()->username;
 													
 				$result["response"] = "ok";
 			}
@@ -52,6 +52,10 @@ class Controller_Login extends Controller {
 		Auth::instance()->logout(TRUE);
 	}
 	
+	/**
+	 * @name isLogged - check if anyuser is logged
+	 * @return boolean (JSON)
+	 */
 	public function action_isLogged()
 	{
 		$result = null;
