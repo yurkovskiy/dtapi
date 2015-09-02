@@ -1,7 +1,7 @@
 # Turn on URL rewriting
 RewriteEngine On
 
-SetEnv KOHANA_ENV=PRODUCTION
+SetEnv KOHANA_ENV production
 Header always set Access-Control-Allow-Origin "*"
 Header always set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
 Header always set Pragma "no-cache"

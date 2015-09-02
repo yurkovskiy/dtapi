@@ -8,7 +8,7 @@
 class Controller_Test extends Controller_BaseAdmin {
 
 	protected $modelName = "Test";
-	
+			
 	public function action_getTestsBySubject()
 	{
 		$record_id = $this->request->param("id");
