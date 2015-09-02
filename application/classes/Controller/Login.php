@@ -64,6 +64,13 @@ class Controller_Login extends Controller {
 		$result = null;
 		if (Auth::instance()->logged_in())
 		{
+			$roles = Auth::instance()->get_user()->roles->find_all();
+			foreach ($roles as $role)
+			{
+				$result["roles"][] = $role->name;
+			}
+			$result["id"] = Auth::instance()->get_user()->id;
+			$result["username"] = Auth::instance()->get_user()->username;
 			$result["response"] = "logged";
 		}
 		else
