@@ -64,7 +64,19 @@ class Controller_AdminUser extends Controller {
 	
 	public function action_del()
 	{
+		// get record_id from URL
 		$record_id = $this->request->param("id");
+		
+		// get current logged user id
+		$user_id = Auth::instance()->get_user()->id;
+		
+		// check record_id and user id
+		if ($record_id == $user_id)
+		{
+			$this->response->body(json_encode(array("response" => "Error: Cannot erase infomration about oneself")));
+			return; 
+		}
+		
 		try {
 			$model = ORM::factory("User", $record_id);
 			$model->delete();
