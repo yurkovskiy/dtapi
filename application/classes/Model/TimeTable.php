@@ -10,4 +10,46 @@ class Model_TimeTable extends Model_Common {
 	protected $tableName = "timetables";
 	protected $fieldNames = array("timetable_id", "group_id","subject_id", "event_date");
 	
+	/**
+	 * @name getTimeTablesForThreeMonth
+	 * @access public
+	 * @return MySQL ResultSet
+	 * 
+	 * Return records from $this->timetable if event_date is suitable CURDATE() - 1 MONTH AND CURDATE() + 1 MONTH
+	 */
+	public function getTimeTablesForThreeMonth()
+	{
+		$query = DB::select_array($this->fieldNames)
+				->from($this->tableName)
+				->where($this->fieldNames[3], ">=", DB::expr("DATE_SUB(CURDATE(), INTERVAL 1 MONTH)"))
+				->and_where($this->fieldNames[3], "<=", DB::expr("DATE_ADD(CURDATE(), INTERVAL 1 MONTH)"))
+				->order_by($this->fieldNames[0], 'asc');
+		$result = $query->as_object()->execute();
+		return $result;
+	}
+	
+	/**
+	 * 
+	 * @param int $group_id
+	 * @return MySQL ResultSet
+	 */
+	public function getTimeTablesForGroup($group_id)
+	{
+		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[1], "=", $group_id)->order_by($this->fieldNames[0], 'asc');
+		$result = $query->as_object()->execute();
+		return $result;
+	}
+	
+	/**
+	 * 
+	 * @param int $subject_id
+	 * @return MySQL ResultSet
+	 */
+	public function getTimeTablesForSubject($subject_id)
+	{
+		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[2], "=", $subject_id)->order_by($this->fieldNames[0], 'asc');
+		$result = $query->as_object()->execute();
+		return $result;
+	}
+	
 }
