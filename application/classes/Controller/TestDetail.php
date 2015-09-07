@@ -28,8 +28,8 @@ class Controller_TestDetail extends Controller_BaseAdmin {
 		{
 			$result[] = array('record_id', 'null');
 		}
-		$r = json_encode($result);
-		$this->response->body($r);
+
+		$this->response->body(json_encode($result));
 	}
 
 }
