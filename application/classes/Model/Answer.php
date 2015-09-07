@@ -12,9 +12,7 @@ class Model_Answer extends Model_Common {
 	
 	public function getAnswersByQuestion($question_id)
 	{
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[1], "=", $question_id)->order_by($this->fieldNames[0], 'asc');
-		$result = $query->as_object()->execute();
-		return $result;
+		return $this->getEntityBy($this->fieldNames[1], $question_id);
 	}
 	
 }
