@@ -35,9 +35,7 @@ class Model_TimeTable extends Model_Common {
 	 */
 	public function getTimeTablesForGroup($group_id)
 	{
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[1], "=", $group_id)->order_by($this->fieldNames[0], 'asc');
-		$result = $query->as_object()->execute();
-		return $result;
+		return $this->getEntityBy($this->fieldNames[1], $group_id);
 	}
 	
 	/**
@@ -47,9 +45,7 @@ class Model_TimeTable extends Model_Common {
 	 */
 	public function getTimeTablesForSubject($subject_id)
 	{
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[2], "=", $subject_id)->order_by($this->fieldNames[0], 'asc');
-		$result = $query->as_object()->execute();
-		return $result;
+		return $this->getEntityBy($this->fieldNames[2], $subject_id);		
 	}
 	
 }

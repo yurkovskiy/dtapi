@@ -12,9 +12,7 @@ class Model_Result extends Model_Common {
 	
 	public function getResultByStudent($student_id)
 	{
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[1], "=", $student_id)->order_by($this->fieldNames[0], 'asc');
-		$result = $query->as_object()->execute();
-		return $result;
+		return $this->getEntityBy($this->fieldNames[1], $student_id);
 	}
 	
 }

@@ -43,6 +43,22 @@ abstract class Model_Common extends Model
 	{
 		return $this->fieldNames;
 	}
+	
+	/**
+	 * Helper method for refactor methods in child classes 
+	 * for example: getStudentsByGroup, getAnswersByQuestion, ...
+	 * @param String $fieldName
+	 * @param int $id
+	 * @return MySQL ResultSet
+	 * @access protected
+	 * @author Yuriy V. Bezgachnyuk
+	 */
+	protected function getEntityBy($fieldName, $id)
+	{
+		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($fieldName, "=", $id)->order_by($this->fieldNames[0], 'asc');
+		$result = $query->as_object()->execute();
+		return $result;
+	}
 
 	/**
 	 * @access public
