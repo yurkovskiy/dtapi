@@ -49,6 +49,36 @@ abstract class Controller_BaseAjax extends Controller
 	}
 	
 	/**
+	 * Helper method for refactoring
+	 * @name getEntityRecordsBy
+	 * @param String $modelMethod
+	 */
+	protected function getEntityRecordsBy($modelMethod)
+	{
+		$record_id = $this->request->param("id");
+		$result = array();
+		
+		// little reflection :-)
+		$DBResult = Model::factory($this->modelName)->{$modelMethod}($record_id);
+		
+		$fieldNames = Model::factory($this->modelName)->getFieldNames();
+		
+		foreach ($DBResult as $data)
+		{
+			$item = array();
+			foreach ($fieldNames as $fieldName) {
+				$item[$fieldName] = $data->$fieldName;
+			}
+			array_push($result, $item);
+		}
+		if (sizeof($result) < 1)
+		{
+			$result[] = array('record_id', 'null');
+		}
+		$this->response->body(json_encode($result));
+	}
+	
+	/**
 	 * @name action_getRecords
 	 * @author Yuriy Bezgachnyuk
 	 * @access public

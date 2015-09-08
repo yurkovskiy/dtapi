@@ -131,7 +131,6 @@ class Controller_AdminUser extends Controller {
 		{
 			$result[] = array('record_id', 'null');
 		}
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	}
 }
