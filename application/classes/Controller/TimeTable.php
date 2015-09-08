@@ -32,47 +32,12 @@ class Controller_TimeTable extends Controller_BaseAdmin {
 	
 	public function action_getTimeTablesForGroup()
 	{
-		$record_id = $this->request->param("id");
-		$result = array();
-		$DBResult = null;
-		$DBResult = Model::factory($this->modelName)->getTimeTablesForGroup($record_id);
-		$fieldNames = Model::factory($this->modelName)->getFieldNames();
-		foreach ($DBResult as $data)
-		{
-			$item = array();
-			foreach ($fieldNames as $fieldName) {
-				$item[$fieldName] = $data->$fieldName;
-			}
-			array_push($result, $item);
-		}
-		if (sizeof($result) < 1)
-		{
-			$result[] = array('record_id', 'null');
-		}
-		
-		$this->response->body(json_encode($result));
+		return $this->getEntityRecordsBy("getTimeTablesForGroup");
 	}
 	
 	public function action_getTimeTablesForSubject()
 	{
-		$record_id = $this->request->param("id");
-		$result = array();
-		$DBResult = Model::factory($this->modelName)->getTimeTablesForSubject($record_id);
-		$fieldNames = Model::factory($this->modelName)->getFieldNames();
-		foreach ($DBResult as $data)
-		{
-			$item = array();
-			foreach ($fieldNames as $fieldName) {
-				$item[$fieldName] = $data->$fieldName;
-			}
-			array_push($result, $item);
-		}
-		if (sizeof($result) < 1)
-		{
-			$result[] = array('record_id', 'null');
-		}
-		
-		$this->response->body(json_encode($result));
+		return $this->getEntityRecordsBy("getTimeTablesForSubject");
 	}
 
 }

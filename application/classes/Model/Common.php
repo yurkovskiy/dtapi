@@ -1,13 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * @package Models Classes
+ * @package Model Classes
  * @name Model_Common class
  * @author Yuriy Bezgachnyuk, IF, Ukraine
- * @copyright 2013 by Yuriy Bezgachnyuk
- * @version 0.1
+ * @copyright (c) 2013-2015 by Yuriy Bezgachnyuk
+ * @version 1.0
  * 
- * This class contains basic methods for works with entitity that represents table of database
+ * This class contain basic methods for works with entitity that represents table of database
  *
  */
 
@@ -55,7 +55,10 @@ abstract class Model_Common extends Model
 	 */
 	protected function getEntityBy($fieldName, $id)
 	{
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($fieldName, "=", $id)->order_by($this->fieldNames[0], 'asc');
+		$query = DB::select_array($this->fieldNames)
+			->from($this->tableName)
+			->where($fieldName, "=", $id)
+			->order_by($this->fieldNames[0], 'asc');
 		$result = $query->as_object()->execute();
 		return $result;
 	}
@@ -82,7 +85,11 @@ abstract class Model_Common extends Model
 	 */
 	public function getRecordsRange($limit, $offset) 
 	{
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->order_by($this->fieldNames[0], 'asc')->limit($limit)->offset($offset);
+		$query = DB::select_array($this->fieldNames)
+			->from($this->tableName)
+			->order_by($this->fieldNames[0], 'asc')
+			->limit($limit)
+			->offset($offset);
 		$result = $query->as_object()->execute();
 		return $result;
 	}
@@ -94,7 +101,9 @@ abstract class Model_Common extends Model
 	 */
 	public function getRecords() 
 	{
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->order_by($this->fieldNames[0], 'asc');
+		$query = DB::select_array($this->fieldNames)
+			->from($this->tableName)
+			->order_by($this->fieldNames[0], 'asc');
 		$result = $query->as_object()->execute();
 		return $result;
 	}
@@ -107,7 +116,9 @@ abstract class Model_Common extends Model
 	 */
 	public function getRecord($record_id) 
 	{
-		$query = DB::select_array($this->fieldNames)->from($this->tableName)->where($this->fieldNames[0], "=", $record_id);
+		$query = DB::select_array($this->fieldNames)
+			->from($this->tableName)
+			->where($this->fieldNames[0], "=", $record_id);
 		$result = $query->as_object()->execute();
 		return $result;
 	}
@@ -147,7 +158,8 @@ abstract class Model_Common extends Model
 		// Add zero for auto_increment primary key :-)
 		array_unshift($_values, 0);
 		
-		$insertQuery = DB::insert($this->tableName, $this->fieldNames)->values($_values);
+		$insertQuery = DB::insert($this->tableName, $this->fieldNames)
+			->values($_values);
 		try
 		{
 			list($insert_id, $aff_rows) = $insertQuery->execute();
@@ -180,7 +192,9 @@ abstract class Model_Common extends Model
 		$record_id = $values[0];
 		array_shift($values);
 												
-		$updateQuery = DB::update($this->tableName)->set($values)->where($this->fieldNames[0], '=', $record_id);
+		$updateQuery = DB::update($this->tableName)
+			->set($values)
+			->where($this->fieldNames[0], '=', $record_id);
 		try
 		{
 			$aff_rows = $updateQuery->execute();
@@ -201,7 +215,8 @@ abstract class Model_Common extends Model
 	public function eraseRecord($record_id) 
 	{
 		$aff_rows = null;
-		$eraseQuery = DB::delete($this->tableName)->where($this->fieldNames[0], "=", $record_id);
+		$eraseQuery = DB::delete($this->tableName)
+			->where($this->fieldNames[0], "=", $record_id);
 		try 
 		{
 			$aff_rows = $eraseQuery->execute();

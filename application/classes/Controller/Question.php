@@ -36,8 +36,7 @@ class Controller_Question extends Controller_BaseAdmin {
 		{
 			$result[] = array('record_id', 'null');
 		}
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	}
 	
 	/**
@@ -49,8 +48,7 @@ class Controller_Question extends Controller_BaseAdmin {
 		$numberOfRecords = Model::factory($this->modelName)->countQuestionsByTest($test_id);
 		$result = array();
 		$result["numberOfRecords"] = $numberOfRecords;
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	}
 	
 	public function action_getRecordsRangeByTest()
@@ -82,8 +80,7 @@ class Controller_Question extends Controller_BaseAdmin {
 				$result[] = array('record_id', 'null');
 			}
 		}
-		$r = json_encode($result);
-		$this->response->body($r);
+		$this->response->body(json_encode($result));
 	}
 
 }
