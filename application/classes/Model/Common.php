@@ -107,6 +107,19 @@ abstract class Model_Common extends Model
 		$result = $query->as_object()->execute();
 		return $result;
 	}
+	
+	/**
+	 * 
+	 * @param array $ids - array with ID sequence
+	 */
+	public function getRecordsByIds($ids)
+	{
+		$query = DB::select_array($this->fieldNames)
+			->from($this->tableName)
+			->where($this->fieldNames[0], "IN", $ids);
+		$result = $query->as_object()->execute();
+		return $result;
+	}
 
 	/**
 	 * Select one record from database
