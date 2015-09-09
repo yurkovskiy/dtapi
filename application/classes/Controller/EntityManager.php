@@ -35,9 +35,16 @@ class Controller_EntityManager extends Controller_Base {
 			}
 			else 
 			{
+				// check if Entity Model is present
+				if (strlen(Kohana::find_file("classes", "Model/".$paramsArr["entity"])) < 1) 
+				{
+					$this->response->body(json_encode(array("response" => "error: could not find entity model")));
+					return;
+				}
 				$DBResult = Model::factory($paramsArr["entity"])
 					->getRecordsByIds($paramsArr["ids"]);
 				$fieldNames = Model::factory($paramsArr["entity"])->getFieldNames();
+								
 				foreach ($DBResult as $data)
 				{
 					$item = array();
