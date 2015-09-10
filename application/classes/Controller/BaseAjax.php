@@ -203,7 +203,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		
 		// Get data from JSON
 		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
-		
+				
 		// check if input data is given
 		if (is_null($params))
 		{

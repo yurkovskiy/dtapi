@@ -82,5 +82,5 @@ class Controller_Question extends Controller_BaseAdmin {
 		}
 		$this->response->body(json_encode($result));
 	}
-
+	
 }
