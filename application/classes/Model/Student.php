@@ -8,7 +8,7 @@
 class Model_Student extends Model_Common {
 	
 	protected $tableName = "students";
-	protected $fieldNames = array("user_id", "gradebook_id","student_surname", "student_name", "student_fname","group_id");
+	protected $fieldNames = array("user_id", "gradebook_id","student_surname", "student_name", "student_fname","group_id", "plain_password", "photo");
 	
 	/*
 	 * JSON Record for new student
@@ -25,7 +25,7 @@ class Model_Student extends Model_Common {
 		// divide $values array
 		$valuesForUserModel = array_slice($values, 0, 4);
 		// workaround :-(
-		$valuesForStudentModel = array_values(array_slice($values, 4, 5));
+		$valuesForStudentModel = array_values(array_slice($values, 4, 7));
 				
 		try {
 			$userModel->values($valuesForUserModel);
