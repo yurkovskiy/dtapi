@@ -46,23 +46,6 @@ class Controller_Test extends Controller_BaseAdmin {
 				// Creating response in JSON format
 				$result["id"] = $model;
 				$result["response"] = "ok";
-				
-				// Everything is OK, so we try to create a directory for test
-				$TESTS_BASE_DIR = DOCROOT."tests";
-				$directory_name = "test_".$model;
-				
-				$directory_name = $TESTS_BASE_DIR.DIRECTORY_SEPARATOR.$directory_name;
-												
-				$dir = @mkdir($directory_name);
-				if (!$dir)
-				{
-					$result["directory"] = "Error: directory is not created";
-				}
-				else
-				{
-					$result["directory"] = "Success: directory has been created";
-				}
-				
 			}
 			else
 			{
