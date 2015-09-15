@@ -13,7 +13,8 @@ abstract class Controller_Base extends Controller {
 	/**
 	 *
 	 * @see Kohana_Controller::before()
-	 * Auth controll added
+	 * Auth control added
+	 * Only logged users can work with entities
 	 */
 	public function before()
 	{
