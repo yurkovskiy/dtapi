@@ -50,10 +50,9 @@ class Controller_SAnswer extends Controller_BaseAjax {
 		}
 		else
 		{
-			
 			foreach ($params as $question)
 			{
-				$model = Model::factory("Answer")->checkAnswers($question->answer_ids);
+				$model = Model::factory("Answer")->checkAnswers($question->question_id, $question->answer_ids);
 				if ($model)
 				{
 					$result[] = array("question_id" => $question->question_id, "true" => 1);

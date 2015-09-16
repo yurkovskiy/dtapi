@@ -58,4 +58,17 @@ class Model_Question extends Model_Common {
 		$result = $query->as_object()->execute();
 		return $result;
 	}
+	
+	public function getQuestionTypeById($question_id)
+	{
+		$query = DB::select($this->fieldNames[4])
+				->from($this->tableName)
+				->where($this->fieldNames[0], "=", $question_id);
+		$result = $query->as_object()->execute();
+		foreach ($result as $question)
+		{
+			return $question->type;
+		}
+	}
+	
 }
