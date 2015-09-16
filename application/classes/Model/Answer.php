@@ -15,4 +15,25 @@ class Model_Answer extends Model_Common {
 		return $this->getEntityBy($this->fieldNames[1], $question_id);
 	}
 	
+	public function checkAnswers($answer_ids)
+	{
+		if (!is_array($answer_ids))
+		{
+			throw new Kohana_Exception("Error input parameters");
+		}
+		else
+		{
+			$answers = $this->getRecordsByIds($answer_ids);
+			foreach ($answers as $answer)
+			{
+				// check if incorrect
+				if ($answer->true_answer == 0)
+				{
+					return false;
+				}
+				return true;
+			}
+		}
+	}
+	
 }

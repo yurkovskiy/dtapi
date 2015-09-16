@@ -28,5 +28,43 @@ class Controller_SAnswer extends Controller_BaseAjax {
 	{
 		return $this->getEntityRecordsBy("getAnswersByQuestion");
 	}
+	
+	
+	/**
+	 * @param JSON object with following structure
+	 * [{question_id: 10, answer_ids: [1,2,3,4]}, {question_id: 18, answer_ids:[10]}, ...]
+	 * @return JSON object with following structure
+	 * [{question_id: 10, true: 0}, {question_id: 18, true: 1}, ...]
+	 */
+	public function action_checkAnswers()
+	{
+		$model = null;
+		$result = array();
+		
+		// Read POST data in JSON format
+		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		// check if input data is given
+		if (is_null($params))
+		{
+			$result["response"] = "Error: no input data";
+		}
+		else
+		{
+			
+			foreach ($params as $question)
+			{
+				$model = Model::factory("Answer")->checkAnswers($question->answer_ids);
+				if ($model)
+				{
+					$result[] = array("question_id" => $question->question_id, "true" => 1);
+				}
+				else 
+				{
+					$result[] = array("question_id" => $question->question_id, "true" => 0);
+				}
+			}
+			$this->response->body(json_encode($result));
+		}
+	}
 
 }
