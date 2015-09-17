@@ -64,7 +64,7 @@ class Model_Answer extends Model_Common {
 			{
 				return true;
 			}
-			// multi choice
+			// multi choice, strong check
 			if (($question_type == 2) && ($true_answers_unumber == $true_answers_number))
 			{
 				return true;

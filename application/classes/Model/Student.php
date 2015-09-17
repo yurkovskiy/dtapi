@@ -53,6 +53,8 @@ class Model_Student extends Model_Common {
 			list($insert_id, $aff_rows) = $insertQuery->execute();
 		} catch (Database_Exception $error) {
 			$this->errorMessage = $error->getMessage();
+			// also we need to delete record from users table :-(
+			$userModel->delete();
 			return $this->errorMessage;
 		}
 		if ($aff_rows > 0) return intval($userModel->id);
