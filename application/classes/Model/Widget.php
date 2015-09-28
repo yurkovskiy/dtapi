@@ -8,6 +8,6 @@
 class Model_Widget extends Model_Common {
 	
 	protected $tableName = "widgets";
-	protected $fieldNames = array("widget_id", "widget_name", "widget_data");
+	protected $fieldNames = array("widget_id", "sizeX", "sizeY", "cols", "rows", "type", "widget_data");
 	
 }
