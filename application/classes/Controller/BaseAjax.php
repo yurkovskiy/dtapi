@@ -55,7 +55,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		$record_id = $this->request->param("id");			
 		$result = array();
 		$DBResult = null;
-		if (!isset($record_id)) 
+		if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0)) 
 		{
 			$DBResult = Model::factory($this->modelName)->getRecords();
 		}
@@ -95,9 +95,9 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		$result = array();
 		
 		// check input parameters
-		if ((!is_numeric($limit)) || (!is_numeric($offset)))
+		if ((!is_numeric($limit)) || (!is_numeric($offset)) || ($limit < 0) || ($offset < 0))
 		{
-			$result["response"] = "error";
+			$result["response"] = "Error: wrong request";
 		}
 		else 
 		{
@@ -201,36 +201,44 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		$results = array();
 		$model = null;
 		
-		// Get data from JSON
-		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
-				
-		// check if input data is given
-		if (is_null($params))
+		// check URL parameters
+		if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
 		{
-			$model = "No input data";
+			$results["response"] = "Error: Wrong request";
 		}
-		
 		else 
 		{
-			$values = get_object_vars($params);
-			array_unshift($values, $record_id); // Add record_id value for Primary Key
-			$model = Model::factory($this->modelName)->updateRecord($values);
-		}
-		
-		if (!is_string($model) && $model)
-		{
-			// Creating response in JSON format
-			$result["response"] = "ok";
-		}
-		else
-		{
-			if (is_string($model))
+			// Get data from JSON
+			$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+					
+			// check if input data is given
+			if (is_null($params))
 			{
-				$result["response"] = $model;
+				$model = "No input data";
+			}
+			
+			else 
+			{
+				$values = get_object_vars($params);
+				array_unshift($values, $record_id); // Add record_id value for Primary Key
+				$model = Model::factory($this->modelName)->updateRecord($values);
+			}
+			
+			if (!is_string($model) && $model)
+			{
+				// Creating response in JSON format
+				$result["response"] = "ok";
 			}
 			else
 			{
-				$result["response"] = "error";
+				if (is_string($model))
+				{
+					$result["response"] = $model;
+				}
+				else
+				{
+					$result["response"] = "error";
+				}
 			}
 		}
 		$this->response->body(json_encode($result));
@@ -251,21 +259,29 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		$record_id = $this->request->param("id");
 		$results = array();
 		
-		$model = Model::factory($this->modelName)->eraseRecord($record_id);
-		if (!is_string($model) && $model)
+		// check URL parameters
+		if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
 		{
-			// Creating response in JSON format
-			$result["response"] = "ok";
+			$results["response"] = "Error: Wrong request";
 		}
-		else
+		else 
 		{
-			if (is_string($model))
+			$model = Model::factory($this->modelName)->eraseRecord($record_id);
+			if (!is_string($model) && $model)
 			{
-				$result["response"] = $model;
+				// Creating response in JSON format
+				$result["response"] = "ok";
 			}
 			else
 			{
-				$result["response"] = "error";
+				if (is_string($model))
+				{
+					$result["response"] = $model;
+				}
+				else
+				{
+					$result["response"] = "error";
+				}
 			}
 		}
 		$this->response->body(json_encode($result));
