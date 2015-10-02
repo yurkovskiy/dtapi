@@ -9,10 +9,10 @@ class Controller_TimeTable extends Controller_BaseAdmin {
 
 	protected $modelName = "TimeTable";
 	
-	public function action_getTimeTablesForThreeMonth()
+	public function action_getTimeTablesFromNowInMonth()
 	{
 		$result = array();
-		$DBResult = Model::factory($this->modelName)->getTimeTablesForThreeMonth();
+		$DBResult = Model::factory($this->modelName)->getTimeTablesFromNowInMonth();
 		$fieldNames = Model::factory($this->modelName)->getFieldNames();
 		foreach ($DBResult as $data)
 		{

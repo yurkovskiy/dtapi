@@ -17,11 +17,11 @@ class Model_TimeTable extends Model_Common {
 	 * 
 	 * Return records from $this->timetable if event_date is suitable CURDATE() - 1 MONTH AND CURDATE() + 1 MONTH
 	 */
-	public function getTimeTablesForThreeMonth()
+	public function getTimeTablesFromNowInMonth()
 	{
 		$query = DB::select_array($this->fieldNames)
 				->from($this->tableName)
-				->where($this->fieldNames[3], ">=", DB::expr("DATE_SUB(CURDATE(), INTERVAL 1 MONTH)"))
+				->where($this->fieldNames[3], ">=", DB::expr("CURDATE()"))
 				->and_where($this->fieldNames[3], "<=", DB::expr("DATE_ADD(CURDATE(), INTERVAL 1 MONTH)"))
 				->order_by($this->fieldNames[0], 'asc');
 		$result = $query->as_object()->execute();
