@@ -45,6 +45,7 @@ class Controller_Log extends Controller_BaseAjax {
 		$user_id = $this->request->param("id");
 		$test_id = $this->request->param("id1");
 		$model = Model::factory($this->modelName)->startTest($user_id, $test_id);
+		
 		if (!is_string($model) && is_int($model))
 		{
 			// Creating response in JSON format

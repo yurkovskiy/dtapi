@@ -18,13 +18,24 @@ class Model_Log extends Model_Common {
 	public function startTest($user_id, $test_id)
 	{
 		$values = array(
+			$this->fieldNames[0] => 0,
 			$this->fieldNames[1] => $user_id,
 			$this->fieldNames[2] => $test_id,
-			$this->fieldNames[3] => DB::expr("CURDATE()"),
-			$this->fieldNames[4] => DB::expr("CURTIME()"),
+			$this->fieldNames[3] => date("Y-m-d"),
+			$this->fieldNames[4] => date("H:i:s"),
 		);
-		$this->registerRecord($values);
 		
+		$insertQuery = DB::insert($this->tableName, $this->fieldNames)
+		->values($values);
+		try
+		{
+			list($insert_id, $aff_rows) = $insertQuery->execute();
+		} catch (Database_Exception $error) {
+			$this->errorMessage = "error ".$error->getCode();
+			return strval($this->errorMessage);
+		}
+		if ($aff_rows > 0) return intval($insert_id);
+		if ($aff_rows <= 0) return false;
 	}
 	
 }
