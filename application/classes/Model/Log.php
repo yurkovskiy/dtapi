@@ -15,6 +15,29 @@ class Model_Log extends Model_Common {
 		return $this->getEntityBy($this->fieldNames[1], $user_id);
 	}
 	
+	/**
+	 * Special security check function
+	 * 
+	 * @param int $user_id
+	 * @param int $test_id
+	 * @return boolean is user can pass the test now
+	 * true - user cannot make the test because he made a test recently (1 hour)
+	 * false - user can make the test
+	 */
+	protected function isUserMakeTest($user_id)
+	{
+		$query = "SELECT COUNT(*) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} = {$user_id}
+				AND CONCAT({$this->fieldNames[3]}, ' ', {$this->fieldNames[4]}) > DATE_SUB(NOW(), INTERVAL 1 HOUR)";
+		$count = DB::query(Database::SELECT, $query)->execute()->get('count');
+		
+		if ($count > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public function startTest($user_id, $test_id)
 	{
 		$values = array(
@@ -25,17 +48,27 @@ class Model_Log extends Model_Common {
 			$this->fieldNames[4] => date("H:i:s"),
 		);
 		
-		$insertQuery = DB::insert($this->tableName, $this->fieldNames)
-		->values($values);
-		try
+		// security check
+		if ($this->isUserMakeTest($user_id)) 
 		{
-			list($insert_id, $aff_rows) = $insertQuery->execute();
-		} catch (Database_Exception $error) {
-			$this->errorMessage = "error ".$error->getCode();
+			$this->errorMessage = "Error. User made test recently";
 			return strval($this->errorMessage);
 		}
-		if ($aff_rows > 0) return intval($insert_id);
-		if ($aff_rows <= 0) return false;
+		
+		else
+		{
+			$insertQuery = DB::insert($this->tableName, $this->fieldNames)
+			->values($values);
+			try
+			{
+				list($insert_id, $aff_rows) = $insertQuery->execute();
+			} catch (Database_Exception $error) {
+				$this->errorMessage = "error ".$error->getCode();
+				return strval($this->errorMessage);
+			}
+			if ($aff_rows > 0) return intval($insert_id);
+			if ($aff_rows <= 0) return false;
+		}
 	}
 	
 }
