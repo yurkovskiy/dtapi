@@ -12,8 +12,9 @@ class Controller_TestPlayer extends Controller_Base {
 	 */
 	public function action_getTimeStamp()
 	{
-		$curtime = time(); // current Unix timestamp
-		$this->response->body(json_encode(array("curtime" => $curtime)));
+		$offset_sec = date("Z"); // offset in seconds depends on timezone
+		$curtime = time() + $offset_sec; // current time depends on timezone
+		$this->response->body(json_encode(array("unix_timestamp" => time(),"offset" => $offset_sec,"curtime" => $curtime)));
 	}
 
 }
