@@ -12,7 +12,8 @@ class Controller_TimeTable extends Controller_BaseAdmin {
 	public function action_getTimeTablesFromNowInMonth()
 	{
 		$result = array();
-		$DBResult = Model::factory($this->modelName)->getTimeTablesFromNowInMonth();
+		$user_id = Auth::instance()->get_user()->id;
+		$DBResult = Model::factory($this->modelName)->getTimeTablesFromNowInMonth($user_id);
 		$fieldNames = Model::factory($this->modelName)->getFieldNames();
 		foreach ($DBResult as $data)
 		{
@@ -40,33 +41,4 @@ class Controller_TimeTable extends Controller_BaseAdmin {
 		return $this->getEntityRecordsBy("getTimeTablesForSubject");
 	}
 	
-	public function action_getTimeTablesFromNowInMonthForStudent()
-	{
-		$result = array();
-		$student_id = $this->request->param("id");
-		if (!is_numeric($student_id)) 
-		{
-			$result["response"] = "Error input parameter";
-		}
-		else
-		{
-			$result = array();
-			$DBResult = Model::factory($this->modelName)->getTimeTablesFromNowInMonthForStudent($student_id);
-			$fieldNames = Model::factory($this->modelName)->getFieldNames();
-			foreach ($DBResult as $data)
-			{
-				$item = array();
-				foreach ($fieldNames as $fieldName) {
-					$item[$fieldName] = $data->$fieldName;
-				}
-				array_push($result, $item);
-			}
-			if (sizeof($result) < 1)
-			{
-				$result[] = array('record_id', 'null');
-			}
-			$this->response->body(json_encode($result));
-		}
-	}
-
 }
