@@ -200,7 +200,17 @@ abstract class Model_Common extends Model
 		{
 			$values[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
 		}
-						
+		
+		// check attributes of input object
+		for ($i = 1;$i < sizeof($values);$i++)
+		{
+			if (!array_key_exists($this->fieldNames[$i], $values))
+			{
+				$this->errorMessage = "Input data is wrong";
+				return $this->errorMessage;
+			}
+		}
+		
 		// remove zero value for ID :-(
 		$record_id = $values[0];
 		array_shift($values);

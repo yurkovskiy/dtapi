@@ -15,6 +15,10 @@ class Controller_AdminUser extends Controller {
 		{
 			throw new HTTP_Exception_403 ( "You don't have permissions to work with this Entity" );
 		}
+		else 
+		{
+			parent::before();
+		}
 	}
 	
 	public function action_insertData() 
