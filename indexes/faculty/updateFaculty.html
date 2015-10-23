@@ -7,12 +7,12 @@
 <script type="text/javascript">
 function request() {
 	var faculty = {
-			faculty_name: "New name for faculty [UPDATED]" + Math.random(), 
-			faculty_desc: "Super Institute"
+			faculty_description: "Super Institute",
+			faculty_name: "New name for faculty [UPDATED]" + Math.random() 
 		};
 $.ajax({
 	contentType: "application/json; charset=utf-8",
-	url: "../../faculty/update/1",
+	url: "../../faculty/update/22",
 	type: "POST",
 	timeout: 3000,
 	dataType: 'json',
