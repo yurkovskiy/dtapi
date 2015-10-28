@@ -50,6 +50,47 @@ class Controller_Student extends Controller_BaseAdmin {
 		}
 	}
 	
+	public function action_del() 
+	{
+		
+		$record_id = $this->request->param("id");
+		$results = array();
+		
+		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))
+		{
+			throw new HTTP_Exception_403("You don't have permissions to insert records");
+		}
+		else
+		{
+			// check input parameters
+			if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
+			{
+				$results["response"] = "Error: Wrong request";
+			}
+			else 
+			{
+				// try to delete information from student table
+				$model = Model::factory($this->modelName)->eraseRecord($record_id);
+				if (!is_string($model) && $model)
+				{
+					// Everything is OK! then we can delete information from users table
+					try {
+						$model = ORM::factory("User", $record_id);
+						$model->delete();
+						$this->response->body(json_encode(array("response" => "ok")));
+					} catch (Kohana_Exception $e) {
+						$this->response->body(json_encode(array("response" => $e->getMessage())));
+					}
+				}
+				else
+				{
+					// Some problem
+					$this->response->body(json_encode(array("response" => "error")));
+				}
+			}
+		}
+	} // end of action_del
+	
 	public function action_getStudentsByGroup()
 	{
 		return $this->getEntityRecordsBy("getStudentsByGroup");
