@@ -62,6 +62,50 @@ class Model_Student extends Model_Common {
 		
 	}
 	
+	public function updateRecord($values)
+	{
+		$record_id = $values[0];
+		// divide $values array
+		$valuesForUserModel = array_slice($values, 1, 4);
+		// workaround :-(
+		$valuesForStudentModel = array_slice($values, 5, 7);
+		
+		/*print_r($valuesForUserModel);
+		print_r($valuesForStudentModel);
+		exit(1);*/
+		
+		try {
+			$model = ORM::factory("User", $record_id);
+			$model->values($valuesForUserModel);
+			$model->save();
+		}
+		catch (ORM_Validation_Exception $e) {
+			return $e->getMessage();
+		}
+		
+		// update data in studens table
+		$aff_rows = null;
+		
+		// change HTML special symbols to entities
+		foreach ($valuesForStudentModel as $key => $value)
+		{
+			$valuesForStudentModel[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
+		}
+		
+		$updateQuery = DB::update($this->tableName)
+			->set($valuesForStudentModel)
+			->where($this->fieldNames[0], '=', $record_id);
+		try
+		{
+			$aff_rows = $updateQuery->execute();
+		} catch (Database_Exception $error) {
+			$this->errorMessage = "error ".$error->getCode();
+			return $this->errorMessage;
+		}
+		if ($aff_rows > 0) return true;
+		if ($aff_rows == 0) return false;
+	}
+	
 	public function getStudentsByGroup($group_id)
 	{
 		return $this->getEntityBy($this->fieldNames[5], $group_id);

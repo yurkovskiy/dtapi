@@ -225,8 +225,8 @@ abstract class Model_Common extends Model
 			$this->errorMessage = "error ".$error->getCode();
 			return $this->errorMessage;
 		}
-			if ($aff_rows > 0) return true;
-			if ($aff_rows == 0) return false;
+		if ($aff_rows > 0) return true;
+		if ($aff_rows == 0) return false;
 	}
 
 	/**
