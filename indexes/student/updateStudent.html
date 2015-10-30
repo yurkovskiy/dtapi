@@ -2,25 +2,31 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>AJAX</title>
+<title>Update student</title>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 function request() {
-	var test = {
-			subject_id: 1,
-			test_name: "QuiZZ_" + Math.random(),
-			tasks: 10,
-			time_for_test: "00:10:00",
-			enabled: 0,
-			attempts: 1
+	var studentUser = {
+			username: "peter",
+			password: "1qaz2wsx",
+			password_confirm: "1qaz2wsx",
+			email: "peter@mail.if.ua",
+			gradebook_id: "AU-0203087",
+			student_surname: "Srakach",
+			student_name: "Peter",
+			student_fname: "Norton",
+			group_id: "1",
+			plain_password: "1qaz2wsx",
+			photo: ""
+			
 		};
 $.ajax({
 	contentType: "application/json; charset=utf-8",
-	url: "../../test/insertData",
+	url: "../../student/update/11",
 	type: "POST",
 	timeout: 3000,
 	dataType: 'json',
-	data: JSON.stringify(test),
+	data: JSON.stringify(studentUser),
 	success: function(resp) {
 		console.log(resp);
 	},
@@ -29,7 +35,7 @@ $.ajax({
 		console.log(message.response);
 	},
 	complete: function(resp) {
-
+		
 	}
 }); // $.ajax
 }

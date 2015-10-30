@@ -198,13 +198,13 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	{
 		// get Record_id from URL
 		$record_id = $this->request->param("id");
-		$results = array();
+		$result = array();
 		$model = null;
 		
 		// check URL parameters
 		if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
 		{
-			$results["response"] = "Error: Wrong request";
+			$result["response"] = "Error: Wrong request";
 		}
 		else 
 		{
