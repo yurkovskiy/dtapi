@@ -29,6 +29,24 @@ class Model_Question extends Model_Common {
 	}
 	
 	/**
+	 *
+	 * @param int $test_id
+	 * @param int $level
+	 * @param int $number
+	 * @return MySQL Result Set
+	 */
+	public function getQuestionIdsByLevelRand($test_id, $level, $number)
+	{
+		$query = DB::select($this->fieldNames[0])->from($this->tableName)
+		->where($this->fieldNames[1], "=", $test_id)
+		->and_where($this->fieldNames[3], "=", $level)
+		->order_by("", 'RAND()')
+		->limit($number);
+		$result = $query->as_object()->execute();
+		return $result;
+	}
+	
+	/**
 	 * 
 	 * @param int $test_id
 	 * @return int $count - number of records
