@@ -10,7 +10,7 @@ class Controller_Question extends Controller_BaseAdmin {
 	protected $modelName = "Question";
 	
 	/**
-	 * Get questions for test by level
+	 * Get questions for test by level randomly (full question)
 	 */
 	public function action_getQuestionsByLevelRand()
 	{
@@ -30,6 +30,35 @@ class Controller_Question extends Controller_BaseAdmin {
 			foreach ($fieldNames as $fieldName) {
 				$item[$fieldName] = $data->$fieldName;
 			}
+			array_push($result, $item);
+		}
+		if (sizeof($result) < 1)
+		{
+			$result[] = array('record_id', 'null');
+		}
+		$this->response->body(json_encode($result));
+	}
+	
+	/**
+	 * Get question IDs for test by level
+	 */
+	public function action_getQuestionIdsByLevelRand()
+	{
+		// get parameters from GET request
+		$test_id = $this->request->param("id");
+		$level = $this->request->param("id1");
+		$number = $this->request->param("id2");
+		
+		$result = array();
+		$DBResult = null;
+	
+		$DBResult = Model::factory($this->modelName)->getQuestionIdsByLevelRand($test_id, $level, $number);
+		$fieldNames = Model::factory($this->modelName)->getFieldNames()[0];
+		
+		foreach ($DBResult as $data)
+		{
+			$item = array();
+			$item[$fieldNames] = $data->$fieldNames;
 			array_push($result, $item);
 		}
 		if (sizeof($result) < 1)
