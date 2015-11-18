@@ -195,26 +195,29 @@ abstract class Model_Common extends Model
 	{
 		$aff_rows = null;
 		
+		// remove zero value for ID :-(
+		$record_id = $values[0];
+		array_shift($values);
+		
 		// change HTML special symbols to entities
 		foreach ($values as $key => $value)
 		{
 			$values[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
 		}
 		
+		// flip key and values for check request's parameters
+		$ffn = array_flip($this->fieldNames);
+		
 		// check attributes of input object
-		for ($i = 1;$i < sizeof($values);$i++)
+		foreach ($values as $key => $value)
 		{
-			if (!array_key_exists($this->fieldNames[$i], $values))
+			if (!array_key_exists($key, $ffn))
 			{
 				$this->errorMessage = "Input data is wrong";
 				return $this->errorMessage;
 			}
 		}
 		
-		// remove zero value for ID :-(
-		$record_id = $values[0];
-		array_shift($values);
-												
 		$updateQuery = DB::update($this->tableName)
 			->set($values)
 			->where($this->fieldNames[0], '=', $record_id);
@@ -228,7 +231,7 @@ abstract class Model_Common extends Model
 		if ($aff_rows > 0) return true;
 		if ($aff_rows == 0) return false;
 	}
-
+	
 	/**
 	 * Erase record from table with value of primary key equals to $record_id
 	 *
