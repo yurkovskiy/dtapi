@@ -17,17 +17,26 @@ class Controller_Student extends Controller_BaseAdmin {
 		}
 		else 
 		{
+			$model = null;
 			$result = array();
 			// Read POST data in JSON format
-			$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+			$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+			// check if input data is given
+			if (is_null($params))
+			{
+				$model = "No input data";
+			}
+			else 
+			{
+				// Convert Object into Array
+				$paramsArr = get_object_vars($params);
+										
+				//$values = array_values($paramsArr);
+				$values = $paramsArr;
+				
+				$model = Model::factory($this->modelName)->registerRecord($values);
+			}
 			
-			// Convert Object into Array
-			$paramsArr = get_object_vars($params);
-									
-			//$values = array_values($paramsArr);
-			$values = $paramsArr;
-			
-			$model = Model::factory($this->modelName)->registerRecord($values);
 			if (!is_string($model) && is_int($model))
 			{
 				// Creating response in JSON format
@@ -69,16 +78,25 @@ class Controller_Student extends Controller_BaseAdmin {
 			else
 			{
 				// Read POST data in JSON format
-				$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+				$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 				
-				// Convert Object into Array
-				$paramsArr = get_object_vars($params);
+				// check if input data is given
+				if (is_null($params))
+				{
+					$model = "No input data";
+				}
+				else 
+				{
+					// Convert Object into Array
+					$paramsArr = get_object_vars($params);
+						
+					//$values = array_values($paramsArr);
+					$values = $paramsArr;
+					array_unshift($values, $record_id); // Add record_id value for Primary Key
 					
-				//$values = array_values($paramsArr);
-				$values = $paramsArr;
-				array_unshift($values, $record_id); // Add record_id value for Primary Key
+					$model = Model::factory($this->modelName)->updateRecord($values);
+				}
 				
-				$model = Model::factory($this->modelName)->updateRecord($values);
 				if (!is_string($model) && $model)
 				{
 					// Creating response in JSON format
