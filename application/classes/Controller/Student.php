@@ -69,6 +69,7 @@ class Controller_Student extends Controller_BaseAdmin {
 		{
 			$record_id = $this->request->param("id");
 			$results = array();
+			$model = null;
 			
 			// check input parameters
 			if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
