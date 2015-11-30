@@ -19,12 +19,16 @@ class Controller_TestPlayer extends Controller_Base {
 		$this->response->body(json_encode(array("unix_timestamp" => time(),"offset" => $offset_sec,"curtime" => $curtime)));
 	}
 	
+	/**
+	 * @name saveData - save JSON (or other) user's custom data to the server into session
+	 * @access public
+	 * @throws HTTP_Exception_400 - if the request data is not present
+	 */
 	public function action_saveData()
 	{
 		// get session object
 		$session = Session::instance();
 		
-		// get data from JSON
 		$value = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 		if (is_null($value))
 		{
@@ -39,11 +43,22 @@ class Controller_TestPlayer extends Controller_Base {
 		
 	}
 	
+	/**
+	 * @name getData - get user's custom data from session 
+	 * @throws HTTP_Exception_404 - if the empty set
+	 */
 	public function action_getData()
 	{
-		// get session object
 		$session = Session::instance();
-		$this->response->body(json_encode($session->get($this->TEST_PLAYER_DATA)));
+		if (is_null($session->get($this->TEST_PLAYER_DATA)))
+		{
+			throw new HTTP_Exception_404("Empty set");
+		}
+		else 
+		{
+			$this->response->body(json_encode($session->get($this->TEST_PLAYER_DATA)));
+		}
+		
 	}
 
 }
