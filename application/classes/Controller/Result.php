@@ -12,7 +12,7 @@ class Controller_Result extends Controller_BaseAjax {
 	public function action_update()
 	{
 		// nothing to do :-)
-		$this->response->body(json_decode(array("response" => "error")));
+		throw new HTTP_Exception_403("Forbidden for this entity"); 
 	}
 	
 	public function action_getRecordsByStudent()
@@ -27,7 +27,7 @@ class Controller_Result extends Controller_BaseAjax {
 		$result = array();
 		if (!is_numeric($student_id) || !is_numeric($test_id)) 
 		{
-			$result["response"] = "Wrong request";
+			throw new HTTP_Exception_400("Wrong request");
 		}
 		else 
 		{
