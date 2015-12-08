@@ -15,4 +15,13 @@ class Model_Result extends Model_Common {
 		return $this->getEntityBy($this->fieldNames[1], $student_id);
 	}
 	
+	public function countTestPassesByStudent($student_id, $test_id)
+	{
+		$query = "SELECT COUNT(*) AS count FROM {$this->tableName} 
+				  WHERE {$this->fieldNames[1]} = {$student_id} 
+				  AND {$this->fieldNames[2]} = {$test_id}";
+		$count = DB::query(Database::SELECT, $query)->execute()->get('count');
+		return $count;
+	}
+	
 }
