@@ -19,7 +19,7 @@ return array
 			 * Ports and sockets may be appended to the hostname.
 			 */
 			'hostname'   => 'localhost',
-			'database'   => 'dtapi',
+			'database'   => 'dtapi2',
 			'username'   => 'dtapi',
 			'password'   => 'dtapi',
 			'persistent' => FALSE,
