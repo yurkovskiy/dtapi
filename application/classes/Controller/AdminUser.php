@@ -133,7 +133,7 @@ class Controller_AdminUser extends Controller {
 		
 		if (sizeof($result) < 1)
 		{
-			$result[] = array('record_id', 'null');
+			$result["response"] = "No records";
 		}
 		$this->response->body(json_encode($result));
 	}

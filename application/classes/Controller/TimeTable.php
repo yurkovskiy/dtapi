@@ -25,7 +25,7 @@ class Controller_TimeTable extends Controller_BaseAdmin {
 		}
 		if (sizeof($result) < 1)
 		{
-			$result[] = array('record_id', 'null');
+			$result["response"] = "No records";
 		}
 		$this->response->body(json_encode($result));
 		

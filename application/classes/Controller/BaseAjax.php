@@ -35,7 +35,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		}
 		if (sizeof($result) < 1)
 		{
-			$result[] = array('record_id', 'null');
+			$result["response"] = "no records";
 		}
 		$this->response->body(json_encode($result));
 	}
@@ -75,7 +75,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		}
 		if (sizeof($result) < 1)
 		{
-			$result[] = array('record_id', 'null');
+			$result["response"] = "no records";
 		}
 		$this->response->body(json_encode($result));
 	
@@ -97,7 +97,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		// check input parameters
 		if ((!is_numeric($limit)) || (!is_numeric($offset)) || ($limit < 0) || ($offset < 0))
 		{
-			$result["response"] = "Error: wrong request";
+			throw new HTTP_Exception_400("Wrong request");
 		}
 		else 
 		{
@@ -113,7 +113,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 			}
 			if (sizeof($result) < 1)
 			{
-				$result[] = array('record_id', 'null');
+				$result["response"] = "no records";
 			}
 		}
 		$this->response->body(json_encode($result));
@@ -152,7 +152,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		// check if input data is given
 		if (is_null($params))
 		{
-			$model = "Error: No input data";
+			throw new HTTP_Exception_400("No input data");
 		}
 		else 
 		{
@@ -204,7 +204,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		// check URL parameters
 		if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
 		{
-			$result["response"] = "Error: Wrong request";
+			throw new HTTP_Exception_400("Wrong request");
 		}
 		else 
 		{
@@ -214,7 +214,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 			// check if input data is given
 			if (is_null($params))
 			{
-				$model = "No input data";
+				throw new HTTP_Exception_400("No input data");
 			}
 			
 			else 
@@ -262,7 +262,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		// check URL parameters
 		if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
 		{
-			$results["response"] = "Error: Wrong request";
+			throw new HTTP_Exception_400("Wrong request");
 		}
 		else 
 		{
