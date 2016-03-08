@@ -21,7 +21,7 @@ class Controller_Login extends Controller
 		
 		if (is_null($params)) 
 		{
-			$result["response"] = "Error: No input data";
+			throw new HTTP_Exception_400("Wrong request");
 		} 
 		else 
 		{

@@ -46,7 +46,7 @@ class Controller_SAnswer extends Controller_BaseAjax {
 		// check if input data is given
 		if (is_null($params))
 		{
-			$result["response"] = "Error: no input data";
+			throw new HTTP_Exception_400("No input data");
 		}
 		else
 		{
