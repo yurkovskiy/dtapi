@@ -29,7 +29,7 @@ class Controller_EntityManager extends Controller_Base {
 		// check if input data is given
 		if (is_null($params))
 		{
-			$this->response->body(json_encode(array("response" => "No input data")));
+			throw new HTTP_Exception_400("No input data");
 		}
 		else 
 		{
@@ -41,15 +41,14 @@ class Controller_EntityManager extends Controller_Base {
 			$paramsArr = get_object_vars($params);
 			if (count($paramsArr) == 0)
 			{
-				$this->response->body(json_encode(array("response" => "No input data")));
+				throw new HTTP_Exception_400("No input data");
 			}
 			else 
 			{
 				// check if Entity Model is present
 				if (strlen(Kohana::find_file("classes", "Model/".$paramsArr["entity"])) < 1) 
 				{
-					$this->response->body(json_encode(array("response" => "error: could not find entity model")));
-					return;
+					throw new HTTP_Exception_400("Could not find entity model");
 				}
 				$DBResult = Model::factory($paramsArr["entity"])
 					->getRecordsByIds($paramsArr["ids"]);
@@ -65,7 +64,7 @@ class Controller_EntityManager extends Controller_Base {
 				}
 				if (sizeof($result) < 1)
 				{
-					$result[] = array('record_id', 'null');
+					$result["response"] = "no records";
 				}
 				$this->response->body(json_encode($result));
 			}

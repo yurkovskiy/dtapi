@@ -59,7 +59,7 @@ class Controller_Student extends Controller_BaseAdmin {
 		else 
 		{
 			$record_id = $this->request->param("id");
-			$results = array();
+			$result = array();
 			
 			// check input parameters
 			if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
@@ -110,11 +110,10 @@ class Controller_Student extends Controller_BaseAdmin {
 		else
 		{
 			$record_id = $this->request->param("id");
-			$results = array();
 			// check input parameters
 			if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
 			{
-				$results["response"] = "Error: Wrong request";
+				throw new HTTP_Exception_400("Wrong request");
 			}
 			else 
 			{
