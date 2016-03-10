@@ -11,22 +11,32 @@ class Controller_SAnswer extends Controller_BaseAjax {
 	
 	public function action_insertData()
 	{
-		throw new HTTP_Exception_404("Not found for users");
+		throw new HTTP_Exception_404("Not found for this entity");
 	}
 	
 	public function action_update()
 	{
-		throw new HTTP_Exception_404("Not found for users");
+		throw new HTTP_Exception_404("Not found for this entity");
 	}
 	
 	public function action_del()
 	{
-		throw new HTTP_Exception_404("Not found for users");
+		throw new HTTP_Exception_404("Not found for this entity");
 	}
 	
 	public function action_getAnswersByQuestion()
 	{
 		return $this->getEntityRecordsBy("getAnswersByQuestion");
+	}
+	
+	/**
+	 * Should be mocked, because a lot of records in DB present
+	 * Please use getRecordsRange only
+	 * @see Controller_BaseAjax::action_getRecords()
+	 */
+	public function action_getRecords()
+	{
+		throw new HTTP_Exception_404("Not found for this entity");
 	}
 	
 	

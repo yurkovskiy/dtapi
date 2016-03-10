@@ -10,6 +10,16 @@ class Controller_Question extends Controller_BaseAdmin {
 	protected $modelName = "Question";
 	
 	/**
+	 * Should be mocked, because a lot of records in DB present
+	 * Please use getRecordsRange only
+	 * @see Controller_BaseAjax::action_getRecords()
+	 */
+	public function action_getRecords()
+	{
+		throw new HTTP_Exception_404("Not found for this entity");
+	}
+	
+	/**
 	 * Get questions for test by level
 	 */
 	public function action_getQuestionsByLevelRand()

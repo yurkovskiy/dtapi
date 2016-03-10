@@ -44,12 +44,12 @@ class Controller_Login extends Controller
 				} 
 				else 
 				{
-					$result["response"] = "Invalid login or password";
+					throw new HTTP_Exception_400("Invalid login or password");
 				}
 			}
 			else 
 			{
-				$result["response"] = "Wrong Request";
+				throw new HTTP_Exception_400("Wrong request");
 			}
 		}
 		
