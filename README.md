@@ -21,13 +21,13 @@
 ## CRUD Actions which can be used with almost all entities
    HTTP_METHOD/URL
 
- * GET/ (http://<host>/<entity>/getRecords) -- returns JSON with all records of database
- * GET/ (http://<host>/<entity>/getRecords/<id>) -- returns JSON with one record of database with ID
- * GET/ http://<host>/<entity>/getRecordsRange/<limit>/<offset> -- returns JSON with records of database for pagination
- * GET/ http://<host>/<entity>/countRecords -- returns JSON in following format {"numberOfRecords": "10"} using for pagination
- * POST/ http://<host>/<entity>/insertData -- using for insert new record. Returns JSON with new record id and some status
- * POST/ http://<host>/<entity>/update/<id> -- using for update info about record with ID
- * DELETE (GET)/ http://<host>/<entity>/del/<id> -- using for remove record with ID
+ * ```GET/ http://<host>/<entity>/getRecords -- returns JSON with all records of database
+ * ```GET/ http://<host>/<entity>/getRecords/<id>``` -- returns JSON with one record of database with ID
+ * ```GET/ http://<host>/<entity>/getRecordsRange/<limit>/<offset> -- returns JSON with records of database for pagination
+ * ```GET/ http://<host>/<entity>/countRecords -- returns JSON in following format {"numberOfRecords": "10"} using for pagination```
+ * ```POST/ http://<host>/<entity>/insertData -- using for insert new record. Returns JSON with new record id and some status```
+ * ```POST/ http://<host>/<entity>/update/<id> -- using for update info about record with ID```
+ * ```DELETE (GET)/ http://<host>/<entity>/del/<id> -- using for remove record with ID```
 
 
 
