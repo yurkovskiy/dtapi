@@ -30,10 +30,14 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```POST/ http://<host>/<entity>/update/<id>``` -- using for update info about record with ID
  * ```DELETE (GET)/ http://<host>/<entity>/del/<id>``` -- using for remove record with ID
  
-# Auth Actions
+## Auth Actions
  * ```POST/ http://<host>/login/index``` -- returns JSON with roles and something else if success
  * ```GET/ http://<host>/login/logout``` -- doesn't return anything
- * ```GET/ http://<host>/login/isLogged``` -- for auth checking, returns JSON with roles if logged or {"response":"not logged"} 
+ * ```GET/ http://<host>/login/isLogged``` -- for auth checking, returns JSON with roles if logged or {"response":"not logged"}
+
+## Questions / Answers functionality
+ * Almost all CRUD operations are allowed
+ * ```GET/ http://<host>/question/getQuestionsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with random generated list of questions  
 
 
 ## Some diffs between version 2.0
