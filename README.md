@@ -17,7 +17,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```Student: {user_id, gradebook_id, student_surname, student_name, student_fname, group_id, plain_password, photo}```
  * ```User [AdminUser]: {id, email, username, password, logins, last_login}```
  * ```Log: {log_id, user_id, test_id, log_date, log_time}```
- * ```Result: {session_id, student_id, test_id, session_date, start_time, end_time, result, questions, true_answers, answers}
+ * ```Result: {session_id, student_id, test_id, session_date, start_time, end_time, result, questions, true_answers, answers}```
 
 ## CRUD Actions which can be used with almost all entities
    HTTP_METHOD / URL
