@@ -29,7 +29,11 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```POST/ http://<host>/<entity>/insertData``` -- using for insert new record. Returns JSON with new record id and some status
  * ```POST/ http://<host>/<entity>/update/<id>``` -- using for update info about record with ID
  * ```DELETE (GET)/ http://<host>/<entity>/del/<id>``` -- using for remove record with ID
-
+ 
+# Auth Actions
+ * ```POST/ http://<host>/login/index``` -- returns JSON with roles and something else if success
+ * ```GET/ http://<host>/login/logout``` -- doesn't return anything
+ * ```GET/ http://<host>/login/isLogged``` -- for auth checking, returns JSON with roles if logged or {"response":"not logged"} 
 
 
 ## Some diffs between version 2.0
