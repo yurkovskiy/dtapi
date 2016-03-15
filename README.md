@@ -39,6 +39,8 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * Almost all CRUD operations are allowed
  * ```GET/ http://<host>/question/getQuestionsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with random generated list of questions  
 
+## User's side [Test Player]
+ * ```GET/ http://<host>/TestPlayer/getTimeStamp``` -- returns JSON ```{"unix_timestamp":1458060816,"offset":"7200","curtime":1458068016}```
 
 ## Some diffs between version 2.0
  * Added HTTP 400 Exception when wrong request
