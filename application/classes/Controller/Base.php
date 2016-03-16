@@ -16,7 +16,7 @@ abstract class Controller_Base extends Controller {
 	 * Auth control added
 	 * Only logged users can work with entities
 	 */
-	public function before()
+	/*public function before()
 	{
 		if (!Auth::instance()->logged_in("login"))
 		{
@@ -26,7 +26,7 @@ abstract class Controller_Base extends Controller {
 		{
 			parent::before();
 		}
-	}
+	}*/
 	
 	/**
 	 * @name action_index
