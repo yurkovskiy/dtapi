@@ -16,7 +16,15 @@ class Controller_Question extends Controller_BaseAdmin {
 	 */
 	public function action_getRecords()
 	{
-		throw new HTTP_Exception_404("Not found for this entity");
+		$record_id = $this->request->param("id");
+		if (isset($record_id))
+		{
+			parent::action_getRecords();
+		}
+		else 
+		{
+			throw new HTTP_Exception_400("This method allowed for gathering one record only");
+		}
 	}
 	
 	/**
