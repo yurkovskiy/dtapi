@@ -9,7 +9,7 @@ class Controller_Answer extends Controller_BaseAdmin {
 
 	protected $modelName = "Answer";
 	
-	public function before()
+	/*public function before()
 	{
 		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))
 		{
@@ -19,7 +19,7 @@ class Controller_Answer extends Controller_BaseAdmin {
 		{
 			parent::before();
 		}
-	}
+	}*/
 	
 	/**
 	 * Should be mocked, because a lot of records in DB present
