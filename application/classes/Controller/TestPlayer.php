@@ -8,6 +8,8 @@
 class Controller_TestPlayer extends Controller_Base {
 	
 	private $TEST_PLAYER_DATA = "TP_DATA";
+	
+	private $TEST_PLAYER_TIME = "TP_TIME";
 
 	/**
 	 * getTimeStamp - get current time from a server
@@ -59,6 +61,51 @@ class Controller_TestPlayer extends Controller_Base {
 			$this->response->body(json_encode($session->get($this->TEST_PLAYER_DATA)));
 		}
 		
+	}
+	
+	/**
+	 * @name saveEndTime - special method to save EndTime at the server's storage
+	 * @return JSON
+	 * @throws HTTP_Exception_400
+	 */
+	public function action_saveEndTime()
+	{
+		$session = Session::instance();
+		$value = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		if (is_null($value))
+		{
+			throw new HTTP_Exception_400("Wrong input data");
+		}
+		else
+		{
+			if (!is_null($session->get($this->TEST_PLAYER_TIME)))
+			{
+				throw new HTTP_Exception_400("Time data is present. You cannot save time data twice");
+			}
+			else
+			{
+				// save time data to the server storage
+				$session->set($this->TEST_PLAYER_TIME, $value);
+				$this->response->body(json_encode(array("response" => "EndTime has been saved")));
+			}
+		}
+	}
+	
+	/**
+	 * @name getEndTime - get JSON representation of EndTime
+	 * @throws HTTP_Exception_404
+	 */
+	public function action_getEndTime()
+	{
+		$session = Session::instance();
+		if (is_null($session->get($this->TEST_PLAYER_TIME)))
+		{
+			throw new HTTP_Exception_404("Empty set");
+		}
+		else
+		{
+			$this->response->body(json_encode($session->get($this->TEST_PLAYER_TIME)));
+		}
 	}
 
 }

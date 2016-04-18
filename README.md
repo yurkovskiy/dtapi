@@ -13,7 +13,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```TestDetail: {id, test_id, level, tasks, rate}```
  * ```TimeTable: {timetable_id, group_id, subject_id, event_date}```
  * ```Question: {question_id, test_id, question_text, level, type, attachment}```
- * ```Answwer: {answer_id, question_id, true_answer, answer_text, attachment}```
+ * ```Answer: {answer_id, question_id, true_answer, answer_text, attachment}```
  * ```Student: {user_id, gradebook_id, student_surname, student_name, student_fname, group_id, plain_password, photo}```
  * ```User [AdminUser]: {id, email, username, password, logins, last_login}```
  * ```Log: {log_id, user_id, test_id, log_date, log_time}```
@@ -37,10 +37,29 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 
 ## Questions / Answers functionality
  * Almost all CRUD operations are allowed
- * ```GET/ http://<host>/question/getQuestionsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with random generated list of questions  
+ * ```GET/ http://<host>/question/getQuestionsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with random generated list of questions
+ * ```GET/ http://<host>/question/getRecordsRangeByTest/<test_id>/<limit>/<offset>``` -- returns JSON with records for pagination
+ * ```GET/ http://<host>/question/countRecordsByTest/<test_id>``` -- returns JSON in following format {"numberOfRecords": "10"} using for pagination
+ * ```GET/ http://<host>/answer/getAnswersByQuestion/<question_id>``` -- returns JSON with answers which related to question with question_id
+
+## Test [Quiz]
+ * Almost all CRUD operations are allowed
+ * ```GET/ http://<host>/test/getTestsBySubject/<subject_id>``` -- returns JSON with tests which related to the subject with subject_id
+
+## TestDetail
+ * ```GET/ http://<host>/testDetail/getTestDetailsByTest/<test_id>``` -- returns JSON with test's parameters 
+ 
+## Groups
+ * ```GET/ http://<host>/group/getGroupsBySpeciality/<speciality_id>``` -- returns JSON with groups which related to the speciality with speciality_id      
+ * ```GET/ http://<host>/group/getGroupsByFaculty/<faculty_id>``` -- returns JSON with groups which related to the faculty with faculty_id
+
+## TimeTable
+ * ```GET/ http://<host>/timeTable/getTimeTablesForGroup/<group_id>``` -- returns JSON with timetables by group 
+ * ```GET/ http://<host>/timeTable/getTimeTablesForSubject/<subject_id>``` -- returns JSON with timetables by subject
 
 ## User's side [Test Player]
  * ```GET/ http://<host>/TestPlayer/getTimeStamp``` -- returns JSON ```{"unix_timestamp":1458060816,"offset":"7200","curtime":1458068016}```
+ * ```POST/ http://<host>/SAnswer/checkAnswers``` -- returns JSON with result of checking user's answers [see php-doc for method]
 
 ## Some diffs between version 2.0
  * Added HTTP 400 Exception when wrong request
