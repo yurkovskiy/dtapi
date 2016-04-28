@@ -116,7 +116,8 @@ abstract class Model_Common extends Model
 	{
 		$query = DB::select_array($this->fieldNames)
 			->from($this->tableName)
-			->where($this->fieldNames[0], "IN", $ids);
+			->where($this->fieldNames[0], "IN", $ids)
+			->order_by($this->fieldNames[0], 'asc');
 		$result = $query->as_object()->execute();
 		return $result;
 	}
