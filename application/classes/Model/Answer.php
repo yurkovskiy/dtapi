@@ -1,5 +1,14 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+
+/**
+ * Constants Section
+ */
+
+define("QTYPE_SIMPLE_CHOICE", 1);
+
+define("QTYPE_MULTI_CHOICE", 2);
+
 /**
  * Class with definitions Answer table model
  *
@@ -37,7 +46,7 @@ class Model_Answer extends Model_Common {
 		{
 			// get question type
 			$question_type = Model::factory("Question")->getQuestionTypeById($question_id);
-			if ($question_type == 2)
+			if ($question_type == QTYPE_MULTI_CHOICE)
 			{
 				$true_answers_number = $this->countTrueAnswersByQuestion($question_id);
 			}
@@ -60,12 +69,12 @@ class Model_Answer extends Model_Common {
 			
 			// final check
 			// simple choice
-			if (($question_type == 1) && ($true_answers_unumber > 0))
+			if (($question_type == QTYPE_SIMPLE_CHOICE) && ($true_answers_unumber > 0))
 			{
 				return true;
 			}
 			// multi choice, strong check
-			if (($question_type == 2) && ($true_answers_unumber == $true_answers_number))
+			if (($question_type == QTYPE_MULTI_CHOICE) && ($true_answers_unumber == $true_answers_number))
 			{
 				return true;
 			}
