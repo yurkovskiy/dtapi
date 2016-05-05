@@ -107,5 +107,16 @@ class Controller_TestPlayer extends Controller_Base {
 			$this->response->body(json_encode($session->get($this->TEST_PLAYER_TIME)));
 		}
 	}
+	
+	/**
+	 * @name resetSessionData - delete all session custom variables
+	 */
+	public function action_resetSessionData()
+	{
+		$session = Session::instance();
+		$session->delete($this->TEST_PLAYER_DATA);
+		$session->delete($this->TEST_PLAYER_TIME);
+		$this->response->body(json_encode(array("response" => "Custom data has been deleted")));
+	}
 
 }
