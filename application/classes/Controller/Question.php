@@ -88,13 +88,11 @@ class Controller_Question extends Controller_BaseAdmin {
 		else
 		{
 			$DBResult = Model::factory($this->modelName)->getQuestionIdsByLevelRand($test_id, $level, $number);
-			$fieldNames = Model::factory($this->modelName)->getFieldNames()[0];
+			$fieldName = Model::factory($this->modelName)->getFieldNames()[0];
 			foreach ($DBResult as $data)
 			{
 				$item = array();
-				foreach ($fieldNames as $fieldName) {
-					$item[$fieldName] = $data->$fieldName;
-				}
+				$item[$fieldName] = $data->$fieldName;
 				array_push($result, $item);
 			}
 			if (sizeof($result) < 1)
