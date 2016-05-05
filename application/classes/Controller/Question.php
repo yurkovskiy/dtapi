@@ -29,6 +29,7 @@ class Controller_Question extends Controller_BaseAdmin {
 	
 	/**
 	 * Get questions for test by level
+	 * @deprecated will be changed to use getQuestionIdsByLevelRand due to a lot of data	 * 
 	 */
 	public function action_getQuestionsByLevelRand()
 	{
@@ -40,21 +41,68 @@ class Controller_Question extends Controller_BaseAdmin {
 		$result = array();
 		$DBResult = null;
 		
-		$DBResult = Model::factory($this->modelName)->getQuestionsByLevelRand($test_id, $level, $number);
-		$fieldNames = Model::factory($this->modelName)->getFieldNames();
-		foreach ($DBResult as $data)
+		// check input parameters
+		if ((!is_numeric($test_id)) || (!is_numeric($level)) || (!is_numeric($number)))
 		{
-			$item = array();
-			foreach ($fieldNames as $fieldName) {
-				$item[$fieldName] = $data->$fieldName;
+			throw new HTTP_Exception_400("Wrong request: fail due to input parameters");
+		}
+		else 
+		{
+			$DBResult = Model::factory($this->modelName)->getQuestionsByLevelRand($test_id, $level, $number);
+			$fieldNames = Model::factory($this->modelName)->getFieldNames();
+			foreach ($DBResult as $data)
+			{
+				$item = array();
+				foreach ($fieldNames as $fieldName) {
+					$item[$fieldName] = $data->$fieldName;
+				}
+				array_push($result, $item);
 			}
-			array_push($result, $item);
+			if (sizeof($result) < 1)
+			{
+				$result["response"] = "No records";
+			}
+			$this->response->body(json_encode($result));
 		}
-		if (sizeof($result) < 1)
+	}
+	
+	/**
+	 * Get questions for test by level
+	 * @since 2.1
+	 */
+	public function action_getQuestionIdsByLevelRand()
+	{
+		// get parameters from GET request
+		$test_id = $this->request->param("id");
+		$level = $this->request->param("id1");
+		$number = $this->request->param("id2");
+	
+		$result = array();
+		$DBResult = null;
+	
+		// check input parameters
+		if ((!is_numeric($test_id)) || (!is_numeric($level)) || (!is_numeric($number)))
 		{
-			$result["response"] = "No records";
+			throw new HTTP_Exception_400("Wrong request: fail due to input parameters");
 		}
-		$this->response->body(json_encode($result));
+		else
+		{
+			$DBResult = Model::factory($this->modelName)->getQuestionIdsByLevelRand($test_id, $level, $number);
+			$fieldNames = Model::factory($this->modelName)->getFieldNames();
+			foreach ($DBResult as $data)
+			{
+				$item = array();
+				foreach ($fieldNames as $fieldName) {
+					$item[$fieldName] = $data->$fieldName;
+				}
+				array_push($result, $item);
+			}
+			if (sizeof($result) < 1)
+			{
+				$result["response"] = "No records";
+			}
+			$this->response->body(json_encode($result));
+		}
 	}
 	
 	/**
@@ -79,7 +127,7 @@ class Controller_Question extends Controller_BaseAdmin {
 		// check input parameters
 		if ((!is_numeric($test_id)) || (!is_numeric($limit)) || (!is_numeric($offset)))
 		{
-			$result["response"] = "error";
+			throw new HTTP_Exception_400("Wrong request: fail due to input parameters");
 		}
 		else
 		{
@@ -97,8 +145,7 @@ class Controller_Question extends Controller_BaseAdmin {
 			{
 				$result["response"] = "No records";
 			}
+			$this->response->body(json_encode($result));
 		}
-		$this->response->body(json_encode($result));
 	}
-	
-}
+} // end of Controller_Question
