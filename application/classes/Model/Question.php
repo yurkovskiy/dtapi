@@ -16,6 +16,7 @@ class Model_Question extends Model_Common {
 	 * @param int $level
 	 * @param int $number
 	 * @return MySQL Result Set
+	 * @deprecated should be deprecated due to a lot of data
 	 */
 	public function getQuestionsByLevelRand($test_id, $level, $number)
 	{
