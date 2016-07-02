@@ -160,8 +160,7 @@ abstract class Model_Common extends Model
 		{
 			if (!array_key_exists($this->fieldNames[$i], $values))
 			{
-				$this->errorMessage = "Input data is wrong";
-				return $this->errorMessage;
+				throw new HTTP_Exception_400("Wrong input data");
 			}
 			else 
 			{
@@ -178,8 +177,8 @@ abstract class Model_Common extends Model
 		{
 			list($insert_id, $aff_rows) = $insertQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = "error ".$error->getCode();
-			return strval($this->errorMessage);
+			$this->errorMessage = "ERROR: ".$error->getMessage();
+			throw new HTTP_Exception_400($this->errorMessage);
 		}
 		if ($aff_rows > 0) return intval($insert_id);
 		if ($aff_rows <= 0) return false;
@@ -214,8 +213,7 @@ abstract class Model_Common extends Model
 		{
 			if (!array_key_exists($key, $ffn))
 			{
-				$this->errorMessage = "Input data is wrong";
-				return $this->errorMessage;
+				throw new HTTP_Exception_400("Wrong input data");
 			}
 		}
 		
@@ -226,8 +224,8 @@ abstract class Model_Common extends Model
 		{
 			$aff_rows = $updateQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = "error ".$error->getCode();
-			return $this->errorMessage;
+			$this->errorMessage = "ERROR: ".$error->getMessage();
+			throw new HTTP_Exception_400($this->errorMessage);
 		}
 		if ($aff_rows > 0) return true;
 		if ($aff_rows == 0) return false;
@@ -248,8 +246,8 @@ abstract class Model_Common extends Model
 		{
 			$aff_rows = $eraseQuery->execute();
 		} catch (Database_Exception $error) {
-			$this->errorMessage = "error ".$error->getCode();
-			return $this->errorMessage;
+			$this->errorMessage = "ERROR: ".$error->getMessage();
+			throw new HTTP_Exception_400($this->errorMessage);
 		}
 		if ($aff_rows > 0) return true;
 		if ($aff_rows == 0) return false;
