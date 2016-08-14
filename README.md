@@ -34,6 +34,8 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```POST/ http://<host>/login/index``` -- returns JSON with roles and something else if success
  * ```GET/ http://<host>/login/logout``` -- doesn't return anything
  * ```GET/ http://<host>/login/isLogged``` -- for auth checking, returns JSON with roles if logged or {"response":"not logged"}
+ * How to login (enter to the system)
+   Need to request with following JSON ```{"username":"some_user_name", "password":"some_password"}```
 
 ## Questions / Answers functionality
  * Almost all CRUD operations are allowed
