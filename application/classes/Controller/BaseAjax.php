@@ -176,7 +176,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 			}
 			else
 			{
-				$result["response"] = "error";
+				throw new HTTP_Exception_400("Error when insert");
 			}
 				
 		}
@@ -237,7 +237,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 				}
 				else
 				{
-					$result["response"] = "error";
+					throw new HTTP_Exception_400("Error when update");
 				}
 			}
 		}

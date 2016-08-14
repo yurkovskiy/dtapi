@@ -15,7 +15,7 @@ class Controller_EntityManager extends Controller_Base {
 	 * With using this method we can get information about entities 
 	 * which ID's were transfered throught ids array of JSON
 	 * Example: http://host_name/EntityManager/getEntityValues with POST JSON Object
-	 * {"entity":"subject", "ids":"[1,2,3,4,5]"} 
+	 * {"entity":"subject", "ids":[1,2,3,4,5]} 
 	 */
 	public function action_getEntityValues()
 	{
