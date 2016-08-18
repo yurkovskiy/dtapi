@@ -58,9 +58,9 @@ class Controller_Question extends Controller_BaseAdmin {
 				}
 				array_push($result, $item);
 			}
-			if (sizeof($result) < 1)
+			if (sizeof($result) < $number)
 			{
-				$result["response"] = "No records";
+				throw new HTTP_Exception_404("Not enough number of questions for quiz");
 			}
 			$this->response->body(json_encode($result));
 		}
@@ -95,9 +95,9 @@ class Controller_Question extends Controller_BaseAdmin {
 				$item[$fieldName] = $data->$fieldName;
 				array_push($result, $item);
 			}
-			if (sizeof($result) < 1)
+			if (sizeof($result) < $number)
 			{
-				$result["response"] = "No records";
+				throw new HTTP_Exception_404("Not enough number of questions for quiz");
 			}
 			$this->response->body(json_encode($result));
 		}
