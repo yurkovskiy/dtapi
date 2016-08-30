@@ -62,7 +62,7 @@ class Controller_Question extends Controller_BaseAdmin {
 			{
 				throw new HTTP_Exception_404("Not enough number of questions for quiz");
 			}
-			$this->response->body(json_encode($result));
+			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 		}
 	}
 	
@@ -99,7 +99,7 @@ class Controller_Question extends Controller_BaseAdmin {
 			{
 				throw new HTTP_Exception_404("Not enough number of questions for quiz");
 			}
-			$this->response->body(json_encode($result));
+			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 		}
 	}
 	
@@ -112,7 +112,7 @@ class Controller_Question extends Controller_BaseAdmin {
 		$numberOfRecords = Model::factory($this->modelName)->countQuestionsByTest($test_id);
 		$result = array();
 		$result["numberOfRecords"] = $numberOfRecords;
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
 	public function action_getRecordsRangeByTest()
@@ -143,7 +143,7 @@ class Controller_Question extends Controller_BaseAdmin {
 			{
 				$result["response"] = "No records";
 			}
-			$this->response->body(json_encode($result));
+			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 		}
 	}
 } // end of Controller_Question

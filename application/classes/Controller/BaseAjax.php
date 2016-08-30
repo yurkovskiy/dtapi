@@ -37,7 +37,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		{
 			$result["response"] = "no records";
 		}
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
 	/**
@@ -77,7 +77,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		{
 			$result["response"] = "no records";
 		}
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	
 	}
 	
@@ -116,7 +116,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 				$result["response"] = "no records";
 			}
 		}
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
 	/**
@@ -127,7 +127,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	{
 		$numberOfRecords = Model::factory($this->modelName)->countRecords();
 		$result["numberOfRecords"] = $numberOfRecords;
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
 	// new INSERT
@@ -180,7 +180,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 			}
 				
 		}
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
 	// new UPDATE
@@ -241,7 +241,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 				}
 			}
 		}
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
 	/**
@@ -284,7 +284,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 				}
 			}
 		}
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
 }

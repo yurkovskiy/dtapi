@@ -46,7 +46,7 @@ class Controller_Student extends Controller_BaseAdmin {
 				}
 					
 			}
-			$this->response->body(json_encode($result));
+			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 		}
 	}
 	
@@ -97,7 +97,7 @@ class Controller_Student extends Controller_BaseAdmin {
 						
 				}
 			}
-			$this->response->body(json_encode($result));
+			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 		}
 	}
 	

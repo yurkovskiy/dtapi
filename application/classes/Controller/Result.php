@@ -34,7 +34,7 @@ class Controller_Result extends Controller_BaseAjax {
 			$numberOfRecords = Model::factory($this->modelName)->countTestPassesByStudent($student_id, $test_id);
 			$result["numberOfRecords"] = $numberOfRecords;
 		}
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 
 }

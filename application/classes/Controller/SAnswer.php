@@ -72,7 +72,7 @@ class Controller_SAnswer extends Controller_BaseAjax {
 					$result[] = array("question_id" => $question->question_id, "true" => 0);
 				}
 			}
-			$this->response->body(json_encode($result));
+			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 		}
 	}
 
