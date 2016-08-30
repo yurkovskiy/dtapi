@@ -66,7 +66,7 @@ class Controller_EntityManager extends Controller_Base {
 				{
 					$result["response"] = "no records";
 				}
-				$this->response->body(json_encode($result));
+				$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 			}
 		}
 	}

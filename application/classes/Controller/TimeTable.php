@@ -27,7 +27,7 @@ class Controller_TimeTable extends Controller_BaseAdmin {
 		{
 			$result["response"] = "No records";
 		}
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 		
 	}
 	

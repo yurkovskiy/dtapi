@@ -53,7 +53,7 @@ class Controller_Login extends Controller
 			}
 		}
 		
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
 	public function action_logout() 
@@ -84,6 +84,6 @@ class Controller_Login extends Controller
 		{
 			$result["response"] = "non logged";
 		}
-		$this->response->body(json_encode($result));
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 }

@@ -8,6 +8,8 @@ Header always set Access-Control-Allow-Headers "Origin,X-Requested-With,Content-
 Header always set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
 Header always set Pragma "no-cache"
 
+AddDefaultCharset utf-8
+
 # Installation directory
 RewriteBase /
 
