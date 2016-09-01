@@ -59,6 +59,10 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```GET/ http://<host>/timeTable/getTimeTablesForGroup/<group_id>``` -- returns JSON with timetables by group 
  * ```GET/ http://<host>/timeTable/getTimeTablesForSubject/<subject_id>``` -- returns JSON with timetables by subject
 
+## Results
+ * ```GET/ http://<host>/Result/getRecordsbyStudent/<student_id>``` -- returns JSON with student's results
+ * ```GET/ http://<host>/Result/countTestPassesByStudent/<student_id>/<test_id>``` -- returns JSON {"numberOfRecords": <value>} 
+
 ## User's side [Test Player]
  * ```GET/ http://<host>/TestPlayer/getTimeStamp``` -- returns JSON ```{"unix_timestamp":1458060816,"offset":"7200","curtime":1458068016}```
  * ```POST/ http://<host>/SAnswer/checkAnswers``` -- returns JSON with result of checking user's answers [see php-doc for method]
