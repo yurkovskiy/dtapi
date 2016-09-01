@@ -40,7 +40,11 @@ class Model_Answer extends Model_Common {
 		$true_answers_number = 0; // by default;
 		if (!is_array($answer_ids))
 		{
-			throw new Kohana_Exception("Error input parameters");
+			throw new HTTP_Exception_400("Wrong input parameters");
+		}
+		if (count($answer_ids) == 0)
+		{
+			return false;
 		}
 		else
 		{
