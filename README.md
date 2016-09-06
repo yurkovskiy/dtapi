@@ -66,6 +66,11 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 ## User's side [Test Player]
  * ```GET/ http://<host>/TestPlayer/getTimeStamp``` -- returns JSON ```{"unix_timestamp":1458060816,"offset":"7200","curtime":1458068016}```
  * ```POST/ http://<host>/SAnswer/checkAnswers``` -- returns JSON with result of checking user's answers [see php-doc for method]
+ * ```POST/ http://<host>/TestPlayer/saveData``` -- the server's storage slot for save some needed information
+ * ```GET/ http://<host>/TestPlayer/getData``` -- returns JSON with information from server's torage slot
+ * ```POST/ http://<host>/TestPlayer/saveEndTime``` -- the second server's storage slot good for save endtime for user
+ * ```GET/ http://<host>/TestPlayer/getEndTime``` -- returns JSON with infromation from second server's storage slot
+ * ```GET/ http://<host>/TestPlayer/resetSessionData``` -- clear infromation from all server's storage slots
 
 ## Some diffs between version 2.0
  * Added HTTP 400 Exception when wrong request
