@@ -30,7 +30,8 @@ date_default_timezone_set('Europe/Kiev');
  * @link http://kohanaframework.org/guide/using.configuration
  * @link http://www.php.net/manual/function.setlocale
  */
-setlocale(LC_ALL, 'en_US.utf-8');
+//setlocale(LC_ALL, 'en_US.utf-8');
+setlocale(LC_ALL, 'uk_UA.UTF-8');
 
 /**
  * Enable the Kohana auto-loader.
@@ -104,7 +105,10 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
 	'base_url'   => '/',
+	'charset'	 => 'utf-8',
 	'index_file' => FALSE,
+	'caching'	 => Kohana::$environment === Kohana::PRODUCTION,
+	'profile'    => Kohana::$environment !== Kohana::PRODUCTION
 ));
 
 /**

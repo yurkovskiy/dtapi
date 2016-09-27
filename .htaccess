@@ -8,7 +8,10 @@ Header always set Access-Control-Allow-Headers "Origin,X-Requested-With,Content-
 Header always set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
 Header always set Pragma "no-cache"
 
-AddDefaultCharset utf-8
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .php
+AddCharset UTF-8 .css
+AddCharset UTF-8 .html
 
 # Installation directory
 RewriteBase /
