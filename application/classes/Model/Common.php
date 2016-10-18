@@ -4,7 +4,7 @@
  * @package Model Classes
  * @name Model_Common class
  * @author Yuriy Bezgachnyuk, IF, Ukraine
- * @copyright (c) 2013-2015 by Yuriy Bezgachnyuk
+ * @copyright (c) 2013-2016 by Yuriy Bezgachnyuk
  * @version 1.0
  * 
  * This class contain basic methods for works with entitity that represents table of database
@@ -133,6 +133,22 @@ abstract class Model_Common extends Model
 		$query = DB::select_array($this->fieldNames)
 			->from($this->tableName)
 			->where($this->fieldNames[0], "=", $record_id);
+		$result = $query->as_object()->execute();
+		return $result;
+	}
+	
+	/**
+	 * 
+	 * @param string $fieldName
+	 * @param string $criteria
+	 * @return mysql_object - records object
+	 */
+	protected function getRecordsBySearchCriteria($fieldName, $criteria)
+	{
+		$query = DB::select_array($this->fieldNames)
+			->from($this->tableName)
+			->where($fieldName, "LIKE", "%".$criteria."%")
+			->order_by($this->fieldNames[0], 'asc');
 		$result = $query->as_object()->execute();
 		return $result;
 	}
