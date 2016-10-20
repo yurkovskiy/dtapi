@@ -119,6 +119,34 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
+	
+	/**
+	 * @name getRecordsBySearchCriteria
+	 * @access protected
+	 * Basic search functionality
+	 */
+	protected function action_getRecordsBySearchCriteria()
+	{
+		$criteria = $this->request->param("id");
+		$result = array();
+		$fieldNames = Model::factory($this->modelName)->getFieldNames();
+		$DBResult = Model::factory($this->modelName)->getRecordsBySearch($criteria);
+	
+		foreach ($DBResult as $data)
+		{
+			$item = array();
+			foreach ($fieldNames as $fieldName) {
+				$item[$fieldName] = $data->$fieldName;
+			}
+			array_push($result, $item);
+		}
+		if (sizeof($result) < 1)
+		{
+			$result["response"] = "no records";
+		}
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+	}
+	
 	/**
 	 * Return number of Records in table (for pagination)
 	 * @return JSON object 

@@ -10,4 +10,9 @@ class Model_Speciality extends Model_Common {
 	protected $tableName = "specialities";
 	protected $fieldNames = array("speciality_id", "speciality_code", "speciality_name");
 	
+	public function getRecordsBySearch($criteria)
+	{
+		return $this->getRecordsBySearchCriteria($this->fieldNames[2], $criteria);
+	}
+	
 }
