@@ -38,7 +38,6 @@ class Controller_Question extends Controller_BaseAdmin {
 		$level = $this->request->param("id1");
 		$number = $this->request->param("id2");
 		
-		$result = array();
 		$DBResult = null;
 		
 		// check input parameters
@@ -50,19 +49,8 @@ class Controller_Question extends Controller_BaseAdmin {
 		{
 			$DBResult = Model::factory($this->modelName)->getQuestionsByLevelRand($test_id, $level, $number);
 			$fieldNames = Model::factory($this->modelName)->getFieldNames();
-			foreach ($DBResult as $data)
-			{
-				$item = array();
-				foreach ($fieldNames as $fieldName) {
-					$item[$fieldName] = $data->$fieldName;
-				}
-				array_push($result, $item);
-			}
-			if (sizeof($result) < $number)
-			{
-				throw new HTTP_Exception_404("Not enough number of questions for quiz");
-			}
-			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+			
+			$this->buildJSONResponse($DBResult, $fieldNames);
 		}
 	}
 	
@@ -129,21 +117,10 @@ class Controller_Question extends Controller_BaseAdmin {
 		}
 		else
 		{
-			$model = Model::factory($this->modelName)->getQuestionsRangeByTest($test_id, $limit, $offset);
+			$DBResult = Model::factory($this->modelName)->getQuestionsRangeByTest($test_id, $limit, $offset);
 			$fieldNames = Model::factory($this->modelName)->getFieldNames();
-			foreach ($model as $data)
-			{
-				$item = array();
-				foreach ($fieldNames as $fieldName) {
-					$item[$fieldName] = $data->$fieldName;
-				}
-				array_push($result, $item);
-			}
-			if (sizeof($result) < 1)
-			{
-				$result["response"] = "No records";
-			}
-			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+			
+			$this->buildJSONResponse($DBResult, $fieldNames);
 		}
 	}
 } // end of Controller_Question
