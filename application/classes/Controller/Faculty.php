@@ -8,5 +8,10 @@
 class Controller_Faculty extends Controller_BaseAdmin {
 
 	protected $modelName = "Faculty";
+	
+	public function action_getRecordsBySearch()
+	{
+		return $this->action_getRecordsBySearchCriteria();
+	}
 
 }

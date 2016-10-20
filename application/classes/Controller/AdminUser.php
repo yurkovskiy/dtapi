@@ -61,7 +61,7 @@ class Controller_AdminUser extends Controller {
 			$model->save();
 			$this->response->body(json_encode(array("response" => "ok")));
 		} catch (ORM_Validation_Exception $e) {
-			$this->response->body(json_encode(array("response" => $e->getMessage())));
+			throw new HTTP_Exception_400($e->getMessage());
 		}
 
 	}
@@ -77,8 +77,7 @@ class Controller_AdminUser extends Controller {
 		// check record_id and user id
 		if ($record_id == $user_id)
 		{
-			$this->response->body(json_encode(array("response" => "Error: Cannot erase infomration about oneself")));
-			return; 
+			throw new HTTP_Exception_400("Error: Cannot erase infomration about oneself");
 		}
 		
 		try {
@@ -86,7 +85,7 @@ class Controller_AdminUser extends Controller {
 			$model->delete();
 			$this->response->body(json_encode(array("response" => "ok")));
 		} catch (Kohana_Exception $e) {
-			$this->response->body(json_encode(array("response" => $e->getMessage())));
+			throw new HTTP_Exception_400($e->getMessage());
 		}
 	}
 	
