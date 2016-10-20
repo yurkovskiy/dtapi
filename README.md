@@ -30,11 +30,16 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```POST/ http://<host>/<entity>/update/<id>``` -- using for update info about record with ID
  * ```DELETE (GET)/ http://<host>/<entity>/del/<id>``` -- using for remove record with ID
 
+## Search action
+ * ``` GET/ http://<host>/<entity>/getRecordsBySearch/<search_criteria_string>``` -- returns JSON with all records of database which are suitable for search criteria```
+ * System do search only by using entity fields like: xxxx_name 
+
 ## EntityManager
  * EntityManager is a special functionality for simplify requests to the server-side
  * For perform the action please do request which are placed below.
  * ```POST/ http://<host>/EntityManager/getEntityValues``` -- returns JSON with entitites
- * In request body we need to use JSON with following structure: {"entity":"subject", "ids":[1,2,3,4,5]}
+ * In request body we need to use JSON with following structure: {"entity":"Subject", "ids":[1,2,3,4,5]}
+ * Value of entity property should start from capital letter
  
 ## Auth Actions
  * ```POST/ http://<host>/login/index``` -- returns JSON with roles and something else if success
