@@ -43,6 +43,13 @@ class Controller_EntityManager extends Controller_Base {
 			{
 				throw new HTTP_Exception_400("No input data");
 			}
+			
+			// check id's
+			if (!is_array($paramsArr["ids"]))
+			{
+				throw new HTTP_Exception_400("EntityManager: Array required as a second parameter");
+			}
+			
 			else 
 			{
 				// check if Entity Model is present
