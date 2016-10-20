@@ -54,19 +54,7 @@ class Controller_EntityManager extends Controller_Base {
 					->getRecordsByIds($paramsArr["ids"]);
 				$fieldNames = Model::factory($paramsArr["entity"])->getFieldNames();
 								
-				foreach ($DBResult as $data)
-				{
-					$item = array();
-					foreach ($fieldNames as $fieldName) {
-						$item[$fieldName] = $data->$fieldName;
-					}
-					array_push($result, $item);
-				}
-				if (sizeof($result) < 1)
-				{
-					$result["response"] = "no records";
-				}
-				$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+				$this->buildJSONResponse($DBResult, $fieldNames);
 			}
 		}
 	}

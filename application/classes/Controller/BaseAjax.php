@@ -9,7 +9,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	
 	// Model for Controller that will be given in child classes 
 	protected $modelName = "";
-					
+							
 	/**
 	 * Helper method for refactoring
 	 * @name getEntityRecordsBy
@@ -25,19 +25,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		
 		$fieldNames = Model::factory($this->modelName)->getFieldNames();
 		
-		foreach ($DBResult as $data)
-		{
-			$item = array();
-			foreach ($fieldNames as $fieldName) {
-				$item[$fieldName] = $data->$fieldName;
-			}
-			array_push($result, $item);
-		}
-		if (sizeof($result) < 1)
-		{
-			$result["response"] = "no records";
-		}
-		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+		$this->buildJSONResponse($DBResult, $fieldNames);
 	}
 	
 	/**
@@ -53,7 +41,6 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	{
 
 		$record_id = $this->request->param("id");			
-		$result = array();
 		$DBResult = null;
 		if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0)) 
 		{
@@ -65,19 +52,8 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		}
 		
 		$fieldNames = Model::factory($this->modelName)->getFieldNames();
-		foreach ($DBResult as $data)
-		{
-			$item = array();
-			foreach ($fieldNames as $fieldName) {
-				$item[$fieldName] = $data->$fieldName;
-			}
-			array_push($result, $item);
-		}
-		if (sizeof($result) < 1)
-		{
-			$result["response"] = "no records";
-		}
-		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+		
+		$this->buildJSONResponse($DBResult, $fieldNames);
 	
 	}
 	
@@ -92,8 +68,9 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	{
 		$limit = $this->request->param("id");
 		$offset = $this->request->param("id1");
-		$result = array();
 		
+		$DBResult = null;
+				
 		// check input parameters
 		if ((!is_numeric($limit)) || (!is_numeric($offset)) || ($limit < 0) || ($offset < 0))
 		{
@@ -101,22 +78,11 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		}
 		else 
 		{
-			$model = Model::factory($this->modelName)->getRecordsRange($limit, $offset);
+			$DBResult = Model::factory($this->modelName)->getRecordsRange($limit, $offset);
 			$fieldNames = Model::factory($this->modelName)->getFieldNames();
-			foreach ($model as $data)
-			{
-				$item = array();
-				foreach ($fieldNames as $fieldName) {
-					$item[$fieldName] = $data->$fieldName;
-				}
-				array_push($result, $item);
-			}
-			if (sizeof($result) < 1)
-			{
-				$result["response"] = "no records";
-			}
+			
+			$this->buildJSONResponse($DBResult, $fieldNames);			
 		}
-		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
 	
 	
@@ -132,19 +98,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		$fieldNames = Model::factory($this->modelName)->getFieldNames();
 		$DBResult = Model::factory($this->modelName)->getRecordsBySearch($criteria);
 	
-		foreach ($DBResult as $data)
-		{
-			$item = array();
-			foreach ($fieldNames as $fieldName) {
-				$item[$fieldName] = $data->$fieldName;
-			}
-			array_push($result, $item);
-		}
-		if (sizeof($result) < 1)
-		{
-			$result["response"] = "no records";
-		}
-		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+		$this->buildJSONResponse($DBResult, $fieldNames);
 	}
 	
 	/**

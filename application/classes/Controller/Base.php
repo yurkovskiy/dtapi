@@ -9,6 +9,32 @@ abstract class Controller_Base extends Controller {
 	
 	// Place where we read input data if POST
 	protected $RAW_DATA_SOURCE = "php://input";
+	
+	
+	/**
+	 * @var mixed $DBResult - database object
+	 * @var array $fieldNames - array with names of table fields
+	 *
+	 * Helper method for avoid a lot of duplication
+	 */
+	protected function buildJSONResponse($DBResult, $fieldNames)
+	{
+		$result = array();
+	
+		foreach ($DBResult as $data)
+		{
+			$item = array();
+			foreach ($fieldNames as $fieldName) {
+				$item[$fieldName] = $data->$fieldName;
+			}
+			array_push($result, $item);
+		}
+		if (sizeof($result) < 1)
+		{
+			$result["response"] = "no records";
+		}
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+	}
 
 	/**
 	 *
