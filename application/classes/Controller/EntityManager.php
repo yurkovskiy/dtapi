@@ -19,10 +19,7 @@ class Controller_EntityManager extends Controller_Base {
 	 */
 	public function action_getEntityValues()
 	{
-		
-		// output result
-		$result = array();
-		
+	
 		// Read POST data in JSON format
 		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 		

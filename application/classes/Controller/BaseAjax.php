@@ -18,7 +18,6 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	protected function getEntityRecordsBy($modelMethod)
 	{
 		$record_id = $this->request->param("id");
-		$result = array();
 		
 		// little reflection :-)
 		$DBResult = Model::factory($this->modelName)->{$modelMethod}($record_id);
@@ -94,7 +93,6 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	protected function action_getRecordsBySearchCriteria()
 	{
 		$criteria = $this->request->param("id");
-		$result = array();
 		$fieldNames = Model::factory($this->modelName)->getFieldNames();
 		$DBResult = Model::factory($this->modelName)->getRecordsBySearch($criteria);
 	
@@ -239,7 +237,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	public function action_del()
 	{
 		$record_id = $this->request->param("id");
-		$results = array();
+		$result = array();
 		
 		// check URL parameters
 		if ((!isset($record_id)) || (!is_numeric($record_id)) || ($record_id <= 0))
