@@ -39,7 +39,7 @@ return array
 			 * string   password    database password
 			 * boolean  persistent  use persistent connections?
 			 */
-			'dsn'        => 'mysql:host=localhost;dbname=dtapi2',
+			'dsn'        => 'mysql:host=localhost;dbname=dtapi2;charset=utf8',
 			'username'   => 'dtapi',
 			'password'   => 'dtapi',
 			'persistent' => FALSE,
@@ -51,7 +51,7 @@ return array
 		 */
 		'table_prefix' => '',
 		'charset'      => 'utf8',
-		/*options' 	   => array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'),*/
+		'options' 	   => array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'),
 		'caching'      => FALSE,
 	),
 );
