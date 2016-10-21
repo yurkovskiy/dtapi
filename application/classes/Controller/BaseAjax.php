@@ -144,9 +144,11 @@ abstract class Controller_BaseAjax extends Controller_Base {
 			
 		if (!is_string($model) && is_int($model))
 		{
-			// Creating response in JSON format
-			$result["id"] = $model;
-			$result["response"] = "ok";
+			// Good Result
+			$DBResult = Model::factory($this->modelName)->getRecord($model);
+			$fieldNames = Model::factory($this->modelName)->getFieldNames();
+			$this->buildJSONResponse($DBResult, $fieldNames);
+			return;
 		}
 		else
 		{
@@ -207,7 +209,11 @@ abstract class Controller_BaseAjax extends Controller_Base {
 			if (!is_string($model) && $model)
 			{
 				// Creating response in JSON format
-				$result["response"] = "ok";
+				// Good Result
+				$DBResult = Model::factory($this->modelName)->getRecord($record_id);
+				$fieldNames = Model::factory($this->modelName)->getFieldNames();
+				$this->buildJSONResponse($DBResult, $fieldNames);
+				return;
 			}
 			else
 			{
