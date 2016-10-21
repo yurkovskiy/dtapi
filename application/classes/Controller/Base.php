@@ -44,13 +44,17 @@ abstract class Controller_Base extends Controller {
 	 */
 	public function before()
 	{
-		if (!Auth::instance()->logged_in("login"))
-		{
-			throw new HTTP_Exception_403("Only logged users can work with entities");
-		}
-		else
-		{
-			parent::before();
+		try {
+			if (!Auth::instance()->logged_in("login"))
+			{
+				throw new HTTP_Exception_403("Only logged users can work with entities");
+			}
+			else
+			{
+				parent::before();
+			}
+		} catch (Session_Exception $e) {
+			throw new HTTP_Exception_400($e->getMessage());			
 		}
 	}
 	
