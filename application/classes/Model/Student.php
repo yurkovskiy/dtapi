@@ -70,10 +70,6 @@ class Model_Student extends Model_Common {
 		// workaround :-(
 		$valuesForStudentModel = array_slice($values, 5, 7);
 		
-		/*print_r($valuesForUserModel);
-		print_r($valuesForStudentModel);
-		exit(1);*/
-		
 		try {
 			$model = ORM::factory("User", $record_id);
 			$model->values($valuesForUserModel);
@@ -109,6 +105,11 @@ class Model_Student extends Model_Common {
 	public function getStudentsByGroup($group_id)
 	{
 		return $this->getEntityBy($this->fieldNames[5], $group_id);
+	}
+	
+	public function getRecordsBySearch($criteria)
+	{
+		return $this->getRecordsBySearchCriteria($this->fieldNames[2], $criteria);
 	}
 	
 }

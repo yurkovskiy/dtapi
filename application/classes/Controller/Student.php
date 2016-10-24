@@ -143,5 +143,10 @@ class Controller_Student extends Controller_BaseAdmin {
 	{
 		return $this->getEntityRecordsBy("getStudentsByGroup");
 	}
+	
+	public function action_getRecordsBySearch()
+	{
+		return $this->action_getRecordsBySearchCriteria();
+	}
 
 }
