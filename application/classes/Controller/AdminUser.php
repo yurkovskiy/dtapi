@@ -24,7 +24,13 @@ class Controller_AdminUser extends Controller {
 	public function action_insertData() 
 	{
 		// Read POST data in JSON format
-		$params = json_decode ( file_get_contents ( $this->RAW_DATA_SOURCE ) );
+		$params = @json_decode ( file_get_contents ( $this->RAW_DATA_SOURCE ) );
+		
+		// check if input data is given
+		if (is_null($params))
+		{
+			throw new HTTP_Exception_400("No input data");
+		}
 			
 		// Convert Object into Array
 		$paramsArr = get_object_vars ( $params );
@@ -36,8 +42,7 @@ class Controller_AdminUser extends Controller {
 			$model->save ();
 			$this->response->body(json_encode(array("id" => $model->id, "response" => "ok")));
 		} catch (ORM_Validation_Exception $e) {
-			$this->response->body(json_encode(array("response" => $e->getMessage())));
-			return;
+			throw new HTTP_Exception_400($e->getMessage());
 		}
 					
 		// Add roles for new user
@@ -135,5 +140,49 @@ class Controller_AdminUser extends Controller {
 			$result["response"] = "No records";
 		}
 		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+	}
+	
+	public function action_getRecordsRange()
+	{
+		$limit = $this->request->param("id");
+		$offset = $this->request->param("id1");
+		
+		$model = null;
+		$result = array();
+		
+		// check input parameters
+		if ((!is_numeric($limit)) || (!is_numeric($offset)) || ($limit < 0) || ($offset < 0))
+		{
+			throw new HTTP_Exception_400("Wrong request");
+		}
+		else 
+		{
+			$model = ORM::factory("User")
+				->join("roles_users")
+				->on("user_id", "=", "user.id")
+				->where("role_id", "=", "2")
+				->limit($limit)
+				->offset($offset)
+				->find_all();
+		}
+		$fieldNames = ORM::factory("User")->list_columns();
+		
+		foreach ($model as $user)
+		{
+			$item = array();
+			foreach ($fieldNames as $fieldName)
+			{
+				$item[$fieldName["column_name"]] = $user->$fieldName["column_name"];
+			}
+			array_push($result, $item);
+		}
+		
+		if (sizeof($result) < 1)
+		{
+			$result["response"] = "No records";
+		}
+		
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+		
 	}
 }
