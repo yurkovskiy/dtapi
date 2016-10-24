@@ -185,4 +185,15 @@ class Controller_AdminUser extends Controller {
 		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 		
 	}
+	
+	public function action_countRecords()
+	{
+		$model = ORM::factory("User")
+			->join("roles_users")
+			->on("user_id", "=", "user.id")
+			->where("role_id", "=", "2")
+			->count_all();
+		$result["numberOfRecords"] = $model;
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+	}
 }
