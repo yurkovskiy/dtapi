@@ -104,7 +104,7 @@ class Model_Student extends Model_Common {
 	
 	public function getStudentsByGroup($group_id)
 	{
-		return $this->getEntityBy($this->fieldNames[5], $group_id);
+		return $this->getEntityBy($this->fieldNames[5], $group_id, 2);
 	}
 	
 	public function getRecordsBySearch($criteria)
