@@ -53,12 +53,12 @@ abstract class Model_Common extends Model
 	 * @access protected
 	 * @author Yuriy V. Bezgachnyuk
 	 */
-	protected function getEntityBy($fieldName, $id)
+	protected function getEntityBy($fieldName, $id, $sortField = 0)
 	{
 		$query = DB::select_array($this->fieldNames)
 			->from($this->tableName)
 			->where($fieldName, "=", $id)
-			->order_by($this->fieldNames[0], 'asc');
+			->order_by($this->fieldNames[$sortField], 'asc');
 		$result = $query->as_object()->execute();
 		return $result;
 	}
