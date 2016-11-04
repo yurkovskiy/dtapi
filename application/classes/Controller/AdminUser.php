@@ -196,4 +196,35 @@ class Controller_AdminUser extends Controller {
 		$result["numberOfRecords"] = $model;
 		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
+	
+	public function action_getRecordsBySearch()
+	{
+		$result = array();
+		
+		$criteria = $this->request->param("id");
+		$fieldNames = ORM::factory("User")->list_columns();
+		$model = ORM::factory("User")
+			->join("roles_users")
+			->on("user_id", "=", "user.id")
+			->where("role_id", "=", "2")
+			->and_where("username", "LIKE", "%".$criteria."%")
+			->find_all();
+		
+		foreach ($model as $user)
+		{
+			$item = array();
+			foreach ($fieldNames as $fieldName)
+			{
+				$item[$fieldName["column_name"]] = $user->$fieldName["column_name"];
+			}
+			array_push($result, $item);
+		}
+		
+		if (sizeof($result) < 1)
+		{
+			$result["response"] = "No records";
+		}
+		
+		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+	}
 }
