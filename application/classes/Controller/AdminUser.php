@@ -137,7 +137,7 @@ class Controller_AdminUser extends Controller {
 		
 		if (sizeof($result) < 1)
 		{
-			$result["response"] = "No records";
+			$result["response"] = "no records";
 		}
 		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
@@ -179,7 +179,7 @@ class Controller_AdminUser extends Controller {
 		
 		if (sizeof($result) < 1)
 		{
-			$result["response"] = "No records";
+			$result["response"] = "no records";
 		}
 		
 		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
@@ -222,7 +222,7 @@ class Controller_AdminUser extends Controller {
 		
 		if (sizeof($result) < 1)
 		{
-			$result["response"] = "No records";
+			$result["response"] = "no records";
 		}
 		
 		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
