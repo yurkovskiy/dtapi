@@ -90,7 +90,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	 * @access protected
 	 * Basic search functionality
 	 */
-	protected function action_getRecordsBySearchCriteria()
+	protected function getRecordsBySearchCriteria()
 	{
 		$criteria = $this->request->param("id");
 		$fieldNames = Model::factory($this->modelName)->getFieldNames();

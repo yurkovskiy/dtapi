@@ -21,7 +21,7 @@ class Controller_Group extends Controller_BaseAdmin {
 	
 	public function action_getRecordsBySearch()
 	{
-		return $this->action_getRecordsBySearchCriteria();
+		return $this->getRecordsBySearchCriteria();
 	}
 	
 }
