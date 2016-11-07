@@ -20,4 +20,9 @@ class Model_Group extends Model_Common {
 		return $this->getEntityBy($this->fieldNames[3], $faculty_id);
 	}
 	
+	public function getRecordsBySearch($criteria)
+	{
+		return $this->getRecordsBySearchCriteria($this->fieldNames[1], $criteria);
+	}
+	
 }

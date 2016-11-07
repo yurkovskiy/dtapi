@@ -19,4 +19,9 @@ class Controller_Group extends Controller_BaseAdmin {
 		return $this->getEntityRecordsBy("getGroupsByFaculty");
 	}
 	
+	public function action_getRecordsBySearch()
+	{
+		return $this->action_getRecordsBySearchCriteria();
+	}
+	
 }
