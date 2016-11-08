@@ -9,6 +9,19 @@ class Controller_Result extends Controller_BaseAjax {
 
 	protected $modelName = "Result";
 	
+	public function action_insertData()
+	{
+		// Security check
+		if (is_null(Session::instance()->get("CheckAns")))
+		{
+			throw new HTTP_Exception_403("You don't have permissions to use this method in simple way");
+		}
+		else
+		{
+			parent::action_insertData();
+		}
+	}
+	
 	public function action_update()
 	{
 		// nothing to do :-)

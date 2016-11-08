@@ -51,6 +51,14 @@ class Controller_SAnswer extends Controller_BaseAjax {
 		$model = null;
 		$result = array();
 		
+		$session = Session::instance();
+		
+		// Security check
+		if (!is_null($session->get("CheckAns")))
+		{
+			throw new HTTP_Exception_403("You don't have permissions to use this method twice");
+		}
+		
 		// Read POST data in JSON format
 		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 		// check if input data is given
@@ -72,6 +80,10 @@ class Controller_SAnswer extends Controller_BaseAjax {
 					$result[] = array("question_id" => $question->question_id, "true" => 0);
 				}
 			}
+			
+			// Security check: save data to the Session
+			$session->set("CheckAns", "used");
+			
 			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 		}
 	}
