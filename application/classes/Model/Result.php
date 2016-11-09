@@ -24,4 +24,16 @@ class Model_Result extends Model_Common {
 		return $count;
 	}
 	
+	public function getResultsByTestAndGroup($test_id, $group_id, $tdate)
+	{
+		$query = DB::select_array($this->fieldNames)
+			->from($this->tableName)
+			->where($this->fieldNames[2], "=", $test_id)
+			->and_where($this->fieldNames[3], "=", $tdate)
+			->and_where($this->fieldNames[1], "IN", DB::expr("(SELECT user_id FROM students WHERE group_id = {$group_id})"));
+		
+		$result = $query->as_object()->execute();
+		return $result;
+	}
+	
 }

@@ -21,6 +21,11 @@ class Controller_Student extends Controller_BaseAdmin {
 			// Read POST data in JSON format
 			$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 			
+			if (is_null($params))
+			{
+				throw new HTTP_Exception_400("Wrong request");
+			}
+			
 			// Convert Object into Array
 			$paramsArr = get_object_vars($params);
 									
@@ -70,6 +75,11 @@ class Controller_Student extends Controller_BaseAdmin {
 			{
 				// Read POST data in JSON format
 				$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+				
+				if (is_null($params))
+				{
+					throw new HTTP_Exception_400("Wrong request");
+				}
 				
 				// Convert Object into Array
 				$paramsArr = get_object_vars($params);
