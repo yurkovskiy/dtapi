@@ -72,7 +72,8 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 
 ## Results
  * ```GET/ http://<host>/Result/getRecordsbyStudent/<student_id>``` -- returns JSON with student's results
- * ```GET/ http://<host>/Result/countTestPassesByStudent/<student_id>/<test_id>``` -- returns JSON {"numberOfRecords": someValue} 
+ * ```GET/ http://<host>/Result/countTestPassesByStudent/<student_id>/<test_id>``` -- returns JSON {"numberOfRecords": someValue}
+ * ```GET/ http://<host>/Result/getRecordsByTestGroupDate/<test_id>/<group_id>/<date>``` -- returns JSON with results for groups of students of some test which were passed on some date. Date should be in following format YYYY-MM-DD
 
 ## User's side [Test Player]
  * ```GET/ http://<host>/TestPlayer/getTimeStamp``` -- returns JSON ```{"unix_timestamp":1458060816,"offset":"7200","curtime":1458068016}```

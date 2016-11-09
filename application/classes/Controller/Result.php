@@ -49,5 +49,16 @@ class Controller_Result extends Controller_BaseAjax {
 		}
 		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
+	
+	public function action_getRecordsByTestGroupDate()
+	{
+		$test_id = intval($this->request->param("id"));
+		$group_id = intval($this->request->param("id1"));
+		$tdate = $this->request->param("id2");
+		$DBResult = Model::factory($this->modelName)->getResultsByTestAndGroup($test_id, $group_id, $tdate);
+		
+		$fieldNames = Model::factory($this->modelName)->getFieldNames();
+		$this->buildJSONResponse($DBResult, $fieldNames);
+	}
 
 }
