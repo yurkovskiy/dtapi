@@ -14,7 +14,7 @@ class Controller_Result extends Controller_BaseAjax {
 		// Security check
 		if (is_null(Session::instance()->get("CheckAns")))
 		{
-			throw new HTTP_Exception_403("You don't have permissions to use this method in simple way");
+			throw new HTTP_Exception_400("It is prohibited to use this call in this way");
 		}
 		else
 		{
