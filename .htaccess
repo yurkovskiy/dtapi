@@ -13,6 +13,8 @@ AddCharset UTF-8 .php
 AddCharset UTF-8 .css
 AddCharset UTF-8 .html
 
+php_value session.use_cookies 1
+
 # Installation directory
 RewriteBase /
 
