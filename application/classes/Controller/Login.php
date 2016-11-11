@@ -28,7 +28,13 @@ class Controller_Login extends Controller
 			// check JSON keys 
 			if (property_exists($params, "username") && (property_exists($params, "password"))) 
 			{
-				$success = Auth::instance()->login($params->username, $params->password, FALSE);
+				$success = null;
+				try {
+					$success = Auth::instance()->login($params->username, $params->password, FALSE);
+				} catch (Exception $e) {
+					throw new HTTP_Exception_400($e->getMessage());
+				}
+				
 				if ($success) 
 				{
 					// extract user's inforamtion
@@ -58,7 +64,14 @@ class Controller_Login extends Controller
 	
 	public function action_logout() 
 	{
-		$result = Auth::instance()->logout(TRUE);
+		$result = null;
+		
+		try {
+			$result = Auth::instance()->logout(TRUE);
+		} catch (Session_Exception $e) {
+			throw new HTTP_Exception_400($e->getMessage());
+		}
+		
 		if ($result)
 		{
 			$this->response->body(json_encode(array("response" => "user has been logout"), JSON_UNESCAPED_UNICODE));
