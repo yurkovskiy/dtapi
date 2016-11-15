@@ -61,5 +61,19 @@ class Controller_Result extends Controller_BaseAjax {
 		$fieldNames = Model::factory($this->modelName)->getFieldNames();
 		$this->buildJSONResponse($DBResult, $fieldNames);
 	}
+	
+	/**
+	 * @name getResultTestIdsByGroup
+	 * @param int $group_id
+	 * 
+	 * Returns all test_id(s) which were passed by students of some group ($group_id)
+	 */
+	public function action_getResultTestIdsByGroup()
+	{
+		$group_id = intval($this->request->param("id"));
+		$DBResult = Model::factory($this->modelName)->getResultTestIdsByGroup($group_id);
+		$fieldNames = array("test_id");
+		$this->buildJSONResponse($DBResult, $fieldNames);
+	}
 
 }

@@ -41,4 +41,14 @@ class Model_Result extends Model_Common {
 		return $result;
 	}
 	
+	public function getResultTestIdsByGroup($group_id)
+	{
+		$query = DB::select($this->fieldNames[2])
+			->from($this->tableName)
+			->where($this->fieldNames[1], "IN", DB::expr("(SELECT user_id FROM students WHERE group_id = {$group_id})"));
+		
+		$result = $query->as_object()->execute();
+		return $result;
+	}
+	
 }
