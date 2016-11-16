@@ -44,6 +44,7 @@ class Model_Result extends Model_Common {
 	public function getResultTestIdsByGroup($group_id)
 	{
 		$query = DB::select($this->fieldNames[2])
+			->distinct(TRUE)
 			->from($this->tableName)
 			->where($this->fieldNames[1], "IN", DB::expr("(SELECT user_id FROM students WHERE group_id = {$group_id})"));
 		
