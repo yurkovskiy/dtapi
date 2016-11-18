@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: dtapi
+-- Host: localhost    Database: dtapi2
 -- ------------------------------------------------------
--- Server version	5.5.37-0ubuntu0.12.10.1
+-- Server version	5.5.38-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,7 +31,7 @@ CREATE TABLE `answers` (
   PRIMARY KEY (`answer_id`),
   KEY `question_id` (`question_id`),
   CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,7 @@ CREATE TABLE `faculties` (
   `faculty_description` text,
   PRIMARY KEY (`faculty_id`),
   UNIQUE KEY `faculty_name` (`faculty_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,9 +66,9 @@ CREATE TABLE `groups` (
   UNIQUE KEY `group_name` (`group_name`),
   KEY `speciality_id` (`speciality_id`),
   KEY `faculty_id` (`faculty_id`),
-  CONSTRAINT `groups_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculties` (`faculty_id`) ON UPDATE CASCADE,
-  CONSTRAINT `groups_ibfk_1` FOREIGN KEY (`speciality_id`) REFERENCES `specialities` (`speciality_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  CONSTRAINT `groups_ibfk_1` FOREIGN KEY (`speciality_id`) REFERENCES `specialities` (`speciality_id`) ON UPDATE CASCADE,
+  CONSTRAINT `groups_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculties` (`faculty_id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `questions` (
   PRIMARY KEY (`question_id`),
   KEY `test_id` (`test_id`),
   CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`test_id`) REFERENCES `tests` (`test_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +161,9 @@ CREATE TABLE `specialities` (
   `speciality_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `speciality_code` varchar(20) NOT NULL,
   `speciality_name` varchar(120) NOT NULL,
-  PRIMARY KEY (`speciality_id`)
+  PRIMARY KEY (`speciality_id`),
+  UNIQUE KEY `speciality_code` (`speciality_code`),
+  UNIQUE KEY `speciality_name` (`speciality_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -202,7 +204,7 @@ CREATE TABLE `subjects` (
   `subject_description` text,
   PRIMARY KEY (`subject_id`),
   UNIQUE KEY `subject_name` (`subject_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +222,7 @@ CREATE TABLE `test_details` (
   `rate` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `test_id` (`test_id`,`level`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +243,7 @@ CREATE TABLE `tests` (
   PRIMARY KEY (`test_id`),
   KEY `subject_id` (`subject_id`),
   CONSTRAINT `tests_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -255,13 +257,16 @@ CREATE TABLE `timetables` (
   `timetable_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `group_id` int(10) unsigned NOT NULL,
   `subject_id` int(10) unsigned NOT NULL,
-  `event_date` date NOT NULL,
+  `start_date` date NOT NULL,
+  `start_time` time DEFAULT NULL,
+  `end_date` date NOT NULL,
+  `end_time` time DEFAULT NULL,
   PRIMARY KEY (`timetable_id`),
   UNIQUE KEY `gs` (`group_id`,`subject_id`),
   KEY `subject_id` (`subject_id`),
   CONSTRAINT `timetables_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`) ON UPDATE CASCADE,
   CONSTRAINT `timetables_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,7 +308,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -315,4 +320,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-11 11:10:53
+-- Dump completed on 2016-11-18 10:43:25
