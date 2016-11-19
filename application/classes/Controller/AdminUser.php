@@ -11,9 +11,9 @@ class Controller_AdminUser extends Controller {
 	
 	public function before()
 	{
-		if (! Auth::instance ()->logged_in ( $this->ADMIN_ROLE ))
+		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))
 		{
-			throw new HTTP_Exception_403 ( "You don't have permissions to work with this Entity" );
+			throw new HTTP_Exception_403( "You don't have permissions to work with this Entity" );
 		}
 		else 
 		{
@@ -24,7 +24,7 @@ class Controller_AdminUser extends Controller {
 	public function action_insertData() 
 	{
 		// Read POST data in JSON format
-		$params = @json_decode ( file_get_contents ( $this->RAW_DATA_SOURCE ) );
+		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 		
 		// check if input data is given
 		if (is_null($params))
@@ -33,21 +33,20 @@ class Controller_AdminUser extends Controller {
 		}
 			
 		// Convert Object into Array
-		$paramsArr = get_object_vars ( $params );
+		$paramsArr = get_object_vars($params);
 			
 		// Register user
-		$model = ORM::factory ( "User" );
+		$model = null;
 		try {
-			$model->values ( $paramsArr );
-			$model->save ();
+			$model = ORM::factory("User")->create_user($paramsArr, array('username', 'password', 'email'));
 			$this->response->body(json_encode(array("id" => $model->id, "response" => "ok")));
 		} catch (ORM_Validation_Exception $e) {
 			throw new HTTP_Exception_400($e->getMessage());
 		}
 					
 		// Add roles for new user
-		$model->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'login' )->find () );
-		$model->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'admin' )->find () );
+		$model->add('roles', ORM::factory('role')->where('name', '=', 'login')->find());
+		$model->add('roles', ORM::factory('role')->where('name', '=', 'admin')->find());
 		
 	}
 	
