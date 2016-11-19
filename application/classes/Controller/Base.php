@@ -53,7 +53,7 @@ abstract class Controller_Base extends Controller {
 			{
 				parent::before();
 			}
-		} catch (Exception $e) {
+		} catch (Session_Exception $e) {
 			throw new HTTP_Exception_400($e->getMessage());			
 		}
 	}
