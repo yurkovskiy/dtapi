@@ -13,5 +13,5 @@ class Controller_TestDetail extends Controller_BaseAdmin {
 	{
 		return $this->getEntityRecordsBy("getTestDetailsByTest");
 	}
-
+	
 }
