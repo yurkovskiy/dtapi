@@ -28,10 +28,9 @@ class Model_Student extends Model_Common {
 		$valuesForStudentModel = array_values(array_slice($values, 4, 7));
 				
 		try {
-			$userModel->values($valuesForUserModel);
-			$userModel->save();
+			$userModel->create_user($valuesForUserModel, array('username', 'password', 'email'));
 		} catch (ORM_Validation_Exception $e) {
-			return $e->getMessage();
+			throw new HTTP_Exception_400($e->getMessage());
 		}	
 		
 		// Add roles for new user
