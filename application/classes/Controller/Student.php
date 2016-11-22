@@ -102,7 +102,7 @@ class Controller_Student extends Controller_BaseAdmin {
 					}
 					else
 					{
-						$result["response"] = "error";
+						throw new HTTP_Exception_400("Error when update");
 					}
 						
 				}
@@ -137,13 +137,13 @@ class Controller_Student extends Controller_BaseAdmin {
 						$model->delete();
 						$this->response->body(json_encode(array("response" => "ok")));
 					} catch (Kohana_Exception $e) {
-						$this->response->body(json_encode(array("response" => $e->getMessage())));
+						throw new HTTP_Exception_400($e->getMessage());
 					}
 				}
 				else
 				{
 					// Some problem
-					$this->response->body(json_encode(array("response" => "error")));
+					throw new HTTP_Exception_400("Error when delete");
 				}
 			}
 		}
