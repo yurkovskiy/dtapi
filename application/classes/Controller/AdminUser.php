@@ -60,9 +60,7 @@ class Controller_AdminUser extends Controller {
 			
 		try {
 			// get record for update
-			$model = ORM::factory("User", $record_id);
-			$model->values($paramsArr);
-			$model->save();
+			$model = ORM::factory("User", $record_id)->update_user($paramsArr);
 			$this->response->body(json_encode(array("response" => "ok")));
 		} catch (ORM_Validation_Exception $e) {
 			throw new HTTP_Exception_400($e->getMessage());
