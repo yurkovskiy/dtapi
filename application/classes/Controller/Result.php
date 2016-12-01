@@ -18,6 +18,7 @@ class Controller_Result extends Controller_BaseAjax {
 		}
 		else
 		{
+			Session::instance()->delete("CheckAns");
 			parent::action_insertData();
 		}
 	}
