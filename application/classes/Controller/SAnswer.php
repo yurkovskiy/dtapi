@@ -62,9 +62,9 @@ class Controller_SAnswer extends Controller_BaseAjax {
 		// Read POST data in JSON format
 		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
 		// check if input data is given
-		if (is_null($params))
+		if (is_null($params) || (!is_array($params)))
 		{
-			throw new HTTP_Exception_400("No input data");
+			throw new HTTP_Exception_400("Wrong input data");
 		}
 		else
 		{
