@@ -65,20 +65,30 @@ class Controller_Login extends Controller
 	public function action_logout() 
 	{
 		$result = null;
-		
 		try {
-			$result = Auth::instance()->logout(TRUE);
+			if (Auth::instance()->logged_in("login"))
+			{
+				try {
+					$result = Auth::instance()->logout(TRUE);
+				} catch (Session_Exception $e) {
+					throw new HTTP_Exception_400($e->getMessage());
+				}
+				
+				if ($result)
+				{
+					$this->response->body(json_encode(array("response" => "user has been logout"), JSON_UNESCAPED_UNICODE));
+				}
+				else
+				{
+					throw new HTTP_Exception_400("Something wrong due to permorm logout action");
+				}
+			}
+			else
+			{
+				throw new HTTP_Exception_400("Cannot use this method due to not logged user");
+			}
 		} catch (Session_Exception $e) {
 			throw new HTTP_Exception_400($e->getMessage());
-		}
-		
-		if ($result)
-		{
-			$this->response->body(json_encode(array("response" => "user has been logout"), JSON_UNESCAPED_UNICODE));
-		}
-		else
-		{
-			throw new HTTP_Exception_400("Something wrong due to permorm logout action");
 		}
 	}
 	
