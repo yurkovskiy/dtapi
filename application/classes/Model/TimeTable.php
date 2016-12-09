@@ -30,4 +30,14 @@ class Model_TimeTable extends Model_Common {
 		return $this->getEntityBy($this->fieldNames[2], $subject_id);		
 	}
 	
+	public function getTimeTableForGroupAndSubject($group_id, $subject_id)
+	{
+		$query = DB::select_array($this->fieldNames)
+			->from($this->tableName)
+			->where($this->fieldNames[1], "=", $group_id)
+			->and_where($this->fieldNames[2], "=", $subject_id);
+		$result = $query->as_object()->execute();
+		return $result;
+	}
+	
 }
