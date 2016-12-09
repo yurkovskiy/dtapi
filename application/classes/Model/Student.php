@@ -34,8 +34,8 @@ class Model_Student extends Model_Common {
 		}	
 		
 		// Add roles for new user
-		$userModel->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'login' )->find () );
-		$userModel->add ( 'roles', ORM::factory ( 'role' )->where ( 'name', '=', 'student' )->find () );
+		$userModel->add ('roles', ORM::factory ('role')->where ('name', '=', 'login')->find());
+		$userModel->add ('roles', ORM::factory ('role')->where ('name', '=', 'student')->find());
 		
 		// Store information into students table
 		
@@ -57,12 +57,13 @@ class Model_Student extends Model_Common {
 			return $this->errorMessage;
 		}
 		if ($aff_rows > 0) return intval($userModel->id);
-		if ($aff_rows <= 0) return false;
+		if ($aff_rows == 0) return false;
 		
 	}
 	
 	public function updateRecord($values)
 	{
+		$model = null;
 		$record_id = $values[0];
 		// divide $values array
 		$valuesForUserModel = array_slice($values, 1, 4);
@@ -70,12 +71,10 @@ class Model_Student extends Model_Common {
 		$valuesForStudentModel = array_slice($values, 5, 7);
 		
 		try {
-			$model = ORM::factory("User", $record_id);
-			$model->values($valuesForUserModel);
-			$model->save();
+			$model = ORM::factory("User", $record_id)->update_user($valuesForUserModel);
 		}
 		catch (ORM_Validation_Exception $e) {
-			return $e->getMessage();
+			throw new HTTP_Exception_400($e->getMessage());
 		}
 		
 		// update data in studens table
@@ -97,7 +96,7 @@ class Model_Student extends Model_Common {
 			$this->errorMessage = "error ".$error->getCode();
 			return $this->errorMessage;
 		}
-		if ($aff_rows > 0) return true;
+		if (($aff_rows > 0) || ($model->saved())) return true;
 		if ($aff_rows == 0) return false;
 	}
 	
