@@ -118,5 +118,53 @@ class Controller_TestPlayer extends Controller_Base {
 		$session->delete($this->TEST_PLAYER_TIME);
 		$this->response->body(json_encode(array("response" => "Custom data has been deleted")));
 	}
+	
+	/**
+	 * method which is checking possibility to make a test by some user 
+	 * using infromtation from timetables
+	 * @return test entity or HTTP_400
+	 * @throws HTTP_Exception_400
+	 */
+	public function action_getTest()
+	{
+		$test_id = $this->request->param("id");
+		
+		if (!isset($test_id) || (!is_numeric($test_id)) || ($test_id < 0))
+		{
+			throw new HTTP_Exception_400("Wrong input parameters");
+		}
+		
+		$user_id = Auth::instance()->get_user()->id;
+		
+		// get group of student
+		$group_id = null;
+		$student = Model::factory("Student")->getRecord($user_id);
+		
+		foreach ($student as $record)
+		{
+			$group_id = $record->group_id;
+		}
+		unset($student);
+		
+		// get subject of test
+		$subject_id = null;
+		$test = Model::factory("Test")->getRecord($test_id);
+		foreach ($test as $record)
+		{
+			$subject_id = $record->subject_id;
+		}
+		
+		// check timetable
+		$timetable_count = Model::factory("TimeTable")->getTimeTableForGroupAndSubject($group_id, $subject_id)->count()	;
+		if ($timetable_count > 0)
+		{
+			// so we can return the test entity
+			return $this->buildJSONResponse($test, Model::factory("Test")->getFieldNames());
+		}
+		else 
+		{
+			throw new HTTP_Exception_400("You don't have permissions to make this test");
+		}		
+	}
 
 }
