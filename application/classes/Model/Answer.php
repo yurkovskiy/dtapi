@@ -9,6 +9,8 @@ define("QTYPE_SIMPLE_CHOICE", 1);
 
 define("QTYPE_MULTI_CHOICE", 2);
 
+define("QTYPE_INPUT_FIELD", 3);
+
 /**
  * Class with definitions Answer table model
  *
@@ -36,12 +38,14 @@ class Model_Answer extends Model_Common {
 	
 	public function checkAnswers($question_id, $answer_ids)
 	{
-		$true_answers_unumber = 0;
+		$true_answers_unumber = 0; // user's number
 		$true_answers_number = 0; // by default;
 		if (!is_array($answer_ids))
 		{
 			throw new HTTP_Exception_400("Wrong input parameters");
 		}
+		
+		// no answers from user
 		if (count($answer_ids) == 0)
 		{
 			return false;
@@ -50,12 +54,34 @@ class Model_Answer extends Model_Common {
 		{
 			// get question type
 			$question_type = Model::factory("Question")->getQuestionTypeById($question_id);
+			
+			// input field
+			if ($question_type == QTYPE_INPUT_FIELD)
+			{
+				$tanswers = array(); // array with answer_text
+				// we assume that for this question type we assign only true answers :-)
+				$true_answers = $this->getAnswersByQuestion($question_id);
+				foreach ($true_answers as $answer)
+				{
+					array_push($tanswers, $answer->answer_text);
+				}
+				// check if user's answer is present in $tanswers
+				if (in_array($answer_ids[0], $tanswers))
+				{
+					unset($tanswers);
+					return true;
+				}
+				// anyway return false :-)
+				return false;
+			} // input field
+			
+			// multi choice
 			if ($question_type == QTYPE_MULTI_CHOICE)
 			{
 				$true_answers_number = $this->countTrueAnswersByQuestion($question_id);
 			}
 			
-			// get answers
+			// get answers [Simple/Multi Choice]
 			$answers = $this->getRecordsByIds($answer_ids);
 			
 			foreach ($answers as $answer)
