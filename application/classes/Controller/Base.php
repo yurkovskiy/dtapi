@@ -25,7 +25,7 @@ abstract class Controller_Base extends Controller {
 		{
 			$item = array();
 			foreach ($fieldNames as $fieldName) {
-				$item[$fieldName] = $data->$fieldName;
+				$item[$fieldName] = $data->{$fieldName};
 			}
 			array_push($result, $item);
 		}
