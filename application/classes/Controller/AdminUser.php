@@ -126,7 +126,7 @@ class Controller_AdminUser extends Controller {
 				$item = array();
 				foreach ($fieldNames as $fieldName) 
 				{
-					$item[$fieldName["column_name"]] = $user->$fieldName["column_name"];
+					$item[$fieldName["column_name"]] = $user->{$fieldName["column_name"]};
 				}
 				array_push($result, $item);
 			}
@@ -169,7 +169,7 @@ class Controller_AdminUser extends Controller {
 			$item = array();
 			foreach ($fieldNames as $fieldName)
 			{
-				$item[$fieldName["column_name"]] = $user->$fieldName["column_name"];
+				$item[$fieldName["column_name"]] = $user->{$fieldName["column_name"]};
 			}
 			array_push($result, $item);
 		}
@@ -212,7 +212,7 @@ class Controller_AdminUser extends Controller {
 			$item = array();
 			foreach ($fieldNames as $fieldName)
 			{
-				$item[$fieldName["column_name"]] = $user->$fieldName["column_name"];
+				$item[$fieldName["column_name"]] = $user->{$fieldName["column_name"]};
 			}
 			array_push($result, $item);
 		}
