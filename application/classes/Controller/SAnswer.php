@@ -84,7 +84,35 @@ class Controller_SAnswer extends Controller_BaseAjax {
 			// Security check: save data to the Session
 			$session->set("CheckAns", "used");
 			
-			$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+			/* FULL MARK CALCULATION SECTION */
+			// Walking over the $result[] array
+			$test_id = null;
+			$fullMark = 0;
+			$numberOfTrueAnswers = 0;
+			foreach ($result as $item)
+			{
+				$level = Model::factory("Question")->getLevelIdByQuestion($item["question_id"]);
+				if (is_null($test_id))
+				{
+					$test_id = Model::factory("Question")->getTestIdByQuestion($item["question_id"]);
+				}
+				// get mark for the question
+				$rates = Model::factory("TestDetail")->getRateByTestAndLevel($test_id, $level);
+				foreach ($rates as $rate) 
+				{
+					if ($item["true"] == 1)
+					{
+						$fullMark += intval($rate->rate);
+						$numberOfTrueAnswers++;
+					}
+				}
+			}
+			/* END OF FULL MARK CALCULATION SECTION */
+			
+			// generate JSON object with result
+			$fullResult = array("full_mark" => $fullMark, 
+								"number_of_true_answers" => $numberOfTrueAnswers);
+			$this->response->body(json_encode($fullResult, JSON_UNESCAPED_UNICODE));
 		}
 	}
 

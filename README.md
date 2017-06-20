@@ -11,7 +11,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```Subject: {subject_id, subject_name, subject_description}```
  * ```Test: {test_id, test_name, subject_id, tasks, time_for_test, enabled, attempts}```
  * ```TestDetail: {id, test_id, level, tasks, rate}```
- * ```TimeTable: {timetable_id, group_id, subject_id, start_date, start_time, end_date, end_time}```
+ * ```TimeTable: {timetable_id, group_id, subject_id, event_date}```
  * ```Question: {question_id, test_id, question_text, level, type, attachment}```
  * ```Answer: {answer_id, question_id, true_answer, answer_text, attachment}```
  * ```Student: {user_id, gradebook_id, student_surname, student_name, student_fname, group_id, plain_password, photo}```
@@ -43,7 +43,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  
 ## Auth Actions
  * ```POST/ http://<host>/login/index``` -- returns JSON with roles and something else if success
- * ```GET/ http://<host>/login/logout``` -- returns JSON {"response":"user has been logout"}
+ * ```GET/ http://<host>/login/logout``` -- returns JSON {"user has been logout"} if OK
  * ```GET/ http://<host>/login/isLogged``` -- for auth checking, returns JSON with roles if logged or {"response":"not logged"}
  * How to login (enter to the system)
    Need to request with following JSON ```{"username":"some_user_name", "password":"some_password"}```
@@ -73,13 +73,12 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 ## Results
  * ```GET/ http://<host>/Result/getRecordsbyStudent/<student_id>``` -- returns JSON with student's results
  * ```GET/ http://<host>/Result/countTestPassesByStudent/<student_id>/<test_id>``` -- returns JSON {"numberOfRecords": someValue}
- * ```GET/ http://<host>/Result/getRecordsByTestGroupDate/<test_id>/<group_id>/<date>``` -- returns JSON with results for groups of students of some test which were passed on some date. Date should be in following format YYYY-MM-DD
  * ```GET/ http://<host>/Result/getRecordsByTestGroupDate/<test_id>/<group_id>/<[tdate]>``` -- returns JSON with student's results by test_id, group_id and date (optional)
  * ```GET/ http://<host>/Result/getResultTestIdsByGroup/<group_id>``` -- returns JSON test_ids which were passed by students of some group (group_id)
 
 ## User's side [Test Player]
  * ```GET/ http://<host>/TestPlayer/getTimeStamp``` -- returns JSON ```{"unix_timestamp":1458060816,"offset":"7200","curtime":1458068016}```
- * ```POST/ http://<host>/SAnswer/checkAnswers``` -- returns JSON with result of checking user's answers [see php-doc for method]
+ * ```POST/ http://<host>/SAnswer/checkAnswers``` -- returns JSON with result {"full_mark":5,"number_of_true_answers":2}
  * ```POST/ http://<host>/TestPlayer/saveData``` -- the server's storage slot for save some needed information
  * ```GET/ http://<host>/TestPlayer/getData``` -- returns JSON with information from server's torage slot
  * ```POST/ http://<host>/TestPlayer/saveEndTime``` -- the second server's storage slot good for save endtime for user

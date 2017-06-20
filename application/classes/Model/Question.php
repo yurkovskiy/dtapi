@@ -55,8 +55,32 @@ class Model_Question extends Model_Common {
 	public function countQuestionsByTest($test_id)
 	{
 		$query = "SELECT COUNT(*) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} = {$test_id}";
-		$count = DB::query(Database::SELECT, $query)->execute()->get('count');
+		$count = DB::query(Database::SELECT, $query)->execute()->get("count");
 		return $count;
+	}
+	
+	/**
+	 * 
+	 * @param int $question_id
+	 * @return int $test_id - test_id which is using together with TestDetail when calculating the mark
+	 */
+	public function getTestIdByQuestion($question_id)
+	{
+		$query = "SELECT {$this->fieldNames[1]} AS id FROM {$this->tableName} WHERE {$this->fieldNames[0]} = {$question_id}";
+		$test_id = DB::query(Database::SELECT, $query)->execute()->get("id");
+		return $test_id;
+	}
+	
+	/**
+	 *
+	 * @param int $question_id
+	 * @return int $level - level_id which is using together with TestDetail when calculating the mark
+	 */
+	public function getLevelIdByQuestion($question_id)
+	{
+		$query = "SELECT {$this->fieldNames[3]} AS id FROM {$this->tableName} WHERE {$this->fieldNames[0]} = {$question_id}";
+		$level_id = DB::query(Database::SELECT, $query)->execute()->get("id");
+		return $level_id;
 	}
 	
 	/**
@@ -78,6 +102,14 @@ class Model_Question extends Model_Common {
 		return $result;
 	}
 	
+	/**
+	 * 
+	 * @param int $question_id
+	 * @return int question type
+	 * 1 - QTYPE_SIMPLE_CHOICE
+	 * 2 - QTYPE_MULTI_CHOICE
+	 * 3 - QTYPE_INPUT_FIELD
+	 */
 	public function getQuestionTypeById($question_id)
 	{
 		$query = DB::select($this->fieldNames[4])
