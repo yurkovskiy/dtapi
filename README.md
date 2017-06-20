@@ -11,7 +11,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```Subject: {subject_id, subject_name, subject_description}```
  * ```Test: {test_id, test_name, subject_id, tasks, time_for_test, enabled, attempts}```
  * ```TestDetail: {id, test_id, level, tasks, rate}```
- * ```TimeTable: {timetable_id, group_id, subject_id, event_date}```
+ * ```TimeTable: {timetable_id, group_id, subject_id, start_date, start_time, end_date, end_time}```
  * ```Question: {question_id, test_id, question_text, level, type, attachment}```
  * ```Answer: {answer_id, question_id, true_answer, answer_text, attachment}```
  * ```Student: {user_id, gradebook_id, student_surname, student_name, student_fname, group_id, plain_password, photo}```
@@ -78,7 +78,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 
 ## User's side [Test Player]
  * ```GET/ http://<host>/TestPlayer/getTimeStamp``` -- returns JSON ```{"unix_timestamp":1458060816,"offset":"7200","curtime":1458068016}```
- * ```POST/ http://<host>/SAnswer/checkAnswers``` -- returns JSON with result {"full_mark":5,"number_of_true_answers":2}
+ * ```POST/ http://<host>/SAnswer/checkAnswers``` -- returns JSON with result ```{"full_mark":5,"number_of_true_answers":2}```
  * ```POST/ http://<host>/TestPlayer/saveData``` -- the server's storage slot for save some needed information
  * ```GET/ http://<host>/TestPlayer/getData``` -- returns JSON with information from server's torage slot
  * ```POST/ http://<host>/TestPlayer/saveEndTime``` -- the second server's storage slot good for save endtime for user
