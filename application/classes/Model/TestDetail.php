@@ -14,15 +14,4 @@ class Model_TestDetail extends Model_Common {
 	{
 		return $this->getEntityBy($this->fieldNames[1], $test_id);
 	}
-	
-	public function getRateByTestAndLevel($test_id, $level)
-	{
-		$query = DB::select($this->fieldNames[4])
-			->from($this->tableName)
-			->where($this->fieldNames[1], "=", $test_id)
-			->and_where($this->fieldNames[2], "=", $level);
-		$result = $query->as_object()->execute();
-		return $result;
-	}
-	
 }

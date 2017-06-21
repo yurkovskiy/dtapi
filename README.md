@@ -84,6 +84,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```POST/ http://<host>/TestPlayer/saveEndTime``` -- the second server's storage slot good for save endtime for user
  * ```GET/ http://<host>/TestPlayer/getEndTime``` -- returns JSON with infromation from second server's storage slot
  * ```GET/ http://<host>/TestPlayer/resetSessionData``` -- clear infromation from all server's storage slots
+ * ```GET/ http://<host>/TestPlayer/getTest``` -- checking possibility to make a test by some user using infromtation from timetables, returns Test entity or HTTP400 error
 
 ## Some diffs between version 2.0
  * Added HTTP 400 Exception when wrong request

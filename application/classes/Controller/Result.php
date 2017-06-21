@@ -11,16 +11,7 @@ class Controller_Result extends Controller_BaseAjax {
 	
 	public function action_insertData()
 	{
-		// Security check
-		if (is_null(Session::instance()->get("CheckAns")))
-		{
-			throw new HTTP_Exception_400("It is prohibited to use this call in this way");
-		}
-		else
-		{
-			Session::instance()->delete("CheckAns");
-			parent::action_insertData();
-		}
+		throw new HTTP_Exception_404("It is prohibited to use this call directly");
 	}
 	
 	public function action_update()

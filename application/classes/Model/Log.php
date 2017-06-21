@@ -57,6 +57,7 @@ class Model_Log extends Model_Common {
 		
 		else
 		{
+			Session::instance()->set("startTime", date("H:s:i"));
 			$insertQuery = DB::insert($this->tableName, $this->fieldNames)
 			->values($values);
 			try
