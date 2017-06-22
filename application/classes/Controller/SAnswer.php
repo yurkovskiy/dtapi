@@ -57,15 +57,10 @@ class Controller_SAnswer extends Controller_BaseAjax {
 		
 		/* Security check */
 		// 1 step
-		if (is_null($session->get("startTime")))
+		if (is_null($session->get("startTime"))) // if user would like to cheat :-(
 		{
 			$session->destroy();
 			throw new HTTP_Exception_400("Would you like to be a superman? You have been logout");
-		}
-		// 2 step
-		if (!is_null($session->get("CheckAns")))
-		{
-			throw new HTTP_Exception_400("It is prohibited to use this method twice during one session");
 		}
 		
 		/* End of Security check */
@@ -93,15 +88,13 @@ class Controller_SAnswer extends Controller_BaseAjax {
 				}
 			}
 			
-			// Security check: save data to the Session
-			$session->set("CheckAns", "used");
-			
 			/* FULL MARK CALCULATION SECTION */
 			// Walking over the $result[] array
 			$test_id = null;
 			$fullMark = 0;
 			$numberOfTrueAnswers = 0;
 			$testDetails = array();
+			$questions = array(); // list of questions which were provided to user
 			
 			foreach ($result as $item)
 			{
@@ -117,11 +110,12 @@ class Controller_SAnswer extends Controller_BaseAjax {
 						$testDetails[$testParam->level] = $testParam->rate;
 					}
 				}
-				// get mark for the question
-				if ($item["true"] == 1)
+				// check and add* mark for the question
+				if (($item["true"] == 1) && (!in_array($item["question_id"], $questions)))
 				{
 					$fullMark += intval($testDetails[$level]);
 					$numberOfTrueAnswers++;
+					array_push($questions, $item["question_id"]); // save question_id into the array
 				}
 			}
 			/* END OF FULL MARK CALCULATION SECTION */
@@ -148,7 +142,7 @@ class Controller_SAnswer extends Controller_BaseAjax {
 			$model = Model::factory("Result")->registerRecord($resultArr);
 			if ($model)
 			{
-				$session->delete("CheckAns");
+				$session->delete("startTime"); // delete startTime from session
 			}
 			
 			$this->response->body(json_encode($fullResult, JSON_UNESCAPED_UNICODE));
