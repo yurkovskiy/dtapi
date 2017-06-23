@@ -39,6 +39,16 @@ class Controller_SAnswer extends Controller_BaseAjax {
 		throw new HTTP_Exception_404("Not found for this entity");
 	}
 	
+	/**
+	 * Should be mocked, because a lot of records in DB present
+	 * Please use getRecordsRange only
+	 * @see Controller_BaseAjax::action_getRecordsRange()
+	 */
+	public function action_getRecordsRange()
+	{
+		throw new HTTP_Exception_404("Not found for this entity");
+	}
+	
 	
 	/**
 	 * @param JSON object with following structure
