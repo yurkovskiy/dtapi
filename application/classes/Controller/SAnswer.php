@@ -135,7 +135,7 @@ class Controller_SAnswer extends Controller_BaseAjax {
 					"end_time" => date("H:i:s"),
 					"result" => $fullMark,
 					"questions" => $data,
-					"true_answers" => "",
+					"true_answers" => json_encode($result, JSON_UNESCAPED_UNICODE),
 					"answers" => ""
 			);
 			
