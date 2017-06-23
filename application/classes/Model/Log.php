@@ -42,6 +42,20 @@ class Model_Log extends Model_Common {
 	
 	public function startTest($user_id, $test_id)
 	{
+		
+		// check attempts count using information from Result
+		$user_attempts = Model::factory("Result")->countTestPassesByStudent($user_id, $test_id);
+		// get information about the Test
+		$test = Model::factory("Test")->getRecord($test_id);
+		foreach ($test as $_test)
+		{
+			if ($user_attempts >= $_test->attempts)
+			{
+				throw new HTTP_Exception_403("You cannot make the test due to used all attempts");
+			}
+		}
+		unset($test);
+		
 		// security check
 		if ($this->isUserMadeTest($user_id, $test_id)) 
 		{
