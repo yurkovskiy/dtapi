@@ -24,18 +24,21 @@ class Model_Result extends Model_Common {
 		return $count;
 	}
 	
-	public function getResultsByTestAndGroup($test_id, $group_id, $tdate = null)
+	public function getResultsByTestAndGroup($test_id, $group_id = null, $tdate = null)
 	{
 		$query = DB::select_array($this->fieldNames)
 			->from($this->tableName)
 			->where($this->fieldNames[2], "=", $test_id);
 		
+		if ((!is_null($group_id)) && ($group_id != 0))
+		{
+			$query->and_where($this->fieldNames[1], "IN", DB::expr("(SELECT user_id FROM students WHERE group_id = {$group_id})"));
+		}
+		
 		if (!is_null($tdate))
 		{
 			$query->and_where($this->fieldNames[3], "=", $tdate);
 		}
-		
-		$query->and_where($this->fieldNames[1], "IN", DB::expr("(SELECT user_id FROM students WHERE group_id = {$group_id})"));
 		
 		$result = $query->as_object()->execute();
 		return $result;

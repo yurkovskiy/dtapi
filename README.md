@@ -73,7 +73,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 ## Results
  * ```GET/ http://<host>/Result/getRecordsbyStudent/<student_id>``` -- returns JSON with student's results
  * ```GET/ http://<host>/Result/countTestPassesByStudent/<student_id>/<test_id>``` -- returns JSON {"numberOfRecords": someValue}
- * ```GET/ http://<host>/Result/getRecordsByTestGroupDate/<test_id>/<group_id>/<[tdate]>``` -- returns JSON with student's results by test_id, group_id and date (optional)
+ * ```GET/ http://<host>/Result/getRecordsByTestGroupDate/<test_id>/<[group_id]>/<[tdate]>``` -- returns JSON with student's results by test_id, group_id (optional) and date (optional)
  * ```GET/ http://<host>/Result/getResultTestIdsByGroup/<group_id>``` -- returns JSON test_ids which were passed by students of some group (group_id)
 
 ## User's side [Test Player]
