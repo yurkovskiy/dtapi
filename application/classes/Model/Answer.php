@@ -1,22 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-
-/**
- * Constants Section
- */
-
-define("QTYPE_SIMPLE_CHOICE", 1);
-
-define("QTYPE_MULTI_CHOICE", 2);
-
-define("QTYPE_INPUT_FIELD", 3);
-
 /**
  * Class with definitions Answer table model
  *
  */
 
-class Model_Answer extends Model_Common {
+class Model_Answer extends Model_Common implements Question {
 	
 	protected $tableName = "answers";
 	protected $fieldNames = array("answer_id","question_id", "true_answer", "answer_text", "attachment");
@@ -56,7 +45,7 @@ class Model_Answer extends Model_Common {
 			$question_type = Model::factory("Question")->getQuestionTypeById($question_id);
 			
 			// input field
-			if ($question_type == QTYPE_INPUT_FIELD)
+			if ($question_type == Question::QTYPE_INPUT_FIELD)
 			{
 				$tanswers = array(); // array with answer_text
 				// we assume that for this question type we assign only true answers :-)
@@ -76,7 +65,7 @@ class Model_Answer extends Model_Common {
 			} // input field
 			
 			// multi choice
-			if ($question_type == QTYPE_MULTI_CHOICE)
+			if ($question_type == Question::QTYPE_MULTI_CHOICE)
 			{
 				$true_answers_number = $this->countTrueAnswersByQuestion($question_id);
 			}
@@ -99,12 +88,12 @@ class Model_Answer extends Model_Common {
 			
 			// final check
 			// simple choice
-			if (($question_type == QTYPE_SIMPLE_CHOICE) && ($true_answers_unumber > 0))
+			if (($question_type == Question::QTYPE_SIMPLE_CHOICE) && ($true_answers_unumber > 0))
 			{
 				return true;
 			}
 			// multi choice, strong check
-			if (($question_type == QTYPE_MULTI_CHOICE) && ($true_answers_unumber == $true_answers_number))
+			if (($question_type == Question::QTYPE_MULTI_CHOICE) && ($true_answers_unumber == $true_answers_number))
 			{
 				return true;
 			}

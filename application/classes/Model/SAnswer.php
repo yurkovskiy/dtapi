@@ -1,21 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Constants Section
- */
-
-define("QTYPE_SIMPLE_CHOICE", 1);
-
-define("QTYPE_MULTI_CHOICE", 2);
-
-define("QTYPE_INPUT_FIELD", 3);
-
-/**
  * Class with definitions Answer [Student] table model
  *
  */
 
-class Model_SAnswer extends Model_Common {
+class Model_SAnswer extends Model_Common implements Question {
 	
 	protected $tableName = "answers";
 	protected $fieldNames = array("answer_id","question_id", "answer_text", "attachment");
@@ -48,7 +38,7 @@ class Model_SAnswer extends Model_Common {
 	private function isShowAnwers($question_id)
 	{
 		$qestion_type = Model::factory("Question")->getQuestionTypeById($question_id);
-		if ($qestion_type == QTYPE_INPUT_FIELD)
+		if ($qestion_type == Question::QTYPE_INPUT_FIELD)
 		{
 			return false;
 		}

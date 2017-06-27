@@ -13,6 +13,12 @@ class Controller_Log extends Controller_BaseAdmin {
 	{
 		$user_id = $this->request->param("id");
 		$test_id = $this->request->param("id1");
+		
+		if ((is_null($user_id)) || (is_null($test_id)))
+		{
+			throw new HTTP_Exception_400("This request require some input parameters");
+		}
+		
 		$model = Model::factory($this->modelName)->startTest($user_id, $test_id);
 		
 		if (!is_string($model) && is_int($model))
