@@ -26,6 +26,11 @@ class Controller_SAnswer extends Controller_BaseAjax {
 	
 	public function action_getAnswersByQuestion()
 	{
+		// Security check
+		if (is_null(Session::instance()->get("startTime"))) // User can't see answers without making an quiz
+		{
+			throw new HTTP_Exception_403("You cannot call this method without making an quiz");
+		}
 		return $this->getEntityRecordsBy("getAnswersByQuestion");
 	}
 	
