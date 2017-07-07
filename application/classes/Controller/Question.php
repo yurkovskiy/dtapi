@@ -9,6 +9,19 @@ class Controller_Question extends Controller_BaseAdmin {
 
 	protected $modelName = "Question";
 	
+	// Strong security check for Student
+	public function before()
+	{
+		if (Auth::instance()->logged_in($this->STUDENT_ROLE))
+		{
+			if (is_null(Session::instance()->get("startTime")))
+			{
+				throw new HTTP_Exception_403("You cannot call this method without making an quiz");
+			}
+		}
+		parent::before();
+	}
+	
 	/**
 	 * Should be mocked, because a lot of records in DB present
 	 * Please use getRecordsRange only

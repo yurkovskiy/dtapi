@@ -9,8 +9,6 @@
 
 abstract class Controller_BaseAdmin extends Controller_BaseAjax {
 	
-	protected $ADMIN_ROLE = "admin";
-
 	public function action_insertData()
 	{
 		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))

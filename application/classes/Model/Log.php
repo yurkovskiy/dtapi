@@ -22,7 +22,7 @@ class Model_Log extends Model_Common {
 	 * @param int $user_id
 	 * @param int $test_id
 	 * @return boolean is user can pass the test now
-	 * true - user cannot make the test because he made a test recently (1 hour)
+	 * true - user cannot make the test because he made a test recently ($INTERVAL constant)
 	 * false - user can make the test
 	 */
 	protected function isUserMadeTest($user_id, $test_id)
@@ -42,19 +42,38 @@ class Model_Log extends Model_Common {
 	
 	public function startTest($user_id, $test_id)
 	{
+		$group_id = null;
+		$subject_id = null;
 		
-		// check attempts count using information from Result
+		// get attempts count using information from Result
 		$user_attempts = Model::factory("Result")->countTestPassesByStudent($user_id, $test_id);
-		// get information about the Test
+		
+		// get group_id from Student Entity
+		$student = Model::factory("Student")->getRecord($user_id);
+		foreach ($student as $_student)
+		{
+			$group_id = $_student->group_id;
+		}
+		unset($student);
+		
+		// get subject_id, attempts from Test Entity
+		// checking attempts
 		$test = Model::factory("Test")->getRecord($test_id);
 		foreach ($test as $_test)
 		{
+			$subject_id = $_test->subject_id;
 			if ($user_attempts >= $_test->attempts)
 			{
 				throw new HTTP_Exception_403("You cannot make the test due to used all attempts");
 			}
 		}
 		unset($test);
+		
+		$timetables_count = Model::factory("TimeTable")->getTimeTableForGroupAndSubject($group_id, $subject_id, $check_time = true)->count();
+		if ($timetables_count == 0)
+		{
+			throw new HTTP_Exception_403("You cannot make the test due to your schedule");
+		}
 		
 		// security check
 		if ($this->isUserMadeTest($user_id, $test_id)) 

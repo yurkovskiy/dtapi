@@ -10,6 +10,10 @@ abstract class Controller_Base extends Controller {
 	// Place where we read input data if POST
 	protected $RAW_DATA_SOURCE = "php://input";
 	
+	// ROLES Constants
+	protected $ADMIN_ROLE = "admin";
+	protected $STUDENT_ROLE = "student";
+	
 	
 	/**
 	 * @var mixed $DBResult - database object
