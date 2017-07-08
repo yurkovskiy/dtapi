@@ -6,6 +6,19 @@
  */
 
 class Controller_EntityManager extends Controller_Base {
+	
+	// Strong security check for Student
+	public function before()
+	{
+		if (Auth::instance()->logged_in($this->STUDENT_ROLE))
+		{
+			if (is_null(Session::instance()->get("startTime")))
+			{
+				throw new HTTP_Exception_403("You cannot call this method without making an quiz");
+			}
+		}
+		parent::before();
+	}
 
 	/**
 	 * @name getEntityValues
@@ -49,6 +62,12 @@ class Controller_EntityManager extends Controller_Base {
 			
 			else 
 			{
+				// student security check [Answers]
+				if (Auth::instance()->logged_in($this->STUDENT_ROLE) && $paramsArr["entity"] != "Question")
+				{
+					throw new HTTP_Exception_403("It's prohibited to use this method for students");
+				}
+						
 				// check if Entity Model is present
 				if (strlen(Kohana::find_file("classes", "Model/".$paramsArr["entity"])) < 1) 
 				{
