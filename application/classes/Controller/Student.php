@@ -9,6 +9,32 @@ class Controller_Student extends Controller_BaseAdmin {
 
 	protected $modelName = "Student";
 	
+	// security check for student
+	public function before()
+	{
+		if (Auth::instance()->logged_in($this->STUDENT_ROLE))
+		{
+			if ($this->request->action() != "getRecords")
+			{
+				throw new HTTP_Exception_403("You don't have permissions to run this method"); 
+			}			
+		}
+		parent::before();
+	}
+	
+	public function action_getRecords()
+	{
+		// Security checking: Student can see only record about himself
+		if (Auth::instance()->logged_in($this->STUDENT_ROLE))
+		{
+			if ($this->request->param("id") != Auth::instance()->get_user()->id)
+			{
+				throw new HTTP_Exception_403("You don't have permissions to use this method in that way");
+			}
+		}
+		parent::action_getRecords();
+	}
+	
 	public function action_insertData()
 	{
 		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))
