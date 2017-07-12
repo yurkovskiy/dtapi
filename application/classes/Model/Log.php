@@ -9,7 +9,7 @@ class Model_Log extends Model_Common {
 	
 	private $INTERVAL = "10 MINUTE";
 	protected $tableName = "logs";
-	protected $fieldNames = array("log_id","user_id", "test_id", "log_date", "log_time");
+	protected $fieldNames = array("log_id","user_id", "test_id", "log_date", "log_time", "remote_ip");
 
 	public function getLogsByUser($user_id)
 	{
@@ -40,7 +40,7 @@ class Model_Log extends Model_Common {
 		}
 	}
 	
-	public function startTest($user_id, $test_id)
+	public function startTest($user_id, $test_id, $remote_ip = "0.0.0.0")
 	{
 		$group_id = null;
 		$subject_id = null;
@@ -89,9 +89,10 @@ class Model_Log extends Model_Common {
 					$this->fieldNames[2] => $test_id,
 					$this->fieldNames[3] => date("Y-m-d"),
 					$this->fieldNames[4] => date("H:i:s"),
+					$this->fieldNames[5] => $remote_ip
 			);
 			
-			Session::instance()->set("startTime", date("H:s:i"));
+			Session::instance()->set("startTime", $values[$this->fieldNames[4]]);
 			$insertQuery = DB::insert($this->tableName, $this->fieldNames)
 			->values($values);
 			try

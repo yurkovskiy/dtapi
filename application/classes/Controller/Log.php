@@ -14,12 +14,18 @@ class Controller_Log extends Controller_BaseAdmin {
 		$user_id = $this->request->param("id");
 		$test_id = $this->request->param("id1");
 		
+		// check Session. User cannot run this method twice before checkAnswers
+		if (!is_null(Session::instance()->get("startTime")))
+		{
+			throw new HTTP_Exception_400("User is making test at current moment");
+		}
+		
 		if ((is_null($user_id)) || (is_null($test_id)))
 		{
 			throw new HTTP_Exception_400("This request require some input parameters");
 		}
-		
-		$model = Model::factory($this->modelName)->startTest($user_id, $test_id);
+
+		$model = Model::factory($this->modelName)->startTest($user_id, $test_id, Request::$client_ip);
 		
 		if (!is_string($model) && is_int($model))
 		{

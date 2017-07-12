@@ -16,7 +16,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```Answer: {answer_id, question_id, true_answer, answer_text, attachment}```
  * ```Student: {user_id, gradebook_id, student_surname, student_name, student_fname, group_id, plain_password, photo}```
  * ```User [AdminUser]: {id, email, username, password, logins, last_login}```
- * ```Log: {log_id, user_id, test_id, log_date, log_time}```
+ * ```Log: {log_id, user_id, test_id, log_date, log_time, remote_ip}```
  * ```Result: {session_id, student_id, test_id, session_date, start_time, end_time, result, questions, true_answers, answers}```
 
 ## CRUD Actions which can be used with almost all entities
@@ -50,7 +50,8 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 
 ## Questions / Answers functionality
  * Almost all CRUD operations are allowed
- * ```GET/ http://<host>/question/getQuestionsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with random generated list of questions
+ * ```GET/ http://<host>/question/getQuestionsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with random generated list of questions [@deprecated]
+ * ```GET/ http://<host>/question/getQuestionIdsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with a list of random generated question ids
  * ```GET/ http://<host>/question/getRecordsRangeByTest/<test_id>/<limit>/<offset>``` -- returns JSON with records for pagination
  * ```GET/ http://<host>/question/countRecordsByTest/<test_id>``` -- returns JSON in following format {"numberOfRecords": "10"} using for pagination
  * ```GET/ http://<host>/answer/getAnswersByQuestion/<question_id>``` -- returns JSON with answers which related to question with question_id
