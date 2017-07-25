@@ -18,7 +18,7 @@ class Controller_TestPlayer extends Controller_Base {
 	{
 		$offset_sec = date("Z"); // offset in seconds depends on timezone
 		$curtime = time() + $offset_sec; // current time depends on timezone
-		$this->response->body(json_encode(array("unix_timestamp" => time(),"offset" => $offset_sec,"curtime" => $curtime)));
+		$this->response->body(json_encode(array("unix_timestamp" => time(),"offset" => $offset_sec,"curtime" => $curtime), JSON_UNESCAPED_UNICODE));
 	}
 	
 	/**
@@ -40,25 +40,24 @@ class Controller_TestPlayer extends Controller_Base {
 		{
 			// save data to the server storage
 			$session->set($this->TEST_PLAYER_DATA, $value);
-			$this->response->body(json_encode(array("response" => "Data has been saved")));
+			$this->response->body(json_encode(array("response" => "Data has been saved"), JSON_UNESCAPED_UNICODE));
 		}
 		
 	}
 	
 	/**
 	 * @name getData - get user's custom data from session 
-	 * @throws HTTP_Exception_404 - if the empty set
 	 */
 	public function action_getData()
 	{
 		$session = Session::instance();
 		if (is_null($session->get($this->TEST_PLAYER_DATA)))
 		{
-			throw new HTTP_Exception_404("Empty set");
+			$this->response->body(json_encode(array("response" => "Empty slot"), JSON_UNESCAPED_UNICODE));
 		}
 		else 
 		{
-			$this->response->body(json_encode($session->get($this->TEST_PLAYER_DATA)));
+			$this->response->body(json_encode($session->get($this->TEST_PLAYER_DATA), JSON_UNESCAPED_UNICODE));
 		}
 		
 	}
@@ -93,14 +92,13 @@ class Controller_TestPlayer extends Controller_Base {
 	
 	/**
 	 * @name getEndTime - get JSON representation of EndTime
-	 * @throws HTTP_Exception_404
 	 */
 	public function action_getEndTime()
 	{
 		$session = Session::instance();
 		if (is_null($session->get($this->TEST_PLAYER_TIME)))
 		{
-			throw new HTTP_Exception_404("Empty set");
+			$this->response->body(json_encode(array("response" => "Empty slot"), JSON_UNESCAPED_UNICODE));
 		}
 		else
 		{
