@@ -22,11 +22,25 @@ class Model_Student extends Model_Common {
 		// first we need register user account uses User Model for future Auth
 		$userModel = ORM::factory("User");
 		
-		// divide $values array
-		$valuesForUserModel = array_slice($values, 0, 4);
-		// workaround :-(
-		$valuesForStudentModel = array_values(array_slice($values, 4, 7));
-				
+		$userModel_fields = array("username", "password", "password_confirm", "email");
+		
+		/* Fixed workaround with parameters 12.10.2017 */
+		$valuesForUserModel = array();
+		$valuesForStudentModel = array();
+		
+		foreach ($values as $k => $v) {
+			if (in_array($k, $userModel_fields)) {
+				$valuesForUserModel[$k] = $v;				
+			}
+			elseif (in_array($k, $this->fieldNames)) {
+				$valuesForStudentModel[$k] = $v;				
+			}
+			else {
+				throw new HTTP_Exception_400("Wrong insert parameters"); 
+			}
+		}
+		/* End of Fix */
+						
 		try {
 			$userModel->create_user($valuesForUserModel, array('username', 'password', 'email'));
 		} catch (ORM_Validation_Exception $e) {
@@ -42,10 +56,10 @@ class Model_Student extends Model_Common {
 		$aff_rows = null;
 		array_unshift($valuesForStudentModel, $userModel->id);
 		// change HTML special symbols to entities
-		for ($i = 0;$i < sizeof($valuesForStudentModel);$i++)
-		{
-			$valuesForStudentModel[$i] = htmlentities($valuesForStudentModel[$i], ENT_QUOTES, "UTF-8");
+		foreach ($valuesForStudentModel as $k => $v) {
+			$valuesForStudentModel[$k] = htmlentities($valuesForStudentModel[$k], ENT_QUOTES, "UTF-8");
 		}
+		
 		$insertQuery = DB::insert($this->tableName, $this->fieldNames)->values($valuesForStudentModel);
 		try
 		{
