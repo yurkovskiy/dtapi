@@ -33,7 +33,7 @@ class Model_Student extends Model_Common {
 				$valuesForUserModel[$k] = $v;				
 			}
 			elseif (in_array($k, $this->fieldNames)) {
-				$valuesForStudentModel[$k] = $v;				
+				$valuesForStudentModel[$k] = htmlentities($v, ENT_QUOTES, "UTF-8");				
 			}
 			else {
 				throw new HTTP_Exception_400("Wrong insert parameters"); 
@@ -55,10 +55,6 @@ class Model_Student extends Model_Common {
 		
 		$aff_rows = null;
 		array_unshift($valuesForStudentModel, $userModel->id);
-		// change HTML special symbols to entities
-		foreach ($valuesForStudentModel as $k => $v) {
-			$valuesForStudentModel[$k] = htmlentities($valuesForStudentModel[$k], ENT_QUOTES, "UTF-8");
-		}
 		
 		$insertQuery = DB::insert($this->tableName, $this->fieldNames)->values($valuesForStudentModel);
 		try
@@ -80,9 +76,26 @@ class Model_Student extends Model_Common {
 		$model = null;
 		$record_id = $values[0];
 		// divide $values array
-		$valuesForUserModel = array_slice($values, 1, 4);
-		// workaround :-(
-		$valuesForStudentModel = array_slice($values, 5, 7);
+		array_shift($values);
+
+		$userModel_fields = array("username", "password", "password_confirm", "email");
+		
+		/* Fixed workaround with parameters 12.10.2017 */
+		$valuesForUserModel = array();
+		$valuesForStudentModel = array();
+		
+		foreach ($values as $k => $v) {
+			if (in_array($k, $userModel_fields)) {
+				$valuesForUserModel[$k] = $v;
+			}
+			elseif (in_array($k, $this->fieldNames)) {
+				$valuesForStudentModel[$k] = htmlentities($v, ENT_QUOTES, "UTF-8");;
+			}
+			else {
+				throw new HTTP_Exception_400("Wrong insert parameters");
+			}
+		}
+		/* End of Fix */
 		
 		try {
 			$model = ORM::factory("User", $record_id)->update_user($valuesForUserModel);
@@ -93,12 +106,6 @@ class Model_Student extends Model_Common {
 		
 		// update data in studens table
 		$aff_rows = null;
-		
-		// change HTML special symbols to entities
-		foreach ($valuesForStudentModel as $key => $value)
-		{
-			$valuesForStudentModel[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
-		}
 		
 		$updateQuery = DB::update($this->tableName)
 			->set($valuesForStudentModel)
