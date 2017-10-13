@@ -54,9 +54,11 @@ class Model_Student extends Model_Common {
 		// Store information into students table
 		
 		$aff_rows = null;
-		array_unshift($valuesForStudentModel, $userModel->id);
 		
-		$insertQuery = DB::insert($this->tableName, $this->fieldNames)->values($valuesForStudentModel);
+		// Big Bug fix: 13.10.2017
+		$valuesForStudentModel["user_id"] = $userModel->id;
+		$insertQuery = DB::insert($this->tableName, array_keys($valuesForStudentModel))->values($valuesForStudentModel);
+		// end of fix
 		try
 		{
 			list($insert_id, $aff_rows) = $insertQuery->execute();
