@@ -90,6 +90,21 @@ class Controller_AdminUser extends Controller {
 		
 		try {
 			$model = ORM::factory("User", $record_id);
+			// get roles for checking
+			$roles = $model->roles->find_all();
+			$rolesArray = array();
+			foreach ($roles as $role)
+			{
+				array_push($rolesArray, $role->name);
+			}
+			unset($roles);
+			
+			// We can delete admin users only using this Controller
+			if (!in_array($this->ADMIN_ROLE, $rolesArray))
+			{
+				throw new HTTP_Exception_403("Cannot erase non admin users using this kind of request");				
+			}
+			
 			$model->delete();
 			$this->response->body(json_encode(array("response" => "ok")));
 		} catch (Kohana_Exception $e) {
