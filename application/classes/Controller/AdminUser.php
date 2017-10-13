@@ -5,7 +5,7 @@
  */
 class Controller_AdminUser extends Controller {
 	
-	private $RAW_DATA_SOURCE = "php://input";
+	private $ROOT_ID = 1;
 	
 	protected $ADMIN_ROLE = "admin";
 	
@@ -24,7 +24,7 @@ class Controller_AdminUser extends Controller {
 	public function action_insertData() 
 	{
 		// Read POST data in JSON format
-		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$params = @json_decode($this->request->body());
 		
 		// check if input data is given
 		if (is_null($params))
@@ -55,7 +55,7 @@ class Controller_AdminUser extends Controller {
 		$record_id = $this->request->param("id");
 				
 		// get info from client
-		$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$params = json_decode($this->request->body());
 		$paramsArr = get_object_vars($params);
 			
 		try {
@@ -80,6 +80,12 @@ class Controller_AdminUser extends Controller {
 		if ($record_id == $user_id)
 		{
 			throw new HTTP_Exception_400("Error: Cannot erase infomration about oneself");
+		}
+		
+		// check for ROOT_ID (we can delete this user)
+		if ($record_id == $this->ROOT_ID)
+		{
+			throw new HTTP_Exception_403("Error: Cannot erase information about main ROOT user");
 		}
 		
 		try {

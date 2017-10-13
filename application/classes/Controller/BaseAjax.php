@@ -127,7 +127,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		$model = null;
 		
 		// Read POST data in JSON format
-		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$params = @json_decode($this->request->body());
 		
 		// check if input data is given
 		if (is_null($params))
@@ -191,7 +191,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		else 
 		{
 			// Get data from JSON
-			$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+			$params = @json_decode($this->request->body());
 					
 			// check if input data is given
 			if (is_null($params))

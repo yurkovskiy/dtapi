@@ -34,7 +34,7 @@ class Controller_EntityManager extends Controller_Base {
 	{
 	
 		// Read POST data in JSON format
-		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$params = @json_decode($this->request->body());
 		
 		// check if input data is given
 		if (is_null($params))

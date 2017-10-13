@@ -7,8 +7,6 @@ defined ('SYSPATH') or die ('No direct script access.');
  */
 class Controller_Login extends Controller 
 {
-	private $RAW_DATA_SOURCE = "php://input";
-	
 	/**
 	 *
 	 * @name index - login action
@@ -17,7 +15,8 @@ class Controller_Login extends Controller
 	public function action_index() 
 	{
 		$result = array();
-		$params = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+
+		$params = @json_decode($this->request->body());
 		
 		if (is_null($params)) 
 		{

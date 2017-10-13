@@ -31,7 +31,7 @@ class Controller_TestPlayer extends Controller_Base {
 		// get session object
 		$session = Session::instance();
 		
-		$value = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$value = @json_decode($this->request->body());
 		if (is_null($value))
 		{
 			throw new HTTP_Exception_400("Wrong input data");
@@ -70,7 +70,7 @@ class Controller_TestPlayer extends Controller_Base {
 	public function action_saveEndTime()
 	{
 		$session = Session::instance();
-		$value = @json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+		$value = @json_decode($this->request->body());
 		if (is_null($value))
 		{
 			throw new HTTP_Exception_400("Wrong input data");

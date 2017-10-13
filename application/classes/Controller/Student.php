@@ -45,7 +45,7 @@ class Controller_Student extends Controller_BaseAdmin {
 		{
 			$result = array();
 			// Read POST data in JSON format
-			$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+			$params = json_decode($this->request->body());
 			
 			if (is_null($params))
 			{
@@ -100,7 +100,7 @@ class Controller_Student extends Controller_BaseAdmin {
 			else
 			{
 				// Read POST data in JSON format
-				$params = json_decode(file_get_contents($this->RAW_DATA_SOURCE));
+				$params = json_decode($this->request->body());
 				
 				if (is_null($params))
 				{

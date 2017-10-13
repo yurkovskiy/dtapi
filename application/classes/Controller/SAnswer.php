@@ -81,7 +81,7 @@ class Controller_SAnswer extends Controller_BaseAjax {
 		/* End of Security check */
 		
 		// Read POST data in JSON format
-		$data = file_get_contents($this->RAW_DATA_SOURCE);
+		$data = $this->request->body();
 		$params = @json_decode($data);
 		// check if input data is given
 		if (is_null($params) || (!is_array($params)))
