@@ -96,7 +96,7 @@ class Controller_Question extends Controller_BaseAdmin {
 				$item[$fieldName] = $data->$fieldName;
 				array_push($result, $item);
 			}
-			if (sizeof($result) < $number)
+			if (count($result) < $number)
 			{
 				throw new HTTP_Exception_404("Not enough number of questions for quiz");
 			}

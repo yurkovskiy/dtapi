@@ -162,6 +162,11 @@ abstract class Model_Common extends Model
 	 */
 	public function registerRecord($values)
 	{
+		// check $values array
+		if (count($values) !== (count($this->fieldNames) - 1)) {
+			throw new HTTP_Exception_400("A lot of fields of an input object");
+		}
+		
 		$aff_rows = null;
 		
 		// change HTML special symbols to entities
@@ -170,9 +175,9 @@ abstract class Model_Common extends Model
 			$values[$key] = htmlentities($value, ENT_QUOTES, "UTF-8");
 		}
 		
-		// sync with table field names sequence
+		// sync up with table field names sequence
 		$_values = array();
-		for ($i = 1;$i <= sizeof($values);$i++)
+		for ($i = 1;$i <= count($values);$i++)
 		{
 			if (!array_key_exists($this->fieldNames[$i], $values))
 			{

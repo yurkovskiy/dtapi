@@ -153,7 +153,7 @@ class Controller_AdminUser extends Controller {
 			}
 		}
 		
-		if (sizeof($result) < 1)
+		if (count($result) < 1)
 		{
 			$result["response"] = "no records";
 		}
@@ -195,7 +195,7 @@ class Controller_AdminUser extends Controller {
 			array_push($result, $item);
 		}
 		
-		if (sizeof($result) < 1)
+		if (count($result) < 1)
 		{
 			$result["response"] = "no records";
 		}
@@ -238,7 +238,7 @@ class Controller_AdminUser extends Controller {
 			array_push($result, $item);
 		}
 		
-		if (sizeof($result) < 1)
+		if (count($result) < 1)
 		{
 			$result["response"] = "no records";
 		}

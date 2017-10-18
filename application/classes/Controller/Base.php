@@ -30,7 +30,7 @@ abstract class Controller_Base extends Controller {
 			}
 			array_push($result, $item);
 		}
-		if (sizeof($result) < 1)
+		if (count($result) < 1)
 		{
 			$result["response"] = "no records";
 		}
