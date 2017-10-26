@@ -211,8 +211,19 @@ class Controller_AdminUser extends Controller {
 			->on("user_id", "=", "user.id")
 			->where("role_id", "=", "2")
 			->count_all();
-		$result["numberOfRecords"] = $model;
-		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+		$this->response->body(json_encode(array("numberOfRecords" => $model), JSON_UNESCAPED_UNICODE));
+	}
+	
+	public function action_getLastRecordId()
+	{
+		$model = ORM::factory("User")
+			->join("roles_users")
+			->on("user_id", "=", "user.id")
+			->where("role_id", "=", "2")
+			->order_by("user.id", "DESC")
+			->limit(1)
+			->find();
+		$this->response->body(json_encode(array("lastRecordId" => $model->id), JSON_UNESCAPED_UNICODE));
 	}
 	
 	public function action_getRecordsBySearch()

@@ -106,8 +106,17 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	public function action_countRecords()
 	{
 		$numberOfRecords = Model::factory($this->modelName)->countRecords();
-		$result["numberOfRecords"] = $numberOfRecords;
-		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+		$this->response->body(json_encode(array("numberOfRecords" => $numberOfRecords), JSON_UNESCAPED_UNICODE));
+	}
+	
+	/**
+	 * Return the number of last record ID of some Entity
+	 * @return JSON object
+	 */
+	public function action_getLastRecordId()
+	{
+		$lastRecordId = Model::factory($this->modelName)->getLastRecordId();
+		$this->response->body(json_encode(array("lastRecordId" => $lastRecordId), JSON_UNESCAPED_UNICODE));
 	}
 	
 	// new INSERT

@@ -74,6 +74,18 @@ abstract class Model_Common extends Model
 		$count = DB::query(Database::SELECT, $query)->execute()->get('count');
 		return $count;
 	}
+	
+	/**
+	 * Get the last record id of Entity
+	 * @return int - number of last record id
+	 */
+	
+	public function getLastRecordId()
+	{
+		$query = "SELECT MAX({$this->fieldNames[0]}) AS maxID FROM {$this->tableName}";
+		$maxID = DB::query(Database::SELECT, $query)->execute()->get('maxID');
+		return (is_null($maxID)) ? 0: $maxID;
+	}
 
 	/**
 	 * Select records from database [for pagination]
@@ -273,5 +285,5 @@ abstract class Model_Common extends Model
 		if ($aff_rows > 0) return true;
 		if ($aff_rows == 0) return false;
 	}
-
+	
 } // Common Model
