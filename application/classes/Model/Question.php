@@ -9,6 +9,12 @@ class Model_Question extends Model_Common {
 	
 	protected $tableName = "questions";
 	protected $fieldNames = array("question_id", "test_id", "question_text", "level", "type", "attachment");
+	protected $_fieldNames = array("question_id", "test_id", "question_text", "level", "type");
+	
+	public function getFieldNames_()
+	{
+		return $this->_fieldNames;
+	}
 	
 	/**
 	 * 
@@ -88,10 +94,13 @@ class Model_Question extends Model_Common {
 	 * @param int $test_id
 	 * @param int $limit
 	 * @param int $offset
+	 * @param boolean $with_images
 	 * @return MySQL Result Set
 	 */
-	public function getQuestionsRangeByTest($test_id, $limit, $offset)
+	public function getQuestionsRangeByTest($test_id, $limit, $offset, $without_images = false)
 	{
+		if ($without_images) $this->fieldNames = $this->_fieldNames;
+		 
 		$query = DB::select_array($this->fieldNames)
 				->from($this->tableName)
 				->where($this->fieldNames[1], "=", $test_id)

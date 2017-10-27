@@ -121,6 +121,12 @@ class Controller_Question extends Controller_BaseAdmin {
 		$test_id = $this->request->param("id");
 		$limit = $this->request->param("id1");
 		$offset = $this->request->param("id2");
+		$without_images = $this->request->param("id3");
+		
+		$without_images = (is_null($without_images)) ? false : true;
+		
+		$fieldNames = null;
+		
 		$result = array();
 	
 		// check input parameters
@@ -130,10 +136,11 @@ class Controller_Question extends Controller_BaseAdmin {
 		}
 		else
 		{
-			$DBResult = Model::factory($this->modelName)->getQuestionsRangeByTest($test_id, $limit, $offset);
-			$fieldNames = Model::factory($this->modelName)->getFieldNames();
+			$DBResult = Model::factory($this->modelName)->getQuestionsRangeByTest($test_id, $limit, $offset, $without_images);
+			$fieldNames = ($without_images) ? Model::factory($this->modelName)->getFieldNames_() : Model::factory($this->modelName)->getFieldNames();
 			
 			$this->buildJSONResponse($DBResult, $fieldNames);
 		}
 	}
+	
 } // end of Controller_Question
