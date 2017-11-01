@@ -15,7 +15,7 @@ class Model_Question extends Model_Common {
 	{
 		return $this->_fieldNames;
 	}
-	
+			
 	/**
 	 * 
 	 * @param int $test_id
@@ -94,7 +94,7 @@ class Model_Question extends Model_Common {
 	 * @param int $test_id
 	 * @param int $limit
 	 * @param int $offset
-	 * @param boolean $with_images
+	 * @param boolean $without_images
 	 * @return MySQL Result Set
 	 */
 	public function getQuestionsRangeByTest($test_id, $limit, $offset, $without_images = false)

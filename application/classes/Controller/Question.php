@@ -39,7 +39,7 @@ class Controller_Question extends Controller_BaseAdmin {
 			throw new HTTP_Exception_400("This method allowed for gathering one record only");
 		}
 	}
-	
+			
 	/**
 	 * Get questions for test by level
 	 * @deprecated will be changed to use getQuestionIdsByLevelRand due to a lot of data	 * 
@@ -111,9 +111,7 @@ class Controller_Question extends Controller_BaseAdmin {
 	{
 		$test_id = $this->request->param("id");
 		$numberOfRecords = Model::factory($this->modelName)->countQuestionsByTest($test_id);
-		$result = array();
-		$result["numberOfRecords"] = $numberOfRecords;
-		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
+		$this->response->body(json_encode(array("numberOfRecords" => $numberOfRecords), JSON_UNESCAPED_UNICODE));
 	}
 	
 	public function action_getRecordsRangeByTest()

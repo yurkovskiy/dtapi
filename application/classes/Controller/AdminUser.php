@@ -5,7 +5,7 @@
  */
 class Controller_AdminUser extends Controller {
 	
-	private $ROOT_ID = 1;
+	private $ROOT_ID = 1; // the main admin of the system
 	
 	protected $ADMIN_ROLE = "admin";
 	
@@ -39,7 +39,7 @@ class Controller_AdminUser extends Controller {
 		$model = null;
 		try {
 			$model = ORM::factory("User")->create_user($paramsArr, array('username', 'password', 'email'));
-			$this->response->body(json_encode(array("id" => $model->id, "response" => "ok")));
+			$this->response->body(json_encode(array("id" => $model->id, "username" => $model->username, "email" => $model->email)));
 		} catch (ORM_Validation_Exception $e) {
 			throw new HTTP_Exception_400($e->getMessage());
 		}
