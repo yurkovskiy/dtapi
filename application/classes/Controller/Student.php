@@ -32,7 +32,18 @@ class Controller_Student extends Controller_BaseAdmin {
 				throw new HTTP_Exception_403("You don't have permissions to use this method in that way");
 			}
 		}
-		parent::action_getRecords();
+		
+		// only one record due to a lot of data
+		$record_id = $this->request->param("id");
+		if (isset($record_id))
+		{
+			parent::action_getRecords();
+		}
+		else 
+		{
+			throw new HTTP_Exception_400("This method allowed for gathering one record only");
+		}
+		
 	}
 	
 	public function action_insertData()
