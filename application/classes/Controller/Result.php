@@ -9,6 +9,15 @@ class Controller_Result extends Controller_BaseAjax {
 
 	protected $modelName = "Result";
 	
+	// security check -> only admins can see result reports and do some actions
+	public function before()
+	{
+		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))
+		{
+			throw new HTTP_Exception_403("You don't have permissions to work with this Entity directly");
+		}
+	}
+	
 	public function action_insertData()
 	{
 		throw new HTTP_Exception_404("It is prohibited to use this call directly");
