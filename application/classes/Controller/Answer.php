@@ -41,6 +41,11 @@ class Controller_Answer extends Controller_BaseAdmin {
 	
 	public function action_getAnswersByQuestion()
 	{
+		$without_images = $this->request->param("id1");
+		if (!is_null($without_images))
+		{
+			return $this->getEntityRecordsBy("getAnswersByQuestion", Model::factory($this->modelName)->getFieldNames_());
+		}
 		return $this->getEntityRecordsBy("getAnswersByQuestion");
 	}
 

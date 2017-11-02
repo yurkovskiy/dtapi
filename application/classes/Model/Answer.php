@@ -9,6 +9,12 @@ class Model_Answer extends Model_Common implements Question {
 	
 	protected $tableName = "answers";
 	protected $fieldNames = array("answer_id","question_id", "true_answer", "answer_text", "attachment");
+	protected $fieldNames_ = array("answer_id","question_id", "true_answer", "answer_text");
+	
+	public function getFieldNames_()
+	{
+		return $this->fieldNames_;
+	}
 	
 	public function getAnswersByQuestion($question_id)
 	{

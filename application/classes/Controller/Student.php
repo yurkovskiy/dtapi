@@ -188,6 +188,11 @@ class Controller_Student extends Controller_BaseAdmin {
 	
 	public function action_getStudentsByGroup()
 	{
+		$without_images = $this->request->param("id1");
+		if (!is_null($without_images))
+		{
+			return $this->getEntityRecordsBy("getStudentsByGroup", Model::factory($this->modelName)->getFieldNames_());
+		}		
 		return $this->getEntityRecordsBy("getStudentsByGroup");
 	}
 	

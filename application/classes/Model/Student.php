@@ -9,6 +9,12 @@ class Model_Student extends Model_Common {
 	
 	protected $tableName = "students";
 	protected $fieldNames = array("user_id", "gradebook_id","student_surname", "student_name", "student_fname","group_id", "plain_password", "photo");
+	protected $fieldNames_ = array("user_id", "gradebook_id","student_surname", "student_name", "student_fname","group_id", "plain_password");
+	
+	public function getFieldNames_()
+	{
+		return $this->fieldNames_;
+	}
 
 	/**
 	 * JSON Record for new student

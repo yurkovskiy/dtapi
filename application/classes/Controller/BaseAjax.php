@@ -15,14 +15,17 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	 * @name getEntityRecordsBy
 	 * @param String $modelMethod
 	 */
-	protected function getEntityRecordsBy($modelMethod)
+	protected function getEntityRecordsBy($modelMethod, $fieldNames = null)
 	{
 		$record_id = $this->request->param("id");
 		
 		// little reflection :-)
 		$DBResult = Model::factory($this->modelName)->{$modelMethod}($record_id);
 		
-		$fieldNames = Model::factory($this->modelName)->getFieldNames();
+		if (is_null($fieldNames))
+		{
+			$fieldNames = Model::factory($this->modelName)->getFieldNames();
+		}
 		
 		$this->buildJSONResponse($DBResult, $fieldNames);
 	}
