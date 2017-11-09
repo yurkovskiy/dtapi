@@ -112,6 +112,11 @@ Kohana::init(array(
 ));
 
 /**
+ * REST API (only json) header set
+ */
+Kohana::$content_type = "application/json";
+
+/**
  * Attach the file write to logging. Multiple writers are supported.
  */
 Kohana::$log->attach(new Log_File(APPPATH.'logs'));

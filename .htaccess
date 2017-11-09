@@ -7,7 +7,7 @@ Header always set Access-Control-Allow-Methods "PUT,POST,GET,OPTIONS, DELETE"
 Header always set Access-Control-Allow-Headers "Origin,X-Requested-With,Content-Type,Accept"
 Header always set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
 Header always set Pragma "no-cache"
-Header always set Content-Type "application/json;charset=utf-8"
+#Header always set Content-Type "application/json;charset=utf-8"
 
 AddDefaultCharset UTF-8
 AddCharset UTF-8 .php
