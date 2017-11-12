@@ -26,7 +26,7 @@ abstract class Controller_Base extends Controller {
 		{
 			$item = array();
 			foreach ($fieldNames as $fieldName) {
-				$item[$fieldName] = $data->{$fieldName};
+				$item[$fieldName] = html_entity_decode($data->{$fieldName}, ENT_QUOTES);
 			}
 			array_push($result, $item);
 		}
