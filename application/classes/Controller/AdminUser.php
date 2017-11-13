@@ -256,4 +256,26 @@ class Controller_AdminUser extends Controller {
 		
 		$this->response->body(json_encode($result, JSON_UNESCAPED_UNICODE));
 	}
+	
+	/**
+	 * Method for checking uniqueness of username (can use for Admin/Student usernames)
+	 * @name checkUserName
+	 * @param string username (by GET request /{})
+	 * @return JSON true - if the username is already present at DB or fase if not
+	 * @throws HTTP_Exception_400
+	 */
+	public function action_checkUserName()
+	{
+		$username = $this->request->param("id");
+		if (is_null($username))
+		{
+			throw new HTTP_Exception_400("Wrong input data");
+		}
+		else 
+		{
+			$model = ORM::factory("User")->where("username", "=", $username)->count_all();
+			$response = ($model === 1) ? true : false;			
+			$this->response->body(json_encode(array("response" => $response), JSON_UNESCAPED_UNICODE));
+		}
+	}
 }

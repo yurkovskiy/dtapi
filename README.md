@@ -7,7 +7,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 ## Entities
  * ```Faculty: {faculty_id, faculty_name, faculty_description}```
  * ```Speciality: {speciality_id, speciality_code, speciality_name}```
- * ```Group: {group_id, group_name, faculty_id, speciality_id}```
+ * ```Group: {group_id, group_name, speciality_id, faculty_id}```
  * ```Subject: {subject_id, subject_name, subject_description}```
  * ```Test: {test_id, test_name, subject_id, tasks, time_for_test, enabled, attempts}```
  * ```TestDetail: {id, test_id, level, tasks, rate}```
@@ -26,6 +26,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```GET/ http://<host>/<entity>/getRecords/<id>``` -- returns JSON with one record of database with ID
  * ```GET/ http://<host>/<entity>/getRecordsRange/<limit>/<offset>``` -- returns JSON with records of database for pagination
  * ```GET/ http://<host>/<entity>/countRecords``` -- returns JSON in following format {"numberOfRecords": "10"} using for pagination
+ * ```GET/ http://<host>/<entity>/getRecordsBySearch/<search_string>``` -- using for filtering by xxxx_name property of some entity (not implemented for all entities)
  * ```POST/ http://<host>/<entity>/insertData``` -- using for insert new record. Returns JSON with new record id and some status
  * ```POST/ http://<host>/<entity>/update/<id>``` -- using for update info about record with ID
  * ```DELETE (GET)/ http://<host>/<entity>/del/<id>``` -- using for remove record with ID
@@ -38,7 +39,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * EntityManager is a special functionality for simplify requests to the server-side
  * For perform the action please do request which are placed below.
  * ```POST/ http://<host>/EntityManager/getEntityValues``` -- returns JSON with entitites
- * In request body we need to use JSON with following structure: {"entity":"Subject", "ids":[1,2,3,4,5]}
+ * In request body we need to use JSON with following structure: ```{"entity":"Subject", "ids":[1,2,3,4,5]}```
  * Value of entity property should start from capital letter
  
 ## Auth Actions
@@ -52,9 +53,11 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * Almost all CRUD operations are allowed
  * ```GET/ http://<host>/question/getQuestionsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with random generated list of questions [@deprecated]
  * ```GET/ http://<host>/question/getQuestionIdsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with a list of random generated question ids
- * ```GET/ http://<host>/question/getRecordsRangeByTest/<test_id>/<limit>/<offset>``` -- returns JSON with records for pagination
+ * ```GET/ http://<host>/question/getRecordsRangeByTest/<test_id>/<limit>/<offset>/<[wi]>``` -- returns JSON with records for pagination 
+      (if parameter [wi] is provided the question structure will be send from server without "attachment" field
  * ```GET/ http://<host>/question/countRecordsByTest/<test_id>``` -- returns JSON in following format {"numberOfRecords": "10"} using for pagination
- * ```GET/ http://<host>/answer/getAnswersByQuestion/<question_id>``` -- returns JSON with answers which related to question with question_id
+ * ```GET/ http://<host>/answer/getAnswersByQuestion/<question_id>/<[wi]>``` -- returns JSON with answers which related to question with question_id
+      (if parameter [wi] is provided the answer structure will be send from server without "attachment" field
 
 ## Test [Quiz]
  * Almost all CRUD operations are allowed
@@ -86,6 +89,10 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * ```GET/ http://<host>/TestPlayer/getEndTime``` -- returns JSON with infromation from second server's storage slot
  * ```GET/ http://<host>/TestPlayer/resetSessionData``` -- clear infromation from all server's storage slots
  * ```GET/ http://<host>/TestPlayer/getTest``` -- checking possibility to make a test by some user using infromtation from timetables, returns Test entity or HTTP400 error
+
+## AdminUser
+ * ```GET/ http://<host>/AdminUser/checkUserName/{username}``` -- returns JSON ```{"response": true}``` if the {username} already exist at the system or ```{"response": false}```
+   this functionality also can use for check student's username
 
 ## Some diffs between version 2.0
  * Added HTTP 400 Exception when wrong request
