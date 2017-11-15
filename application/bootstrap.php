@@ -149,6 +149,15 @@ Kohana::modules(array(
 
 
 /**
+ * Route for AdminUser/checking (becuase we need to add regexp for special symbols)
+ */
+
+Route::set("userchecking", 'AdminUser(/<action>(/<id>))', array('action' => 'checkUserName|checkEmailAddress', 'id' => '.*'))
+	->defaults(array(
+		'controller' => 'AdminUser'
+	));
+
+/**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */

@@ -258,6 +258,20 @@ class Controller_AdminUser extends Controller {
 	}
 	
 	/**
+	 * Helper function for checking uniqueness
+	 * @param string $field
+	 * @param string $value
+	 * 
+	 * @return JSON {"responese": true/false}
+	 */
+	protected function checkUniqueness($field, $value)
+	{
+		$model = ORM::factory("User")->where($field, "=", $value)->count_all();
+		$response = ($model === 1) ? true : false;
+		$this->response->body(json_encode(array("response" => $response), JSON_UNESCAPED_UNICODE));
+	}
+	
+	/**
 	 * Method for checking uniqueness of username (can use for Admin/Student usernames)
 	 * @name checkUserName
 	 * @param string username (by GET request /{})
@@ -273,9 +287,27 @@ class Controller_AdminUser extends Controller {
 		}
 		else 
 		{
-			$model = ORM::factory("User")->where("username", "=", $username)->count_all();
-			$response = ($model === 1) ? true : false;			
-			$this->response->body(json_encode(array("response" => $response), JSON_UNESCAPED_UNICODE));
+			$this->checkUniqueness("username", $username);
+		}
+	}
+	
+	/**
+	 * Method for checking uniqueness of email (can use for Admin/Student email)
+	 * @name checkEmailAddress
+	 * @param string email (by GET request /{})
+	 * @return JSON true - if the email is already present at DB or fase if not
+	 * @throws HTTP_Exception_400
+	 */
+	public function action_checkEmailAddress()
+	{
+		$email = $this->request->param("id");
+		if (is_null($email))
+		{
+			throw new HTTP_Exception_400("Wrong input data");
+		}
+		else
+		{
+			$this->checkUniqueness("email", $email);
 		}
 	}
 }
