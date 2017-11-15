@@ -246,7 +246,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	 * @name action_del
 	 * @author Yuriy Bezgachnyuk
 	 * @access public
-	 * @method GET
+	 * @method GET / DELETE
 	 * 
 	 * Delete information about Entity from database
 	 * Using unique record_id for this action 

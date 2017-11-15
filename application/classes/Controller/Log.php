@@ -14,17 +14,32 @@ class Controller_Log extends Controller_BaseAdmin {
 		$user_id = $this->request->param("id");
 		$test_id = $this->request->param("id1");
 		
+		// Check input parameters
+		if ((is_null($user_id)) || (is_null($test_id)))
+		{
+			throw new HTTP_Exception_400("This request require some input parameters");
+		}
+		
+		// Strong check
+		// Security checking: Student can start test only for himself
+		if (Auth::instance()->logged_in($this->STUDENT_ROLE))
+		{
+			if ($user_id != Auth::instance()->get_user()->id)
+			{
+				throw new HTTP_Exception_403("You can start test only for you!!!");
+			}
+		}
+		else 
+		{
+			throw new HTTP_Exception_403("Only students can make a test");
+		}
+		
 		// check Session. User cannot run this method twice before checkAnswers
 		if (!is_null(Session::instance()->get("startTime")))
 		{
 			throw new HTTP_Exception_400("User is making test at current moment");
 		}
 		
-		if ((is_null($user_id)) || (is_null($test_id)))
-		{
-			throw new HTTP_Exception_400("This request require some input parameters");
-		}
-
 		$model = Model::factory($this->modelName)->startTest($user_id, $test_id, Request::$client_ip);
 		
 		if (!is_string($model) && is_int($model))

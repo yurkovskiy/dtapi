@@ -66,6 +66,10 @@ class Model_Log extends Model_Common {
 			{
 				throw new HTTP_Exception_403("You cannot make the test due to used all attempts");
 			}
+			if (intval($_test->enabled) === 0)
+			{
+				throw new HTTP_Exception_403("You cannot make the test due that this test is disabled");
+			}
 		}
 		unset($test);
 		
