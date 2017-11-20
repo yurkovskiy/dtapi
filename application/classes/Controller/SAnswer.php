@@ -72,11 +72,11 @@ class Controller_SAnswer extends Controller_BaseAjax {
 		
 		/* Security check */
 		// 1 step
-		/* if (is_null($session->get("startTime"))) // if user would like to cheat :-(
+		if (is_null($session->get("startTime"))) // if user would like to cheat :-(
 		{
 			$session->destroy();
 			throw new HTTP_Exception_400("Would you like to be a superman? You have been logout");
-		} */
+		}
 		
 		/* End of Security check */
 		
