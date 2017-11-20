@@ -18,7 +18,7 @@ class Controller_Login extends Controller
 
 		$params = @json_decode($this->request->body());
 		
-		if (is_null($params)) 
+		if (is_null($params) || (!is_object($params))) 
 		{
 			throw new HTTP_Exception_400("Wrong request");
 		} 

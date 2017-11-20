@@ -64,6 +64,11 @@ class Model_Answer extends Model_Common {
 					return InputFieldQuestion::checkAnswers($question_id, $answer_ids);
 					break;
 				}
+				
+				case Question::QTYPE_NUMERICAL: {
+					return NumericalQuestion::checkAnswers($question_id, $answer_ids);
+					break;
+				}
 			}
 		} // else (no exception)
 	} // end of method

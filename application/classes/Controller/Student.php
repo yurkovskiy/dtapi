@@ -58,7 +58,7 @@ class Controller_Student extends Controller_BaseAdmin {
 			// Read POST data in JSON format
 			$params = json_decode($this->request->body());
 			
-			if (is_null($params))
+			if (!$this->checkInputParams($params))
 			{
 				throw new HTTP_Exception_400("Wrong request");
 			}
@@ -113,7 +113,7 @@ class Controller_Student extends Controller_BaseAdmin {
 				// Read POST data in JSON format
 				$params = json_decode($this->request->body());
 				
-				if (is_null($params))
+				if (!$this->checkInputParams($params))
 				{
 					throw new HTTP_Exception_400("Wrong request");
 				}

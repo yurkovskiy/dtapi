@@ -31,6 +31,21 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	}
 	
 	/**
+	 * 
+	 * @param JSON $paramObject
+	 * @return bool
+	 * 
+	 */
+	protected function checkInputParams($paramObject)
+	{
+		if (is_null($paramObject) || (!is_object($paramObject)))
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * @name action_getRecords
 	 * @author Yuriy Bezgachnyuk
 	 * @access public
@@ -142,7 +157,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		$params = @json_decode($this->request->body());
 		
 		// check if input data is given
-		if (is_null($params))
+		if (!$this->checkInputParams($params))
 		{
 			throw new HTTP_Exception_400("No input data");
 		}
@@ -206,7 +221,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 			$params = @json_decode($this->request->body());
 					
 			// check if input data is given
-			if (is_null($params))
+			if (!$this->checkInputParams($params))
 			{
 				throw new HTTP_Exception_400("No input data");
 			}

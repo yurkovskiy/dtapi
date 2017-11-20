@@ -27,7 +27,7 @@ class Controller_AdminUser extends Controller {
 		$params = @json_decode($this->request->body());
 		
 		// check if input data is given
-		if (is_null($params))
+		if (is_null($params) || (!is_object($params)))
 		{
 			throw new HTTP_Exception_400("No input data");
 		}
