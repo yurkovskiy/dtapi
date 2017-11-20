@@ -5,7 +5,7 @@
  *
  */
 
-class Model_Answer extends Model_Common implements Question {
+class Model_Answer extends Model_Common {
 	
 	protected $tableName = "answers";
 	protected $fieldNames = array("answer_id","question_id", "true_answer", "answer_text", "attachment");
@@ -33,8 +33,6 @@ class Model_Answer extends Model_Common implements Question {
 	
 	public function checkAnswers($question_id, $answer_ids)
 	{
-		$true_answers_unumber = 0; // user's number
-		$true_answers_number = 0; // by default;
 		if (!is_array($answer_ids))
 		{
 			throw new HTTP_Exception_400("Wrong input parameters");
@@ -50,62 +48,24 @@ class Model_Answer extends Model_Common implements Question {
 			// get question type
 			$question_type = Model::factory("Question")->getQuestionTypeById($question_id);
 			
-			// input field
-			if ($question_type == Question::QTYPE_INPUT_FIELD)
-			{
-				$tanswers = array(); // array with answer_text
-				// we assume that for this question type we assign only true answers :-)
-				$true_answers = $this->getAnswersByQuestion($question_id);
-				foreach ($true_answers as $answer)
-				{
-					array_push($tanswers, $answer->answer_text);
+			// checking answers by question type
+			switch ($question_type) {
+				case Question::QTYPE_SIMPLE_CHOICE:  {
+					return SimpleChoiceQuestion::checkAnswers($question_id, $answer_ids);
+					break;					
 				}
-				// check if user's answer is present in $tanswers
-				if (in_array($answer_ids[0], $tanswers))
-				{
-					unset($tanswers);
-					return true;
+				
+				case Question::QTYPE_MULTI_CHOICE: {
+					return MultiChoiceQuestion::checkAnswers($question_id, $answer_ids);
+					break;
 				}
-				// anyway return false :-)
-				return false;
-			} // input field
-			
-			// multi choice
-			if ($question_type == Question::QTYPE_MULTI_CHOICE)
-			{
-				$true_answers_number = $this->countTrueAnswersByQuestion($question_id);
-			}
-			
-			// get answers [Simple/Multi Choice]
-			$answers = $this->getRecordsByIds($answer_ids);
-			
-			foreach ($answers as $answer)
-			{
-				// check if incorect answer is present, so it's bad :-)
-				if ($answer->true_answer == 0)
-				{
-					return false;
-				}
-				else 
-				{
-					$true_answers_unumber++;
+				
+				case Question::QTYPE_INPUT_FIELD: {
+					return InputFieldQuestion::checkAnswers($question_id, $answer_ids);
+					break;
 				}
 			}
-			
-			// final check
-			// simple choice
-			if (($question_type == Question::QTYPE_SIMPLE_CHOICE) && ($true_answers_unumber > 0))
-			{
-				return true;
-			}
-			// multi choice, strong check
-			if (($question_type == Question::QTYPE_MULTI_CHOICE) && ($true_answers_unumber == $true_answers_number))
-			{
-				return true;
-			}
-			
-			return false;
 		} // else (no exception)
-	}
+	} // end of method
 	
 }

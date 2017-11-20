@@ -275,7 +275,7 @@ class Controller_AdminUser extends Controller {
 	 * Method for checking uniqueness of username (can use for Admin/Student usernames)
 	 * @name checkUserName
 	 * @param string username (by GET request /{})
-	 * @return JSON true - if the username is already present at DB or fase if not
+	 * @return JSON true - if the username is already present at DB or false if not
 	 * @throws HTTP_Exception_400
 	 */
 	public function action_checkUserName()
@@ -295,7 +295,7 @@ class Controller_AdminUser extends Controller {
 	 * Method for checking uniqueness of email (can use for Admin/Student email)
 	 * @name checkEmailAddress
 	 * @param string email (by GET request /{})
-	 * @return JSON true - if the email is already present at DB or fase if not
+	 * @return JSON true - if the email is already present at DB or false if not
 	 * @throws HTTP_Exception_400
 	 */
 	public function action_checkEmailAddress()

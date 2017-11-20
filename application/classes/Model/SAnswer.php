@@ -5,7 +5,7 @@
  *
  */
 
-class Model_SAnswer extends Model_Common implements Question {
+class Model_SAnswer extends Model_Common {
 	
 	protected $tableName = "answers";
 	protected $fieldNames = array("answer_id","question_id", "answer_text", "attachment");
