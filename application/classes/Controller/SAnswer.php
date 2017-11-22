@@ -102,8 +102,6 @@ class Controller_SAnswer extends Controller_BaseAjax {
 					$result[] = array("question_id" => $question->question_id, "true" => 0);
 				}
 			}
-			print_r($result);
-			exit(1);
 			
 			/* FULL MARK CALCULATION SECTION */
 			// Walking over the $result[] array

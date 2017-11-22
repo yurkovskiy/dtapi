@@ -1,6 +1,11 @@
 <?php
 class MultiChoiceQuestion {
 	
+	public static function canShow()
+	{
+		return true;
+	}
+	
 	public static function checkAnswers($question_id, $answer_ids)
 	{
 		$true_answers_unumber = 0;

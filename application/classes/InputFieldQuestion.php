@@ -1,6 +1,11 @@
 <?php
 class InputFieldQuestion {
 	
+	public static function canShow()
+	{
+		return false;
+	}
+	
 	public static function checkAnswers($question_id, $answer_ids)
 	{
 		$tanswers = array(); // array with answer_text

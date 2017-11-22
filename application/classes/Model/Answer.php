@@ -47,29 +47,12 @@ class Model_Answer extends Model_Common {
 		{
 			// get question type
 			$question_type = Model::factory("Question")->getQuestionTypeById($question_id);
+			// find out constant name of question type for reflect class
+			$question_type = array_flip((new ReflectionClass("Question"))->getConstants())[$question_type];
+			$class_name = $question_type."Question";
 			
-			// checking answers by question type
-			switch ($question_type) {
-				case Question::QTYPE_SIMPLE_CHOICE:  {
-					return SimpleChoiceQuestion::checkAnswers($question_id, $answer_ids);
-					break;					
-				}
-				
-				case Question::QTYPE_MULTI_CHOICE: {
-					return MultiChoiceQuestion::checkAnswers($question_id, $answer_ids);
-					break;
-				}
-				
-				case Question::QTYPE_INPUT_FIELD: {
-					return InputFieldQuestion::checkAnswers($question_id, $answer_ids);
-					break;
-				}
-				
-				case Question::QTYPE_NUMERICAL: {
-					return NumericalQuestion::checkAnswers($question_id, $answer_ids);
-					break;
-				}
-			}
+			return $class_name::checkAnswers($question_id, $answer_ids);
+			
 		} // else (no exception)
 	} // end of method
 	

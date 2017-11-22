@@ -115,10 +115,10 @@ class Model_Question extends Model_Common {
 	 * 
 	 * @param int $question_id
 	 * @return int question type
-	 * 1 - QTYPE_SIMPLE_CHOICE
-	 * 2 - QTYPE_MULTI_CHOICE
-	 * 3 - QTYPE_INPUT_FIELD
-	 * 4 - QTYPE_NUMERICAL
+	 * 1 - SIMPLECHOICE
+	 * 2 - MULTICHOICE
+	 * 3 - INPUTFIELD
+	 * 4 - NUMERICAL
 	 */
 	public function getQuestionTypeById($question_id)
 	{

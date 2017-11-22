@@ -30,19 +30,17 @@ class Model_SAnswer extends Model_Common {
 	
 	/**
 	 * [SECURITY] for some question type we assume that all answers which
-	 * are assigned for the question - true answers (QTYPE_INPUT_FIELD/QTYPE_NUMERICAL)
-	 * so we cannot show the answers to the student as with questions with type (QTYPE_XXXX_CHOICE)
+	 * are assigned for the question - true answers (INPUTFIELD/NUMERICAL)
+	 * so we cannot show the answers to the student as with questions with type (XXXXCHOICE)
 	 * need to hide!!!
 	 * @param int $question_id
 	 */
 	private function isShowAnwers($question_id)
 	{
 		$question_type = Model::factory("Question")->getQuestionTypeById($question_id);
-		if (($question_type == Question::QTYPE_INPUT_FIELD) || ($question_type == Question::QTYPE_NUMERICAL))
-		{
-			return false;
-		}
-		return true;
+		$question_type = array_flip((new ReflectionClass("Question"))->getConstants())[$question_type];
+		$class_name = $question_type."Question";
+		return $class_name::canShow();
 	}
 	
 	public function getAnswersByQuestion($question_id)
