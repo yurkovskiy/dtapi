@@ -7,8 +7,6 @@
 
 class Controller_Student extends Controller_BaseAdmin {
 
-	protected $modelName = "Student";
-	
 	// security check for student
 	public function before()
 	{

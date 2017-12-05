@@ -7,8 +7,6 @@
 
 class Controller_Answer extends Controller_BaseAdmin {
 
-	protected $modelName = "Answer";
-	
 	public function before()
 	{
 		if (!Auth::instance()->logged_in($this->ADMIN_ROLE))

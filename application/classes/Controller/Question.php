@@ -7,8 +7,6 @@
 
 class Controller_Question extends Controller_BaseAdmin {
 
-	protected $modelName = "Question";
-	
 	// Strong security check for Student
 	public function before()
 	{

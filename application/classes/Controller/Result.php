@@ -16,6 +16,7 @@ class Controller_Result extends Controller_BaseAjax {
 		{
 			throw new HTTP_Exception_403("You don't have permissions to work with this Entity directly");
 		}
+		parent::before();
 	}
 	
 	public function action_insertData()
@@ -41,7 +42,6 @@ class Controller_Result extends Controller_BaseAjax {
 		$tdate = $this->request->param("id2");
 		
 		$DBResult = Model::factory($this->modelName)->getResultsByTestAndGroup($test_id, $group_id, $tdate);
-		
 		$fieldNames = Model::factory($this->modelName)->getFieldNames();
 		$this->buildJSONResponse($DBResult, $fieldNames);
 	}
@@ -56,8 +56,7 @@ class Controller_Result extends Controller_BaseAjax {
 	{
 		$group_id = intval($this->request->param("id"));
 		$DBResult = Model::factory($this->modelName)->getResultTestIdsByGroup($group_id);
-		$fieldNames = array("test_id");
-		$this->buildJSONResponse($DBResult, $fieldNames);
+		$this->buildJSONResponse($DBResult, array("test_id"));
 	}
 
 }

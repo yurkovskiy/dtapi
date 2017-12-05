@@ -176,7 +176,7 @@ abstract class Model_Common extends Model
 	{
 		// check $values array
 		if (count($values) !== (count($this->fieldNames) - 1)) {
-			throw new HTTP_Exception_400("A lot of fields of an input object");
+			throw new HTTP_Exception_400("The number of fields of input object is not suitable for this entity");
 		}
 		
 		$aff_rows = null;

@@ -7,8 +7,6 @@
 
 class Controller_TimeTable extends Controller_BaseAdmin {
 
-	protected $modelName = "TimeTable";
-	
 	public function action_getTimeTablesForGroup()
 	{
 		return $this->getEntityRecordsBy("getTimeTablesForGroup");

@@ -19,7 +19,6 @@ class NumericalQuestion {
 		// check if user's answer is present in $tanswers
 		if (($answer_ids[0] >= doubleval($tanswers[0])) && ($answer_ids[0] <= doubleval($tanswers[1])))
 		{
-			unset($tanswers);
 			return true;
 		}
 		// anyway return false :-)

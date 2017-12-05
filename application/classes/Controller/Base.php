@@ -10,6 +10,7 @@ abstract class Controller_Base extends Controller {
 	// ROLES Constants
 	protected $ADMIN_ROLE = "admin";
 	protected $STUDENT_ROLE = "student";
+	protected $LOGGED_ROLE = "login";
 	
 	
 	/**
@@ -46,7 +47,7 @@ abstract class Controller_Base extends Controller {
 	public function before()
 	{
 		try {
-			if (!Auth::instance()->logged_in("login"))
+			if (!Auth::instance()->logged_in($this->LOGGED_ROLE))
 			{
 				throw new HTTP_Exception_403("Only logged users can work with entities");
 			}
@@ -70,7 +71,7 @@ abstract class Controller_Base extends Controller {
 	{
 		$result = array("name" => "d-tester API",
 				"author" => "Yuriy V. Bezgachnyuk aka Yurkovskiy",
-				"date" => "20 Aug. 2015",
+				"startdate" => "20 Aug. 2015",
 				"hint" => "Please define an action in URL address");
 	
 		$this->response->body(json_encode($result));

@@ -7,8 +7,6 @@
 
 class Controller_SAnswer extends Controller_BaseAjax {
 
-	protected $modelName = "SAnswer";
-	
 	public function action_insertData()
 	{
 		throw new HTTP_Exception_404("Not found for this entity");

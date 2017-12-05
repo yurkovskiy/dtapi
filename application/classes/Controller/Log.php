@@ -7,8 +7,6 @@
 
 class Controller_Log extends Controller_BaseAdmin {
 
-	protected $modelName = "Log";
-			
 	public function action_startTest()
 	{
 		$user_id = $this->request->param("id");

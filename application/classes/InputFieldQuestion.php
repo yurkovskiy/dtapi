@@ -15,15 +15,8 @@ class InputFieldQuestion {
 		{
 			array_push($tanswers, $answer->answer_text);
 		}
-		// check if user's answer is present in $tanswers
-		if (in_array($answer_ids[0], $tanswers))
-		{
-			unset($tanswers);
-			return true;
-		}
-		// anyway return false :-)
-		return false;
 		
+		// check if user's answer is present in $tanswers
+		return (in_array($answer_ids[0], $tanswers)) ? true : false;
 	}
-	
 }

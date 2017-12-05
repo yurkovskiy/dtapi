@@ -7,9 +7,20 @@
 
 abstract class Controller_BaseAjax extends Controller_Base {
 	
-	// Model for Controller that will be given in child classes 
+	// Model for Controller (has the name whis is the same as Controller name) 
 	protected $modelName = "";
-							
+	
+	/**
+	 * 
+	 * using late static binding for generate modelName which is the same as Controller name
+	 * allow to avoid assignment in subclasses
+	 */
+	public function before()
+	{
+		$this->modelName = preg_split("/_/", get_called_class())[1];
+		parent::before();
+	}
+									
 	/**
 	 * Helper method for refactoring
 	 * @name getEntityRecordsBy

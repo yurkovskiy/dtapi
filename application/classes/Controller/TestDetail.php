@@ -7,8 +7,6 @@
 
 class Controller_TestDetail extends Controller_BaseAdmin {
 
-	protected $modelName = "TestDetail";
-	
 	public function action_getTestDetailsByTest()
 	{
 		return $this->getEntityRecordsBy("getTestDetailsByTest");

@@ -262,7 +262,7 @@ class Controller_AdminUser extends Controller {
 	 * @param string $field
 	 * @param string $value
 	 * 
-	 * @return JSON {"responese": true/false}
+	 * @return JSON {"response": true/false}
 	 */
 	protected function checkUniqueness($field, $value)
 	{

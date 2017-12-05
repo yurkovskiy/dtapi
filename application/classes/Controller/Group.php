@@ -7,8 +7,6 @@
 
 class Controller_Group extends Controller_BaseAdmin {
 
-	protected $modelName = "Group";
-	
 	public function action_getGroupsBySpeciality()
 	{
 		return $this->getEntityRecordsBy("getGroupsBySpeciality");

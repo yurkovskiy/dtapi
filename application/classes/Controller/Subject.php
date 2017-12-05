@@ -7,8 +7,6 @@
 
 class Controller_Subject extends Controller_BaseAdmin {
 	
-	protected $modelName = "Subject";
-	
 	public function action_getRecordsBySearch()
 	{
 		return $this->getRecordsBySearchCriteria();
