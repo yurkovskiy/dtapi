@@ -24,7 +24,7 @@ class Controller_Log extends Controller_BaseAdmin {
 		{
 			if ($user_id != Auth::instance()->get_user()->id)
 			{
-				throw new HTTP_Exception_403("You can start test only for you!!!");
+				throw new HTTP_Exception_403("You can start tests which are only for you!!!");
 			}
 		}
 		else 

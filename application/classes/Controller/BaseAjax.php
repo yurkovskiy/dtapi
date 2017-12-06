@@ -12,12 +12,12 @@ abstract class Controller_BaseAjax extends Controller_Base {
 	
 	/**
 	 * 
-	 * using late static binding for generate modelName which is the same as Controller name
+	 * using binding for generate modelName which is the same as Controller name
 	 * allow to avoid assignment in subclasses
 	 */
 	public function before()
 	{
-		$this->modelName = preg_split("/_/", get_called_class())[1];
+		$this->modelName = preg_split("/_/", get_class($this))[1];
 		parent::before();
 	}
 									

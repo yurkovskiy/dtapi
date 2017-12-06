@@ -40,33 +40,6 @@ class Controller_Question extends Controller_BaseAdmin {
 			
 	/**
 	 * Get questions for test by level
-	 * @deprecated will be changed to use getQuestionIdsByLevelRand due to a lot of data	 * 
-	 */
-	public function action_getQuestionsByLevelRand()
-	{
-		// get parameters from GET request		
-		$test_id = $this->request->param("id");
-		$level = $this->request->param("id1");
-		$number = $this->request->param("id2");
-		
-		$DBResult = null;
-		
-		// check input parameters
-		if ((!is_numeric($test_id)) || (!is_numeric($level)) || (!is_numeric($number)))
-		{
-			throw new HTTP_Exception_400("Wrong request: fail due to input parameters");
-		}
-		else 
-		{
-			$DBResult = Model::factory($this->modelName)->getQuestionsByLevelRand($test_id, $level, $number);
-			$fieldNames = Model::factory($this->modelName)->getFieldNames();
-			
-			$this->buildJSONResponse($DBResult, $fieldNames);
-		}
-	}
-	
-	/**
-	 * Get questions for test by level
 	 * @since 2.1
 	 */
 	public function action_getQuestionIdsByLevelRand()

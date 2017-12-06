@@ -68,7 +68,7 @@ class Model_Log extends Model_Common {
 			}
 			if (intval($_test->enabled) === 0)
 			{
-				throw new HTTP_Exception_403("You cannot make the test due that this test is disabled");
+				throw new HTTP_Exception_403("You cannot make the test because this test is disabled");
 			}
 		}
 		unset($test);
@@ -107,7 +107,7 @@ class Model_Log extends Model_Common {
 				return strval($this->errorMessage);
 			}
 			if ($aff_rows > 0) return intval($insert_id);
-			if ($aff_rows <= 0) return false;
+			if ($aff_rows == 0) return false;
 		}
 	}
 	
