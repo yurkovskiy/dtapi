@@ -73,6 +73,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 ## TimeTable
  * ```GET/ http://<host>/timeTable/getTimeTablesForGroup/<group_id>``` -- returns JSON with timetables by group 
  * ```GET/ http://<host>/timeTable/getTimeTablesForSubject/<subject_id>``` -- returns JSON with timetables by subject
+ * ```GET/ http://<host>/timeTable/getTimeTableForGroupAndSubject/<group_id>/<subject_id>``` -- returns JSON with timetables by group and subject
 
 ## Results
  * ```GET/ http://<host>/Result/getRecordsbyStudent/<student_id>``` -- returns JSON with student's results
@@ -93,6 +94,8 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 ## AdminUser
  * ```GET/ http://<host>/AdminUser/checkUserName/{username}``` -- returns JSON ```{"response": true}``` if the {username} already exist at the system or ```{"response": false}```
    this functionality also can use for check student's username
+ * ```GET/ http://<host>/AdminUser/checkEmailAddress/{emailaddress}``` -- returns JSON ```{"response": true}``` if the {emailaddress} already exist at the system or ```{"response": false}```
+   this functionality also can use for check student's email
 
 ## Some diffs between version 2.0
  * Added HTTP 400 Exception when wrong request
