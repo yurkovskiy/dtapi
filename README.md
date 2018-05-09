@@ -65,6 +65,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 
 ## TestDetail
  * ```GET/ http://<host>/testDetail/getTestDetailsByTest/<test_id>``` -- returns JSON with test's parameters 
+ * ```GET/ http://<host>/testDetail/getTestRate/<test_id>``` -- returns JSON in following format {"testRate": 28} with maximum mark for the test
  
 ## Groups
  * ```GET/ http://<host>/group/getGroupsBySpeciality/<speciality_id>``` -- returns JSON with groups which related to the speciality with speciality_id      
