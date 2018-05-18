@@ -13,11 +13,13 @@ class Controller_Welcome extends Controller {
 	{
 		$result = array("name" => "d-tester API",
 				"author" => "Yuriy V. Bezgachnyuk aka Yurkovskiy",
-				"startdate" => "20 Aug. 2015");
+				"startdate" => "20 Aug. 2015",
+				"servertime" => date("d/m/Y")." ".date("H:i:s")
+		);
 		
 		$this->response
 			->send_headers("Cache-Control: no-cache, no-store, must-revalidate", "Pragma: no-cache", "Expires: 0", "Content-Type: application/json;charset=utf-8")
-			->body(json_encode(array("response" => "Welcome to the D-Tester API version 2.1", "systeminfo" => $result)));
+			->body(json_encode(array("response" => "Welcome to the D-Tester API version 2.2", "systeminfo" => $result)));
 	}
 	
 	public function action_logo()

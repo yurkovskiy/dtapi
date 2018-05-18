@@ -82,33 +82,51 @@ class Model_Log extends Model_Common {
 		// security check
 		if ($this->isUserMadeTest($user_id, $test_id)) 
 		{
-			$this->errorMessage = "Error. User made test recently";
+			throw new HTTP_Exception_400("Error. User made test recently");
+		}
+		
+		// check if the test (quiz) is ready: number of questions is suitable for test details
+		$test_details_model = Model::factory("TestDetail")->getTestDetailsByTest($test_id);
+		$testDetails = array();
+		
+		// generating array with test details by level of questions
+		// $testDetails[level] = number_of_tasks 
+		foreach ($test_details_model as $test_detail)
+		{
+			$testDetails[$test_detail->level] = $test_detail->tasks;
+		}
+		unset($test_details_model);
+		
+		// check nubmer of questions
+		foreach ($testDetails as $level => $tasks)
+		{
+			// check number of question by level
+			$questionsCount = Model::factory("Question")->getQuestionIdsByLevelRand($test_id, $level, $tasks)->count();
+			if ($questionsCount < $tasks) throw new HTTP_Exception_400("Error: The number of needed questions for the quiz is not suitable due to test details");
+		}
+		unset($testDetails);
+		
+		$values = array(
+				$this->fieldNames[0] => 0,
+				$this->fieldNames[1] => $user_id,
+				$this->fieldNames[2] => $test_id,
+				$this->fieldNames[3] => date("Y-m-d"),
+				$this->fieldNames[4] => date("H:i:s"),
+				$this->fieldNames[5] => $remote_ip
+		);
+			
+		Session::instance()->set("startTime", $values[$this->fieldNames[4]]);
+		$insertQuery = DB::insert($this->tableName, $this->fieldNames)
+		->values($values);
+		try
+		{
+			list($insert_id, $aff_rows) = $insertQuery->execute();
+		} catch (Database_Exception $error) {
+			$this->errorMessage = "error ".$error->getCode();
 			return strval($this->errorMessage);
 		}
-		else
-		{
-			$values = array(
-					$this->fieldNames[0] => 0,
-					$this->fieldNames[1] => $user_id,
-					$this->fieldNames[2] => $test_id,
-					$this->fieldNames[3] => date("Y-m-d"),
-					$this->fieldNames[4] => date("H:i:s"),
-					$this->fieldNames[5] => $remote_ip
-			);
-			
-			Session::instance()->set("startTime", $values[$this->fieldNames[4]]);
-			$insertQuery = DB::insert($this->tableName, $this->fieldNames)
-			->values($values);
-			try
-			{
-				list($insert_id, $aff_rows) = $insertQuery->execute();
-			} catch (Database_Exception $error) {
-				$this->errorMessage = "error ".$error->getCode();
-				return strval($this->errorMessage);
-			}
-			if ($aff_rows > 0) return intval($insert_id);
-			if ($aff_rows == 0) return false;
-		}
+		if ($aff_rows > 0) return intval($insert_id);
+		if ($aff_rows == 0) return false;
 	}
 	
 }

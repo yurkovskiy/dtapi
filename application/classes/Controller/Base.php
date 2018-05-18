@@ -7,6 +7,8 @@
 
 abstract class Controller_Base extends Controller {
 	
+	private $VERSION = "2.2";
+	
 	// ROLES Constants
 	protected $ADMIN_ROLE = "admin";
 	protected $STUDENT_ROLE = "student";
@@ -69,9 +71,10 @@ abstract class Controller_Base extends Controller {
 	 */
 	public function action_index()
 	{
-		$result = array("name" => "d-tester API",
+		$result = array("name" => "d-tester API", "version" => $this->VERSION,
 				"author" => "Yuriy V. Bezgachnyuk aka Yurkovskiy",
 				"startdate" => "20 Aug. 2015",
+				"servertime" => date("d/m/Y")." ".date("H:i:s"),
 				"hint" => "Please define an action in URL address");
 	
 		$this->response->body(json_encode($result));
