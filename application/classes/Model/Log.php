@@ -96,6 +96,12 @@ class Model_Log extends Model_Common {
 			$testDetails[$test_detail->level] = $test_detail->tasks;
 		}
 		unset($test_details_model);
+
+		// checking testDetails array
+		if (count($testDetails) < 1)
+		{
+			throw new HTTP_Exception_400("Test detail parameters not found for requested test");
+		}
 		
 		// check nubmer of questions
 		foreach ($testDetails as $level => $tasks)
