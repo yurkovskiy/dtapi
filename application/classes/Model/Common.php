@@ -204,8 +204,7 @@ abstract class Model_Common extends Model
 		// Add zero for auto_increment primary key :-)
 		array_unshift($_values, 0);
 		
-		$insertQuery = DB::insert($this->tableName, $this->fieldNames)
-			->values($_values);
+		$insertQuery = DB::insert($this->tableName, $this->fieldNames)->values($_values);
 		try
 		{
 			list($insert_id, $aff_rows) = $insertQuery->execute();
@@ -250,8 +249,7 @@ abstract class Model_Common extends Model
 			}
 		}
 		
-		$updateQuery = DB::update($this->tableName)
-			->set($values)
+		$updateQuery = DB::update($this->tableName)->set($values)
 			->where($this->fieldNames[0], '=', $record_id);
 		try
 		{
