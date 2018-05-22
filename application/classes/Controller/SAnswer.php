@@ -149,7 +149,7 @@ class Controller_SAnswer extends Controller_BaseAjax {
 					"result" => $fullMark,
 					"questions" => $data,
 					"true_answers" => json_encode($result, JSON_UNESCAPED_UNICODE),
-					"answers" => ""
+					"answers" => Model::factory("TestDetail")->getTestRate($test_id)
 			);
 			
 			$model = Model::factory("Result")->registerRecord($resultArr);
