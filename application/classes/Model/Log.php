@@ -32,12 +32,7 @@ class Model_Log extends Model_Common {
 				AND CONCAT({$this->fieldNames[3]}, ' ', {$this->fieldNames[4]}) > DATE_SUB(NOW(), INTERVAL {$this->INTERVAL})";
 		$count = DB::query(Database::SELECT, $query)->execute()->get('count');
 		
-		if ($count > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return ($count > 0) ? true : false;
 	}
 	
 	public function startTest($user_id, $test_id, $remote_ip = "0.0.0.0")
@@ -122,8 +117,7 @@ class Model_Log extends Model_Common {
 		);
 			
 		Session::instance()->set("startTime", $values[$this->fieldNames[4]]);
-		$insertQuery = DB::insert($this->tableName, $this->fieldNames)
-		->values($values);
+		$insertQuery = DB::insert($this->tableName, $this->fieldNames)->values($values);
 		try
 		{
 			list($insert_id, $aff_rows) = $insertQuery->execute();
