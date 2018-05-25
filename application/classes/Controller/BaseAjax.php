@@ -97,6 +97,10 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		$limit = $this->request->param("id");
 		$offset = $this->request->param("id1");
 		
+		// additional features [sorting by parameter]
+		$field = $this->request->param("id2");
+		$direction = $this->request->param("id3");
+		
 		$DBResult = null;
 				
 		// check input parameters
@@ -106,7 +110,7 @@ abstract class Controller_BaseAjax extends Controller_Base {
 		}
 		else 
 		{
-			$DBResult = Model::factory($this->modelName)->getRecordsRange($limit, $offset);
+			$DBResult = Model::factory($this->modelName)->getRecordsRange($limit, $offset, $field, $direction);
 			$fieldNames = Model::factory($this->modelName)->getFieldNames();
 			
 			$this->buildJSONResponse($DBResult, $fieldNames);			

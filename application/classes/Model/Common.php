@@ -95,13 +95,43 @@ abstract class Model_Common extends Model
 	 * @param int $offset - offset 
 	 * @return mysql_object - records objects
 	 */
-	public function getRecordsRange($limit, $offset) 
+	public function getRecordsRange($limit, $offset, $field = null, $direction = null) 
 	{
-		$query = DB::select_array($this->fieldNames)
-			->from($this->tableName)
-			->order_by($this->fieldNames[0], 'asc')
-			->limit($limit)
-			->offset($offset);
+		$query = null;
+		if (!is_null($field) && (!is_null($direction)))
+		{
+			// with specific sorting
+			if (!in_array($field, $this->fieldNames))
+			{
+				throw new HTTP_Exception_400("The filed name {$field} is not suitable for this entity");
+			}
+			
+			$direction = intval($direction);			
+			if (!in_array($direction, array(1, -1)))
+			{
+				throw new HTTP_Exception_400("The direction parameter have to be 1 or -1 only");
+			}
+			
+			$direction = ($direction == 1) ? "asc" : "desc";
+
+			$query = DB::select_array($this->fieldNames)
+				->from($this->tableName)
+				->order_by($field, $direction)
+				->order_by($this->fieldNames[0], 'asc')
+				->limit($limit)
+				->offset($offset);
+		}
+		
+		// without using specific sorting [common behavior]
+		else 
+		{
+			$query = DB::select_array($this->fieldNames)
+				->from($this->tableName)
+				->order_by($this->fieldNames[0], 'asc')
+				->limit($limit)
+				->offset($offset);
+		}
+				
 		$result = $query->as_object()->execute();
 		return $result;
 	}

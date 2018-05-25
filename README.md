@@ -24,7 +24,8 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
 
  * ```GET/ http://<host>/<entity>/getRecords``` -- returns JSON with all records of database
  * ```GET/ http://<host>/<entity>/getRecords/<id>``` -- returns JSON with one record of database with ID
- * ```GET/ http://<host>/<entity>/getRecordsRange/<limit>/<offset>``` -- returns JSON with records of database for pagination
+ * ```GET/ http://<host>/<entity>/getRecordsRange/<limit>/<offset>/[<fieldName>]/[direction]``` -- returns JSON with records of database for pagination
+      Optional parameters: fieldName and direction (1 or -1) using for sorting data
  * ```GET/ http://<host>/<entity>/countRecords``` -- returns JSON in following format {"numberOfRecords": "10"} using for pagination
  * ```GET/ http://<host>/<entity>/getRecordsBySearch/<search_string>``` -- using for filtering by xxxx_name property of some entity (not implemented for all entities)
  * ```POST/ http://<host>/<entity>/insertData``` -- using for insert new record. Returns JSON with new record id and some status
