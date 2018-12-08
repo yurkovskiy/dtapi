@@ -27,7 +27,7 @@ class Model_Log extends Model_Common {
 	 */
 	protected function isUserMadeTest($user_id, $test_id)
 	{
-		$query = "SELECT COUNT(*) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} = {$user_id}
+		$query = "SELECT COUNT($this->fieldNames[0]) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} = {$user_id}
 				AND {$this->fieldNames[2]} = {$test_id}
 				AND CONCAT({$this->fieldNames[3]}, ' ', {$this->fieldNames[4]}) > DATE_SUB(NOW(), INTERVAL {$this->INTERVAL})";
 		$count = DB::query(Database::SELECT, $query)->execute()->get('count');

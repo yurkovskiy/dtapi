@@ -41,7 +41,7 @@ class Model_Question extends Model_Common {
 	 */
 	public function countQuestionsByTest($test_id)
 	{
-		$query = "SELECT COUNT(*) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} = {$test_id}";
+		$query = "SELECT COUNT($this->fieldNames[0]) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} = {$test_id}";
 		$count = DB::query(Database::SELECT, $query)->execute()->get("count");
 		return $count;
 	}

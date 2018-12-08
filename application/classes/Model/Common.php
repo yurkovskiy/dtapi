@@ -70,7 +70,7 @@ abstract class Model_Common extends Model
 	 */
 	public function countRecords() 
 	{
-		$query = "SELECT COUNT(*) AS count FROM {$this->tableName}";
+		$query = "SELECT COUNT($this->fieldNames[0]) AS count FROM {$this->tableName}";
 		$count = DB::query(Database::SELECT, $query)->execute()->get('count');
 		return $count;
 	}
