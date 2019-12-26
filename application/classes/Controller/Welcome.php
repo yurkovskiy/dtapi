@@ -14,6 +14,7 @@ class Controller_Welcome extends Controller {
 		$result = array("name" => "d-tester API",
 				"author" => "Yuriy V. Bezgachnyuk aka Yurkovskiy",
 				"startdate" => "20 Aug. 2015",
+				"repository" => "https://github.com/yurkovskiy/dtapi",
 				"servertime" => date("d/m/Y")." ".date("H:i:s")
 		);
 		
