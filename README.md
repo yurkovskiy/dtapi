@@ -50,6 +50,12 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
  * How to login (enter to the system)
    Need to request with following JSON ```{"username":"some_user_name", "password":"some_password"}```
 
+## (User) Student
+ * Important: you need to transfer field ```confirm_password``` when creating users
+ * Rules (Validation): username have to be unique, password - min length: 8 symbols
+ * How to create new student: needs to give following JSON
+   ```{"email":"vzasranets@gmail.com","username":"vzasranets","password":"throw_Pe5","password_confirm":"throw_Pe5","gradebook_id":"АУ-020203", "student_surname":"Засранець", "student_name":"Василь", "student_fname":"Васильович", "group_id":1, "photo":"", "plain_password":"throw_Pe5"}```
+
 ## Questions / Answers functionality
  * Almost all CRUD operations are allowed
  * ```GET/ http://<host>/question/getQuestionsByLevelRand/<test_id>/<level>/<number>``` -- returns JSON with random generated list of questions [@deprecated]
