@@ -104,6 +104,7 @@ d-tester API version 2.1 built with Kohana Framework 3.3.1
    this functionality also can use for check student's username
  * ```GET/ http://<host>/AdminUser/checkEmailAddress/{emailaddress}``` -- returns JSON ```{"response": true}``` if the {emailaddress} already exist at the system or ```{"response": false}```
    this functionality also can use for check student's email
+ * How to create new admin: needs to give following JSON ```{"email":"vzasranets@gmail.com","username":"vzasranets","password":"throw_Pe5","password_confirm":"throw_Pe5"}```
 
 ## Some diffs between version 2.0
  * Added HTTP 400 Exception when wrong request
