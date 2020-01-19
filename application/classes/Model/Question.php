@@ -41,9 +41,9 @@ class Model_Question extends Model_Common {
 	 */
 	public function countQuestionsByTest($test_id)
 	{
-		$query = "SELECT COUNT($this->fieldNames[0]) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} = {$test_id}";
+		$query = "SELECT COUNT({$this->fieldNames[0]}) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} = {$test_id}";
 		$count = DB::query(Database::SELECT, $query)->execute()->get("count");
-		return $count;
+		return intval($count);
 	}
 	
 	/**
@@ -55,7 +55,7 @@ class Model_Question extends Model_Common {
 	{
 		$query = "SELECT {$this->fieldNames[1]} AS id FROM {$this->tableName} WHERE {$this->fieldNames[0]} = {$question_id}";
 		$test_id = DB::query(Database::SELECT, $query)->execute()->get("id");
-		return $test_id;
+		return intval($test_id);
 	}
 	
 	/**
@@ -67,7 +67,7 @@ class Model_Question extends Model_Common {
 	{
 		$query = "SELECT {$this->fieldNames[3]} AS id FROM {$this->tableName} WHERE {$this->fieldNames[0]} = {$question_id}";
 		$level_id = DB::query(Database::SELECT, $query)->execute()->get("id");
-		return $level_id;
+		return intval($level_id);
 	}
 	
 	/**
@@ -109,7 +109,7 @@ class Model_Question extends Model_Common {
 		$result = $query->as_object()->execute();
 		foreach ($result as $question)
 		{
-			return $question->type;
+			return intval($question->type);
 		}
 	}
 	

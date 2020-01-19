@@ -70,9 +70,9 @@ abstract class Model_Common extends Model
 	 */
 	public function countRecords() 
 	{
-		$query = "SELECT COUNT($this->fieldNames[0]) AS count FROM {$this->tableName}";
+		$query = "SELECT COUNT({$this->fieldNames[0]}) AS count FROM {$this->tableName}";
 		$count = DB::query(Database::SELECT, $query)->execute()->get('count');
-		return $count;
+		return intval($count);
 	}
 	
 	/**
@@ -84,7 +84,7 @@ abstract class Model_Common extends Model
 	{
 		$query = "SELECT MAX({$this->fieldNames[0]}) AS maxID FROM {$this->tableName}";
 		$maxID = DB::query(Database::SELECT, $query)->execute()->get('maxID');
-		return (is_null($maxID)) ? 0: $maxID;
+		return (is_null($maxID)) ? 0: intval($maxID);
 	}
 
 	/**

@@ -199,4 +199,12 @@ class Controller_Student extends Controller_BaseAdmin {
 		return $this->getRecordsBySearchCriteria();
 	}
 
+	public function action_checkGradebookId()
+	{
+		$gradebook_id = $this->request->param("id");
+		$model = Model::factory($this->modelName)->isGradebookIdPresent($gradebook_id);
+		$response = ($model === 1) ? true : false;
+		$this->response->body(json_encode(array("response" => $response), JSON_UNESCAPED_UNICODE));
+	}
+
 }

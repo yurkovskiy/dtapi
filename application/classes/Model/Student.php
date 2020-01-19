@@ -136,5 +136,12 @@ class Model_Student extends Model_Common {
 	{
 		return $this->getRecordsBySearchCriteria($this->fieldNames[2], $criteria);
 	}
+
+	public function isGradebookIdPresent($gradebook_id)
+	{
+		$query = "SELECT COUNT({$this->fieldNames[0]}) AS count FROM {$this->tableName} WHERE {$this->fieldNames[1]} = '{$gradebook_id}'";
+		$count = DB::query(Database::SELECT, $query)->execute()->get('count');
+		return intval($count);
+	}
 	
 }
