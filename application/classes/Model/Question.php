@@ -25,11 +25,9 @@ class Model_Question extends Model_Common {
 	 */
 	public function getQuestionIdsByLevelRand($test_id, $level, $number)
 	{
-		$query = DB::select($this->fieldNames[0])->from($this->tableName)
-		->where($this->fieldNames[1], "=", $test_id)
-		->and_where($this->fieldNames[3], "=", $level)
-		->order_by("", 'RAND()')
-		->limit($number);
+		$query = DB::query(Database::SELECT, 
+				"SELECT {$this->fieldNames[0]} FROM {$this->tableName} 
+		WHERE {$this->fieldNames[1]} = {$test_id} AND {$this->fieldNames[3]} = {$level} ORDER BY RAND() LIMIT {$number}");		
 		$result = $query->as_object()->execute();
 		return $result;
 	}
