@@ -149,6 +149,13 @@ Kohana::modules(array(
 
 
 /**
+ * Kohana session storage
+ */
+
+Session::$default = "database";
+
+
+/**
  * Route for AdminUser/checking (becuase we need to add regexp for special symbols)
  */
 
