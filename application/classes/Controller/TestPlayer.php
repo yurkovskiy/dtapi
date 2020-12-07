@@ -153,7 +153,7 @@ class Controller_TestPlayer extends Controller_Base {
 		}
 		
 		// check timetable
-		$timetable_count = Model::factory("TimeTable")->getTimeTableForGroupAndSubject($group_id, $subject_id)->count()	;
+		$timetable_count = Model::factory("TimeTable")->getTimeTableForGroupAndSubject($group_id, $subject_id, true)->count()	;
 		if ($timetable_count > 0)
 		{
 			// so we can return the test entity
